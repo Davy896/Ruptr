@@ -1,0 +1,3 @@
+*.log*
+/firstMiniChallenge/firstMiniChallengeTests/*
+/firstMiniChallenge/firstMiniChallengeUITests/*

@@ -74,6 +74,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4180B9261FD983A800BD6425 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4180B9281FD983B400BD6425 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				41F974241FD94A7100D4764C /* Main.storyboard */,
+				41F974291FD94A7100D4764C /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4180B9291FD983B900BD6425 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				41F974221FD94A7100D4764C /* ViewController.swift */,
+				41F974201FD94A7100D4764C /* AppDelegate.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		41F974141FD94A7100D4764C = {
 			isa = PBXGroup;
 			children = (
@@ -97,11 +122,10 @@
 		41F9741F1FD94A7100D4764C /* firstMiniChallenge */ = {
 			isa = PBXGroup;
 			children = (
-				41F974201FD94A7100D4764C /* AppDelegate.swift */,
-				41F974221FD94A7100D4764C /* ViewController.swift */,
-				41F974241FD94A7100D4764C /* Main.storyboard */,
+				4180B9261FD983A800BD6425 /* Model */,
+				4180B9281FD983B400BD6425 /* View */,
+				4180B9291FD983B900BD6425 /* Controller */,
 				41F974271FD94A7100D4764C /* Assets.xcassets */,
-				41F974291FD94A7100D4764C /* LaunchScreen.storyboard */,
 				41F9742C1FD94A7100D4764C /* Info.plist */,
 			);
 			path = firstMiniChallenge;
@@ -428,6 +452,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = firstMiniChallenge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.team.hasNoName.firstMiniChallenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -442,6 +467,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = firstMiniChallenge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.team.hasNoName.firstMiniChallenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -6,6 +6,8 @@
 //  Copyright © 2017 Apple Dev Academy. All rights reserved.
 //
 
+//whatever
+
 import ConnectivityServices
 
 public class UserProfile: ProfileRequirements {

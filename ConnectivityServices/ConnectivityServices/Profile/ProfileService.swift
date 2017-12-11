@@ -26,7 +26,7 @@ public class ProfileService: NSObject {
     
     public init(profile: ProfileRequirements) {
         self.profile = profile
-        self.peerId = MCPeerID(displayName: "\(self.profile.id)|\(self.profile.userName)|\(self.profile.avatar)")
+        self.peerId = MCPeerID(displayName: "\(self.profile.id)\(serviceType)|\(self.profile.userName)|\(self.profile.avatar)")
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: peerId, discoveryInfo: nil, serviceType: serviceType)
         self.serviceBrowser = MCNearbyServiceBrowser(peer: peerId, serviceType: serviceType)
         super.init()

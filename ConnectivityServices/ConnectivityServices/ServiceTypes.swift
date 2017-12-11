@@ -10,6 +10,7 @@ internal struct ServiceTypes {
     
     static internal let profile = "mpc-profile"
     static internal let broadcast = "mpc-broadcast"
-    
+    static internal let chat = "mpc-chat"
+
     private init() {}
 }

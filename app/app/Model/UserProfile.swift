@@ -9,31 +9,37 @@
 import ConnectivityServices
 
 public class UserProfile: ProfileRequirements {
+    
     private let _id: String
     private var _userName: String
     private var _avatar: String
     
     public var id: String {
-        get{
+        get {
+            
             return self._id
         }
     }
     
     public var userName: String {
-        get{
+        get {
+            
             return self._userName
         }
         
-        set(userName){
+        set(userName) {
             self._userName = userName
         }
     }
     
     public var avatar: String {
-        get{
+        get {
+            
             return self._avatar
         }
-        set(avatar){
+        
+        set(avatar) {
+            
             self._avatar = avatar
         }
     }
@@ -46,7 +52,9 @@ public class UserProfile: ProfileRequirements {
 }
 
 public extension String {
+    
     public static func randomAlphaNumericString(length: Int) -> String {
+        
         let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
         var randomString = ""
         

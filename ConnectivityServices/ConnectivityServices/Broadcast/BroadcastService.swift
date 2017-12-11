@@ -23,7 +23,7 @@ public class BroadcastService: NSObject {
     public var delegate: BroadcastServiceDelegate?
     
     public init(profile: ProfileRequirements) {
-        self.peerId = MCPeerID(displayName: "\(profile.id)")
+        self.peerId = MCPeerID(displayName: "\(profile.id)\(serviceType)")
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: peerId, discoveryInfo: nil, serviceType: serviceType)
         self.serviceBrowser = MCNearbyServiceBrowser(peer: peerId, serviceType: serviceType)
         super.init()

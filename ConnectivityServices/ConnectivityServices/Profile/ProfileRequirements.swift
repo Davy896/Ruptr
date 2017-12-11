@@ -7,7 +7,8 @@
 //
 
 public protocol ProfileRequirements {
-    var id: String {get}
-    var userName: String {get set}
-    var avatar: String {get set}
+    
+    var id: String { get }
+    var userName: String { get set }
+    var avatar: String { get set }
 }

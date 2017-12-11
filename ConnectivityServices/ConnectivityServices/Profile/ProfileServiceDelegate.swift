@@ -8,6 +8,6 @@
 
 
 public protocol ProfileServiceDelegate {
-    
+
     func connectedDevicesChanged(manager: ProfileService, connectedDevices: [String])
 }

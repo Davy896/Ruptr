@@ -9,26 +9,36 @@
 import UIKit
 import MultipeerConnectivity
 
-class MapViewController: ConnectivityViewController {
-
+class MapViewController: UIViewController {
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let a  = CircleView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        a.backgroundColor = UIColor.white
-        a.drawCircle(onRectangle: a.frame, withRadius: 40)
-        self.view.addSubview(a)
+        updateCircles(numberOfPeers: 20)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func button1(_ sender: Any) {
+    func updateCircles(numberOfPeers: Int) {
+        var peersMissing: Int = numberOfPeers
+        var circlePopulation: Int = 1
+        var circleIndex: Int = 1
+        let circle: CircleView
+        circle = CircleView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        circle.backgroundColor = UIColor.clear
+        while peersMissing > 0 {
+            peersMissing -= circlePopulation
+            circlePopulation += circleIndex
+            circleIndex += 1
+        }
+        circle.drawCircles(numberOf: circleIndex, onRectangle: circle.frame, withRadius: 80)
+        self.view.addSubview(circle)
+        print(self.view.subviews.count)
     }
-
 }
 
 

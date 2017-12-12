@@ -11,6 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController {
     
     @IBOutlet var statusButtons: [UIButton]!
+    @IBOutlet var moodButtons: [UIButton]!
     @IBOutlet weak var statusTextView: UITextView!
     
     let statusColours: [UIColor] = [UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1), // ghost
@@ -39,6 +40,9 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupColours(forButton: 3)
+        for button in moodButtons {
+            button.backgroundColor = UIColor.blue
+        }
     }
     
     override func didReceiveMemoryWarning() {

@@ -10,6 +10,7 @@
 		410BE7071FDFCFCB00B26DF2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */; };
 		410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */; };
 		410BE70D1FDFD18800B26DF2 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE70B1FDFD18800B26DF2 /* Chat.storyboard */; };
+		410BE70F1FDFDBDA00B26DF2 /* ConnectivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */; };
 		41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A1D1FDD8201004A0E99 /* UserProfile.swift */; };
 		41792C8B1FDD60A200B5F83E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792C8A1FDD60A200B5F83E /* AppDelegate.swift */; };
 		41792C8D1FDD60A200B5F83E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792C8C1FDD60A200B5F83E /* ViewController.swift */; };
@@ -63,6 +64,7 @@
 		410BE7061FDFCFCB00B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		410BE7091FDFD0A600B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PeerDisplay.storyboard; sourceTree = "<group>"; };
 		410BE70C1FDFD18800B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Chat.storyboard; sourceTree = "<group>"; };
+		410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityViewController.swift; sourceTree = "<group>"; };
 		41667A1D1FDD8201004A0E99 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		41792C871FDD60A200B5F83E /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41792C8A1FDD60A200B5F83E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				F95E9EC61FDEA767008020C3 /* TableViewController.swift */,
 				41792C8A1FDD60A200B5F83E /* AppDelegate.swift */,
 				41792C8C1FDD60A200B5F83E /* ViewController.swift */,
+				410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				F95E9EC41FDEA210008020C3 /* ListViewController.swift in Sources */,
 				ED27DA3F1FDFD7E5008830A5 /* RoundImgViewSettings.swift in Sources */,
 				41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */,
+				410BE70F1FDFDBDA00B26DF2 /* ConnectivityViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

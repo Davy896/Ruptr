@@ -18,50 +18,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Mappa" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4xP-jw-DTD">
-                                <rect key="frame" x="134" y="312" width="107.5" height="43"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loaded by FirstViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbS-0b-6cg">
-                                <rect key="frame" x="90.5" y="363" width="194.5" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZL-AF-PkJ">
-                                <rect key="frame" x="152" y="478" width="46" height="30"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0X-Su-wot">
+                                <rect key="frame" x="119" y="269" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5cH-yu-jKc">
-                                <rect key="frame" x="123" y="205" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="button1:" destination="zcj-xO-MSe" eventType="touchUpInside" id="c4G-ZG-hSw"/>
-                                    <segue destination="vee-4c-Xip" kind="show" id="l6K-Y6-S93">
-                                        <nil key="action"/>
-                                    </segue>
-                                </connections>
-                            </button>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="pbS-0b-6cg" firstAttribute="top" secondItem="4xP-jw-DTD" secondAttribute="bottom" constant="8" symbolic="YES" id="8R7-I6-WKE"/>
-                            <constraint firstAttribute="centerY" secondItem="4xP-jw-DTD" secondAttribute="centerY" id="fxd-vb-h42"/>
-                            <constraint firstAttribute="centerX" secondItem="4xP-jw-DTD" secondAttribute="centerX" id="g9v-P2-Y8s"/>
-                            <constraint firstItem="pbS-0b-6cg" firstAttribute="centerX" secondItem="4xP-jw-DTD" secondAttribute="centerX" id="pM7-Cs-wmW"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="SKt-S5-e9q"/>
                     </view>
                     <navigationItem key="navigationItem" id="4UY-TQ-aAP"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bSu-WO-08I" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1490" y="-321"/>
+            <point key="canvasLocation" x="1488.8" y="-321.58920539730138"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="sEQ-mm-76X">
@@ -343,7 +313,4 @@ AABUAAAAAAAAAAAAAAAAAAAT6w
 </mutableData>
         </image>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="P0O-ty-Yr7"/>
-    </inferredMetricsTieBreakers>
 </document>

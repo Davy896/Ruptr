@@ -10,10 +10,15 @@ import UIKit
 
 class CircleView: UIView {
 
+    private var radius: Double = 0
+    
+    func drawCircle(onRectangle rect: CGRect, withRadius radius: Double) {
+        self.radius = radius
+        draw(rect)
+    }
+    
     override func draw(_ rect: CGRect) {
-        
         let path = UIBezierPath()
-        let radius: Double = Double(rect.width) / 2 - 5
         let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
         
         path.move(to: CGPoint(x: center.x + CGFloat(radius), y: center.y))

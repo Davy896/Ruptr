@@ -7,15 +7,18 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
 class MapViewController: ConnectivityViewController {
-    let a = CircleView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let a  = CircleView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        a.backgroundColor = UIColor.white
+        a.drawCircle(onRectangle: a.frame, withRadius: 40)
         self.view.addSubview(a)
-        a.draw(CGRect(x: 0, y: 0, width: 300, height: 300))
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,7 +28,7 @@ class MapViewController: ConnectivityViewController {
     
     @IBAction func button1(_ sender: Any) {
     }
-    
+
 }
 
 

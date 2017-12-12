@@ -15,6 +15,7 @@ public class UserProfile: ProfileRequirements {
     private let _id: String
     private var _userName: String
     private var _avatar: String
+    private var _isVisible: Bool
     
     public var id: String {
         get {
@@ -46,10 +47,22 @@ public class UserProfile: ProfileRequirements {
         }
     }
     
-    public init(id: String, userName: String, avatar: String) {
+    public var isVisible: Bool {
+        
+        get {
+            return _isVisible
+        }
+        
+        set(isVisible) {
+            self._isVisible = isVisible
+        }
+    }
+    
+    public init(id: String, userName: String, avatar: String, isVisible: Bool) {
         self._id = id
         self._userName = userName
         self._avatar = avatar
+        self._isVisible = isVisible
     }
 }
 

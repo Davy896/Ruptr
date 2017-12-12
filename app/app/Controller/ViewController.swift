@@ -13,8 +13,8 @@ import MultipeerConnectivity
 class ViewController: UIViewController, ProfileServiceDelegate, BroadcastServiceDelegate, ChatServiceDelegate {
     
     private let profile: UserProfile
-//    private let profileService: ProfileService
-//    private let broadcastService: BroadcastService
+    private let profileService: ProfileService
+    private let broadcastService: BroadcastService
     private let chatService: ChatService
     
     @IBOutlet weak var connectedDevices: UITextView!
@@ -27,50 +27,71 @@ class ViewController: UIViewController, ProfileServiceDelegate, BroadcastService
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.profile = UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Lucas", avatar: "avatar0")
-//        self.profileService = ProfileService(profile: self.profile)
-//        self.broadcastService = BroadcastService(profile: self.profile)
+        self.profile = UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Lucas", avatar: "avatar0", isVisible: true)
+        self.profileService = ProfileService(profile: self.profile)
+        self.broadcastService = BroadcastService(profile: self.profile)
         self.chatService = ChatService(profile: self.profile)
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.profile = UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Lucas", avatar: "avatar0")
-//        self.profileService = ProfileService(profile: self.profile)
-//        self.broadcastService = BroadcastService(profile: self.profile)
+        self.profile = UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Lucas", avatar: "avatar0", isVisible: true)
+        self.profileService = ProfileService(profile: self.profile)
+        self.broadcastService = BroadcastService(profile: self.profile)
         self.chatService = ChatService(profile: self.profile)
         super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.profileService.delegate = self
-//        self.broadcastService.delegate = self
+        self.profileService.delegate = self
+        self.broadcastService.delegate = self
         self.chatService.delegate = self
+        self.updateVisibility()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    
+    func updateVisibility() {
+        if (self.profile.isVisible) {
+            self.profileService.serviceAdvertiser.startAdvertisingPeer()
+            self.profileService.serviceBrowser.startBrowsingForPeers()
+            
+            self.broadcastService.serviceAdvertiser.startAdvertisingPeer()
+            self.broadcastService.serviceBrowser.startBrowsingForPeers()
+            
+            self.chatService.serviceAdvertiser.startAdvertisingPeer()
+            self.chatService.serviceBrowser.startBrowsingForPeers()
+        } else {
+            self.profileService.serviceAdvertiser.stopAdvertisingPeer()
+            self.profileService.serviceBrowser.stopBrowsingForPeers()
+            
+            self.broadcastService.serviceAdvertiser.stopAdvertisingPeer()
+            self.broadcastService.serviceBrowser.stopBrowsingForPeers()
+            
+            self.chatService.serviceAdvertiser.stopAdvertisingPeer()
+            self.chatService.serviceBrowser.stopBrowsingForPeers()
+        }
+    }
     
     @IBAction func broadcastMessage(_ sender: UIButton) {
-        //        broadcastService.broadcastMessage(message: messageToBeBroadcasted.text)
+        broadcastService.broadcastMessage(message: messageToBeBroadcasted.text)
     }
     
     func connectedDevicesChanged(manager: ProfileService, connectedDevices: [String]) {
-        //        OperationQueue.main.addOperation {
-        //            for device in connectedDevices {
-        //                self.connectedDevices.text =  "\(self.connectedDevices.text!)\(device)\n"
-        //            }
-        //        }
+//        OperationQueue.main.addOperation {
+//            for device in connectedDevices {
+//                self.connectedDevices.text =  "\(self.connectedDevices.text!)\(device)\n"
+//            }
+//        }
     }
     
     func receiveBroadcastedMessage(manager: BroadcastService, message: String) {
-        //        OperationQueue.main.addOperation {
-        //            self.broadcastedMessage.text = message
-        //        }
+//        OperationQueue.main.addOperation {
+//            self.broadcastedMessage.text = message
+//        }
     }
     var aa: MCPeerID?
     
@@ -81,7 +102,6 @@ class ViewController: UIViewController, ProfileServiceDelegate, BroadcastService
         button.isHidden = false
         button.isEnabled = true
         button.addTarget(self, action: #selector(ViewController.inviteForChat(sender:)), for: .touchUpInside)
-        print("found")
         aa = id
         self.view.addSubview(button)
     }
@@ -91,9 +111,7 @@ class ViewController: UIViewController, ProfileServiceDelegate, BroadcastService
     }
     
     func invitePeer(withId id: MCPeerID) {
-        print("invite \(id.displayName)")
         chatService.serviceBrowser.invitePeer(id, to: chatService.session, withContext: nil, timeout: 20)
-        print("invite2")
     }
     
     func peerLost(withId id: MCPeerID) {
@@ -103,7 +121,6 @@ class ViewController: UIViewController, ProfileServiceDelegate, BroadcastService
     }
     
     func handleInvitation(from: String) {
-        print("handle")
         let alert = UIAlertController(title: "Invitation", message: "received an invitation", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
         OperationQueue.main.addOperation {
@@ -111,4 +128,5 @@ class ViewController: UIViewController, ProfileServiceDelegate, BroadcastService
         }
     }
 }
+
 

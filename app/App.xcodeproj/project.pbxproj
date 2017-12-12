@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		414512CA1FDFCC74001864BB /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 414512C81FDFCC74001864BB /* Settings.storyboard */; };
+		410BE7071FDFCFCB00B26DF2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */; };
+		410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */; };
+		410BE70D1FDFD18800B26DF2 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE70B1FDFD18800B26DF2 /* Chat.storyboard */; };
 		41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A1D1FDD8201004A0E99 /* UserProfile.swift */; };
 		41792C8B1FDD60A200B5F83E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792C8A1FDD60A200B5F83E /* AppDelegate.swift */; };
 		41792C8D1FDD60A200B5F83E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792C8C1FDD60A200B5F83E /* ViewController.swift */; };
@@ -56,7 +58,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		414512C91FDFCC74001864BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		410BE7061FDFCFCB00B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		410BE7091FDFD0A600B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PeerDisplay.storyboard; sourceTree = "<group>"; };
+		410BE70C1FDFD18800B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Chat.storyboard; sourceTree = "<group>"; };
 		41667A1D1FDD8201004A0E99 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		41792C871FDD60A200B5F83E /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41792C8A1FDD60A200B5F83E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,7 +111,9 @@
 		414512C41FDFCBF1001864BB /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				414512C81FDFCC74001864BB /* Settings.storyboard */,
+				410BE70B1FDFD18800B26DF2 /* Chat.storyboard */,
+				410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */,
+				410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */,
 				41792C8E1FDD60A200B5F83E /* Main.storyboard */,
 				41792C931FDD60A200B5F83E /* LaunchScreen.storyboard */,
 			);
@@ -310,10 +316,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				410BE70D1FDFD18800B26DF2 /* Chat.storyboard in Resources */,
+				410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */,
 				41792C951FDD60A200B5F83E /* LaunchScreen.storyboard in Resources */,
 				41792C921FDD60A200B5F83E /* Assets.xcassets in Resources */,
 				41792C901FDD60A200B5F83E /* Main.storyboard in Resources */,
-				414512CA1FDFCC74001864BB /* Settings.storyboard in Resources */,
+				410BE7071FDFCFCB00B26DF2 /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,12 +388,28 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		414512C81FDFCC74001864BB /* Settings.storyboard */ = {
+		410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				414512C91FDFCC74001864BB /* Base */,
+				410BE7061FDFCFCB00B26DF2 /* Base */,
 			);
 			name = Settings.storyboard;
+			sourceTree = "<group>";
+		};
+		410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				410BE7091FDFD0A600B26DF2 /* Base */,
+			);
+			name = PeerDisplay.storyboard;
+			sourceTree = "<group>";
+		};
+		410BE70B1FDFD18800B26DF2 /* Chat.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				410BE70C1FDFD18800B26DF2 /* Base */,
+			);
+			name = Chat.storyboard;
 			sourceTree = "<group>";
 		};
 		41792C8E1FDD60A200B5F83E /* Main.storyboard */ = {

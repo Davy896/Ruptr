@@ -16,11 +16,12 @@ public class BroadcastService: Service {
         super.init(profile: profile, serviceType: ServiceTypes.broadcast)
     }
     
-    public func broadcastMessage(message: String){
+    public func broadcastMessage(message: String) {
         if session.connectedPeers.count > 0 {
             do {
                 try self.session.send(message.data(using: .utf8)!, toPeers: session.connectedPeers, with: .reliable)
             }
+                
             catch let error {
                 NSLog("%@", "Error for sending: \(error)")
             }

@@ -9,27 +9,59 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
+    @IBOutlet var statusButtons: [UIButton]!
+    @IBOutlet weak var statusTextView: UITextView!
+    
+    let statusColours: [UIColor] = [UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1), // ghost
+        UIColor(red: 255/255, green: 100/255, blue: 100/255, alpha: 1), // chatful
+        UIColor(red: 100/255, green: 255/255, blue: 100/255, alpha: 1), // open
+        UIColor(red: 100/255, green: 100/255, blue: 255/255, alpha: 1)] // playful
+    let deselectedColour: UIColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1)
+    let ghostString = NSLocalizedString("ghost", comment: "")
+    let statusDescriptions: [String] = ["""
+                                                Ghost
+                                        Nobody can see you
+                                        """, // ghost
+                                        """
+                                                Chatful
+                                        Can't play games
+                                        """, // chatful
+                                        """
+                                                Open
+                                        Down for anything, kinky!
+                                        """, // open
+                                        """
+                                                Playful
+                                        Can't skip games
+                                        """] // playful
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        setupColours(forButton: 3)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
-    */
-
+    
+    @IBAction func changeStatus(_ sender: UIButton) {
+        setupColours(forButton: sender.tag)
+    }
+    
+    func setupColours(forButton tag: Int) {
+        if (tag >= statusColours.count) {
+            return
+        }
+        
+        for button in statusButtons {
+            if (button.tag == tag) {
+                button.backgroundColor = statusColours[tag]
+                statusTextView.backgroundColor = statusColours[tag]
+                statusTextView.text = statusDescriptions[tag]
+            } else{
+                button.backgroundColor = deselectedColour
+            }
+        }
+    }
 }

@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     @IBAction func button1(_ sender: Any) {
     }
     

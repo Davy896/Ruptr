@@ -1,0 +1,27 @@
+
+/* Class = "UILabel"; text = "Mappa"; ObjectID = "4xP-jw-DTD"; */
+"4xP-jw-DTD.text" = "Mappa";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "5cH-yu-jKc"; */
+"5cH-yu-jKc.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Loaded by SecondViewController"; ObjectID = "8zE-PH-dbd"; */
+"8zE-PH-dbd.text" = "Loaded by SecondViewController";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "EZL-AF-PkJ"; */
+"EZL-AF-PkJ.normalTitle" = "Button";
+
+/* Class = "UITabBarItem"; title = "First"; ObjectID = "FkO-2i-Bp9"; */
+"FkO-2i-Bp9.title" = "First";
+
+/* Class = "UILabel"; text = "lista"; ObjectID = "RKp-TL-1cn"; */
+"RKp-TL-1cn.text" = "lista";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "YfZ-nf-W52"; */
+"YfZ-nf-W52.normalTitle" = "Button";
+
+/* Class = "UITabBarItem"; title = "Second"; ObjectID = "a8p-Js-DOP"; */
+"a8p-Js-DOP.title" = "Second";
+
+/* Class = "UILabel"; text = "Loaded by FirstViewController"; ObjectID = "pbS-0b-6cg"; */
+"pbS-0b-6cg.text" = "Loaded by FirstViewController";

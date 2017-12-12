@@ -1,0 +1,18 @@
+
+/* Class = "UIButton"; normalTitle = "Mood 3"; ObjectID = "Kah-in-ANT"; */
+"Kah-in-ANT.normalTitle" = "Mood 3";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "bdi-Pg-RyN"; */
+"bdi-Pg-RyN.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "Mood 1"; ObjectID = "iYn-lP-UVX"; */
+"iYn-lP-UVX.normalTitle" = "Mood 1";
+
+/* Class = "UILabel"; text = "USER_NAME"; ObjectID = "vGA-lu-zmg"; */
+"vGA-lu-zmg.text" = "USER_NAME";
+
+/* Class = "UILabel"; text = "Contact Info"; ObjectID = "wbY-KX-FOV"; */
+"wbY-KX-FOV.text" = "Contact Info";
+
+/* Class = "UIButton"; normalTitle = "Mood 2"; ObjectID = "zgJ-16-H5V"; */
+"zgJ-16-H5V.normalTitle" = "Mood 2";

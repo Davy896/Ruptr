@@ -12,13 +12,11 @@ class ListTableViewController: UITableViewController {
     
     // var person = where i have to link the data from multipeer connectivity. I used "person" like a class with title and image as attributes.
     
-    let people: [UserProfile] = [UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Persona1")]
-    public init(id: String, userName: String, avatar: String, moods: [Mood],status: Status) {
-
+    let people: [UserProfile] = [UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Persona1", avatar: "roguemonkeyblog", moods: [Mood.Food, Mood.Food, Mood.Food], status: Status.playful), UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Persona2", avatar: "roguemonkeyblog", moods: [Mood.Food, Mood.Food, Mood.Food], status: Status.playful)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "People Around You"
+        self.title = "People Around You"
         
         self.tableView.reloadData()
         
@@ -48,7 +46,7 @@ class ListTableViewController: UITableViewController {
         // HERE I CREATED THE SUBLCASS PERSON
         
         
-        cell.person = people[indexPath.row]
+        cell.userProfile = people[indexPath.row]
         
         return cell
     }

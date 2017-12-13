@@ -72,7 +72,7 @@ public class UserProfile: ProfileRequirements {
         }
     }
     
-    public init(id: String, userName: String, avatar: String, moods: [Mood],status: Status) {
+    public init(id: String, userName: String, avatar: String, moods: [Mood], status: Status) {
         self._id = id
         self._userName = userName
         self._avatar = avatar

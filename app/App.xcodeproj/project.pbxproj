@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4105BF1B1FE123DC005B2A8C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF1A1FE123DC005B2A8C /* ServiceManager.swift */; };
+		4105BF1D1FE124A9005B2A8C /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF1C1FE124A9005B2A8C /* Status.swift */; };
+		4105BF231FE12772005B2A8C /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF221FE12772005B2A8C /* Mood.swift */; };
 		410BE7071FDFCFCB00B26DF2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */; };
 		410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */; };
 		410BE70D1FDFD18800B26DF2 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE70B1FDFD18800B26DF2 /* Chat.storyboard */; };
@@ -63,6 +66,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4105BF1A1FE123DC005B2A8C /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
+		4105BF1C1FE124A9005B2A8C /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		4105BF221FE12772005B2A8C /* Mood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
 		410BE7061FDFCFCB00B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		410BE7091FDFD0A600B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PeerDisplay.storyboard; sourceTree = "<group>"; };
 		410BE70C1FDFD18800B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Chat.storyboard; sourceTree = "<group>"; };
@@ -91,7 +97,7 @@
 		41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConnectivityServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED27DA3E1FDFD7E5008830A5 /* ViewDesignableSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewDesignableSettings.swift; path = app/View/Sources/ViewDesignableSettings.swift; sourceTree = SOURCE_ROOT; };
 		ED27DA421FDFEB6C008830A5 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
-		F945CB121FE03283004D3B8F /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListTableViewCell.swift; path = app/Controller/ListTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F945CB121FE03283004D3B8F /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListTableViewCell.swift; path = App/Controller/UI/ListTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F945CB141FE032F2004D3B8F /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F95E9EC11FDEA210008020C3 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +130,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4105BF191FE123BB005B2A8C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				41792C8C1FDD60A200B5F83E /* ViewController.swift */,
+				410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */,
+				F945CB121FE03283004D3B8F /* ListTableViewCell.swift */,
+				F945CB141FE032F2004D3B8F /* ListTableViewController.swift */,
+				F95E9EC21FDEA210008020C3 /* MapViewController.swift */,
+				F95E9EC11FDEA210008020C3 /* ListViewController.swift */,
+				F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		414512C41FDFCBF1001864BB /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +193,7 @@
 				41792CB91FDD60E800B5F83E /* View */,
 				41792CBA1FDD60EC00B5F83E /* Controller */,
 				41792C911FDD60A200B5F83E /* Assets.xcassets */,
+				410BE71B1FDFF5E300B26DF2 /* Localizable.strings */,
 				41792C961FDD60A200B5F83E /* Info.plist */,
 			);
 			path = App;
@@ -199,7 +220,9 @@
 		41792CB81FDD60DF00B5F83E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4105BF221FE12772005B2A8C /* Mood.swift */,
 				41667A1D1FDD8201004A0E99 /* UserProfile.swift */,
+				4105BF1C1FE124A9005B2A8C /* Status.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -216,15 +239,9 @@
 		41792CBA1FDD60EC00B5F83E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F95E9EC21FDEA210008020C3 /* MapViewController.swift */,
-				F95E9EC11FDEA210008020C3 /* ListViewController.swift */,
-				F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */,
-				410BE71B1FDFF5E300B26DF2 /* Localizable.strings */,
+				4105BF191FE123BB005B2A8C /* UI */,
 				41792C8A1FDD60A200B5F83E /* AppDelegate.swift */,
-				41792C8C1FDD60A200B5F83E /* ViewController.swift */,
-				410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */,
-				F945CB121FE03283004D3B8F /* ListTableViewCell.swift */,
-				F945CB141FE032F2004D3B8F /* ListTableViewController.swift */,
+				4105BF1A1FE123DC005B2A8C /* ServiceManager.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -380,8 +397,12 @@
 				ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */,
 				F95E9EC41FDEA210008020C3 /* ListViewController.swift in Sources */,
 				ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */,
+				F945CB151FE032F2004D3B8F /* ListTableViewController.swift in Sources */,
+				4105BF1D1FE124A9005B2A8C /* Status.swift in Sources */,
+				4105BF231FE12772005B2A8C /* Mood.swift in Sources */,
 				41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */,
 				410BE70F1FDFDBDA00B26DF2 /* ConnectivityViewController.swift in Sources */,
+				4105BF1B1FE123DC005B2A8C /* ServiceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,8 +15,9 @@ public class UserProfile: ProfileRequirements {
     private let _id: String
     private var _userName: String
     private var _avatar: String
-    private var _isVisible: Bool
-    
+    private var _moods: [Mood]
+    private var _status: Status
+
     public var id: String {
         get {
             
@@ -47,22 +48,36 @@ public class UserProfile: ProfileRequirements {
         }
     }
     
-    public var isVisible: Bool {
-        
+    public var moods: [Mood] {
         get {
-            return _isVisible
+            
+            return self._moods
         }
         
-        set(isVisible) {
-            self._isVisible = isVisible
+        set(moods) {
+            
+            self._moods = moods
         }
     }
     
-    public init(id: String, userName: String, avatar: String, isVisible: Bool) {
+    public var status: Status {
+        get {
+            
+            return self._status
+        }
+        
+        set(status) {
+            
+            self._status = status
+        }
+    }
+    
+    public init(id: String, userName: String, avatar: String, moods: [Mood],status: Status) {
         self._id = id
         self._userName = userName
         self._avatar = avatar
-        self._isVisible = isVisible
+        self._moods = moods
+        self._status = status
     }
 }
 

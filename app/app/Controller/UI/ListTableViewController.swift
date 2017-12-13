@@ -8,31 +8,15 @@
 
 import UIKit
 
-class Person {
-    var image : UIImage
-    var title : String
-    var mood1 : UIImage
-    var mood2 : UIImage
-    var mood3 : UIImage
-    init(image: UIImage, title: String, mood1: UIImage, mood2: UIImage, mood3: UIImage) {
-        self.image = image
-        self.title = title
-        self.mood1 = mood1
-        self.mood2 = mood2
-        self.mood3 = mood3
-    }
-}
-
 class ListTableViewController: UITableViewController {
     
     // var person = where i have to link the data from multipeer connectivity. I used "person" like a class with title and image as attributes.
     
-    let people: [Person] = [Person(image: #imageLiteral(resourceName: "roguemonkeyblog"), title: "Persona1", mood1: #imageLiteral(resourceName: "roguemonkeyblog"), mood2:#imageLiteral(resourceName: "roguemonkeyblog"), mood3: #imageLiteral(resourceName: "roguemonkeyblog")), Person(image: #imageLiteral(resourceName: "roguemonkeyblog"), title: "Persona2", mood1: #imageLiteral(resourceName: "roguemonkeyblog"), mood2:#imageLiteral(resourceName: "roguemonkeyblog"), mood3: #imageLiteral(resourceName: "roguemonkeyblog"))]
-    
+    let people: [UserProfile] = [UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Persona1", avatar: "roguemonkeyblog", moods: [Mood.Food, Mood.Food, Mood.Food], status: Status.playful), UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Persona2", avatar: "roguemonkeyblog", moods: [Mood.Food, Mood.Food, Mood.Food], status: Status.playful)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "People Around You"
+        self.title = "People Around You"
         
         self.tableView.reloadData()
         
@@ -62,7 +46,7 @@ class ListTableViewController: UITableViewController {
         // HERE I CREATED THE SUBLCASS PERSON
         
         
-        cell.person = people[indexPath.row]
+        cell.userProfile = people[indexPath.row]
         
         return cell
     }

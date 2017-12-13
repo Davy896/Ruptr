@@ -3,3 +3,6 @@
 .xcuserdatad*
 .xcuserdatad
 xuserdata
+App/App.xcodeproj/xcuserdata/
+ConnectivityServices/ConnectivityServices.xcodeproj/xcuserdata/
+firstMiniChallenge.xcworkspace/xcuserdata/

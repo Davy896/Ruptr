@@ -12,8 +12,9 @@ class ListTableViewController: UITableViewController {
     
     // var person = where i have to link the data from multipeer connectivity. I used "person" like a class with title and image as attributes.
     
-    let people: [UserProfile] = [UserProfile(id: String.randomAlphaNumericString(length: 20), )]
-    
+    let people: [UserProfile] = [UserProfile(id: String.randomAlphaNumericString(length: 20), userName: "Persona1")]
+    public init(id: String, userName: String, avatar: String, moods: [Mood],status: Status) {
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

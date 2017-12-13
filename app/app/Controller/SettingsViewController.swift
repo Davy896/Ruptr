@@ -10,7 +10,8 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    @IBOutlet var statusButtons: [UIButton]!
+    @IBOutlet weak var statusView: RoundView!
+    @IBOutlet var statusButtons: [StatusButton]!
     @IBOutlet var moodButtons: [UIButton]!
     @IBOutlet weak var statusTextView: UITextView!
     
@@ -24,15 +25,15 @@ class SettingsViewController: UIViewController {
                                                 Ghost
                                         Nobody can see you
                                         """, // ghost
-                                        """
+        """
                                                 Chatful
                                         Can't play games
                                         """, // chatful
-                                        """
+        """
                                                 Open
                                         Down for anything, kinky!
                                         """, // open
-                                        """
+        """
                                                 Playful
                                         Can't skip games
                                         """] // playful
@@ -40,7 +41,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupColours(forButton: 3)
-        for button in moodButtons {
+        for button in self.moodButtons {
             button.backgroundColor = UIColor.blue
         }
     }
@@ -50,22 +51,54 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func changeStatus(_ sender: UIButton) {
-        setupColours(forButton: sender.tag)
+        self.setupColours(forButton: sender.tag)
     }
     
     func setupColours(forButton tag: Int) {
-        if (tag >= statusColours.count) {
+        if (tag >= self.statusColours.count) {
             return
         }
+        self.statusView.backgroundColor = self.deselectedColour
+        self.statusTextView.backgroundColor = self.deselectedColour
+
+        for button in self.statusButtons {
+            button.backgroundColor = self.deselectedColour
+        }
         
-        for button in statusButtons {
+        for button in self.statusButtons {
+            
             if (button.tag == tag) {
-                button.backgroundColor = statusColours[tag]
-                statusTextView.backgroundColor = statusColours[tag]
-                statusTextView.text = statusDescriptions[tag]
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.statusView.backgroundColor = self.statusColours[tag]
+                    button.backgroundColor = self.statusColours[tag]
+                    self.statusTextView.backgroundColor = self.statusColours[tag]
+                    self.statusTextView.text = self.statusDescriptions[tag]
+                }, completion: nil)
             } else{
-                button.backgroundColor = deselectedColour
+                button.backgroundColor = self.deselectedColour
             }
+            
+            button.bottomRightCorner = false
+            button.bottomLeftCorner = false
+        }
+        
+        switch tag {
+        case 0:
+            self.statusButtons[1].bottomLeftCorner = true
+            break
+        case 1:
+            self.statusButtons[0].bottomRightCorner = true
+            self.statusButtons[2].bottomLeftCorner = true
+            break
+        case 2:
+            self.statusButtons[1].bottomRightCorner = true
+            self.statusButtons[3].bottomLeftCorner = true
+            break
+        case 3:
+            self.statusButtons[2].bottomRightCorner = true
+            break
+        default:
+            break
         }
     }
 }

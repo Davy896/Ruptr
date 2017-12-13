@@ -25,7 +25,6 @@
 		ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED27DA3E1FDFD7E5008830A5 /* ViewDesignableSettings.swift */; };
 		ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED27DA421FDFEB6C008830A5 /* CircleView.swift */; };
 		F945CB131FE03283004D3B8F /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945CB121FE03283004D3B8F /* ListTableViewCell.swift */; };
-		F945CB151FE032F2004D3B8F /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945CB141FE032F2004D3B8F /* ListTableViewController.swift */; };
 		F95E9EC31FDEA210008020C3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */; };
 		F95E9EC41FDEA210008020C3 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E9EC11FDEA210008020C3 /* ListViewController.swift */; };
 		F95E9EC51FDEA210008020C3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E9EC21FDEA210008020C3 /* MapViewController.swift */; };
@@ -588,7 +587,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HH88N3P4EZ;
+				DEVELOPMENT_TEAM = K8GHX29B37;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -604,7 +603,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HH88N3P4EZ;
+				DEVELOPMENT_TEAM = K8GHX29B37;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

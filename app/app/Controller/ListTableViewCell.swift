@@ -19,7 +19,7 @@ class ListTableViewCell: UITableViewCell {
     
     // variable data model
     
-    var person: Person? {
+    var person: UserProfile? {
         didSet {
             self.updateUI()
         }
@@ -27,10 +27,12 @@ class ListTableViewCell: UITableViewCell {
     
     func updateUI()
     {
-        ListTitleView?.text = person?.title
-        ListImageView?.image = person?.image
-        mood1?.image = person?.mood1
-        mood2?.image = person?.mood2
-        mood3?.image = person?.mood3
-    }
+        guard let profile = person else{
+            return
+        }
+        ListTitleView?.text = profile.userName
+        ListImageView?.image = UIImage(named: profile.avatar)
+        mood1?.image = UIImage(named: profile.moods[0])
+        mood2?.image = UIImage(named: profile.moods[1])
+        mood3?.image = UIImage(named: profile.moods[2])
 }

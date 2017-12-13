@@ -10,6 +10,8 @@
 		4105BF1B1FE123DC005B2A8C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF1A1FE123DC005B2A8C /* ServiceManager.swift */; };
 		4105BF1D1FE124A9005B2A8C /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF1C1FE124A9005B2A8C /* Status.swift */; };
 		4105BF231FE12772005B2A8C /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF221FE12772005B2A8C /* Mood.swift */; };
+		4105BF251FE1423B005B2A8C /* ProfileCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF241FE1423B005B2A8C /* ProfileCreationViewController.swift */; };
+		4105BF271FE14829005B2A8C /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF261FE14829005B2A8C /* StringExtention.swift */; };
 		410BE7071FDFCFCB00B26DF2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */; };
 		410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */; };
 		410BE70D1FDFD18800B26DF2 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE70B1FDFD18800B26DF2 /* Chat.storyboard */; };
@@ -68,6 +70,8 @@
 		4105BF1A1FE123DC005B2A8C /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		4105BF1C1FE124A9005B2A8C /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		4105BF221FE12772005B2A8C /* Mood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
+		4105BF241FE1423B005B2A8C /* ProfileCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCreationViewController.swift; sourceTree = "<group>"; };
+		4105BF261FE14829005B2A8C /* StringExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
 		410BE7061FDFCFCB00B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		410BE7091FDFD0A600B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PeerDisplay.storyboard; sourceTree = "<group>"; };
 		410BE70C1FDFD18800B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Chat.storyboard; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 				F95E9EC21FDEA210008020C3 /* MapViewController.swift */,
 				F95E9EC11FDEA210008020C3 /* ListViewController.swift */,
 				F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */,
+				4105BF241FE1423B005B2A8C /* ProfileCreationViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 				41792C911FDD60A200B5F83E /* Assets.xcassets */,
 				410BE71B1FDFF5E300B26DF2 /* Localizable.strings */,
 				41792C961FDD60A200B5F83E /* Info.plist */,
+				4105BF261FE14829005B2A8C /* StringExtention.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -393,6 +399,7 @@
 				41792C8B1FDD60A200B5F83E /* AppDelegate.swift in Sources */,
 				F95E9EC31FDEA210008020C3 /* SettingsViewController.swift in Sources */,
 				F95E9EC51FDEA210008020C3 /* MapViewController.swift in Sources */,
+				4105BF271FE14829005B2A8C /* StringExtention.swift in Sources */,
 				ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */,
 				F95E9EC41FDEA210008020C3 /* ListViewController.swift in Sources */,
 				ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */,
@@ -401,6 +408,7 @@
 				41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */,
 				410BE70F1FDFDBDA00B26DF2 /* ConnectivityViewController.swift in Sources */,
 				4105BF1B1FE123DC005B2A8C /* ServiceManager.swift in Sources */,
+				4105BF251FE1423B005B2A8C /* ProfileCreationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

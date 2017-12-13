@@ -10,6 +10,8 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
+    @IBOutlet weak var avatarImageView: RoundImgView!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var statusView: RoundView!
     @IBOutlet var statusButtons: [StatusButton]!
     @IBOutlet var moodButtons: [UIButton]!
@@ -40,6 +42,8 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        avatarImageView.image = ServiceManager.instance.userProfile.avatarImage
+        usernameLabel.text = ServiceManager.instance.userProfile.userName
         setupColours(forButton: 3)
         for button in self.moodButtons {
             button.backgroundColor = UIColor.blue

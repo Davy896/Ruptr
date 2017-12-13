@@ -72,29 +72,17 @@ public class UserProfile: ProfileRequirements {
         }
     }
     
+    public var avatarImage: UIImage? {
+        get {
+            return UIImage(named: self.avatar)
+        }
+    }
+    
     public init(id: String, userName: String, avatar: String, moods: [Mood], status: Status) {
         self._id = id
         self._userName = userName
         self._avatar = avatar
         self._moods = moods
         self._status = status
-    }
-}
-
-public extension String {
-    
-    public static func randomAlphaNumericString(length: Int) -> String {
-        
-        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
-        var randomString = ""
-        
-        for _ in 0..<length {
-            let randomNum = Int(arc4random_uniform(UInt32(allowedChars.count)))
-            let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
-            let newCharacter = allowedChars[randomIndex]
-            randomString += String(newCharacter)
-        }
-        
-        return randomString
     }
 }

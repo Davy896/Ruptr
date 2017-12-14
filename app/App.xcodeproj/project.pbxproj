@@ -35,9 +35,8 @@
 		ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED27DA421FDFEB6C008830A5 /* CircleView.swift */; };
 		F945CB131FE03283004D3B8F /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945CB121FE03283004D3B8F /* ListTableViewCell.swift */; };
 		F95E9EC31FDEA210008020C3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */; };
-		F95E9EC41FDEA210008020C3 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E9EC11FDEA210008020C3 /* ListViewController.swift */; };
 		F95E9EC51FDEA210008020C3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E9EC21FDEA210008020C3 /* MapViewController.swift */; };
-		F9BC7EA41FE2DA45006F337F /* GameViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC7EA31FE2DA45006F337F /* GameViewControl.swift */; };
+		F9BC7EA41FE2DA45006F337F /* GameViewControlller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC7EA31FE2DA45006F337F /* GameViewControlller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,9 +116,8 @@
 		ED27DA421FDFEB6C008830A5 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		F945CB121FE03283004D3B8F /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListTableViewCell.swift; path = App/View/Sources/ListTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		F95E9EC11FDEA210008020C3 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		F95E9EC21FDEA210008020C3 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		F9BC7EA31FE2DA45006F337F /* GameViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewControl.swift; path = app/View/Storyboards/GameViewControl.swift; sourceTree = SOURCE_ROOT; };
+		F9BC7EA31FE2DA45006F337F /* GameViewControlller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewControlller.swift; path = App/Controller/UI/GameViewControlller.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,10 +165,10 @@
 		4105BF191FE123BB005B2A8C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F9BC7EA31FE2DA45006F337F /* GameViewControlller.swift */,
 				41792C8C1FDD60A200B5F83E /* ViewController.swift */,
 				410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */,
 				F95E9EC21FDEA210008020C3 /* MapViewController.swift */,
-				F95E9EC11FDEA210008020C3 /* ListViewController.swift */,
 				F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */,
 				4105BF241FE1423B005B2A8C /* ProfileCreationViewController.swift */,
 				41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */,
@@ -182,7 +180,6 @@
 			isa = PBXGroup;
 			children = (
 				410BE70B1FDFD18800B26DF2 /* Interactions.storyboard */,
-				F9BC7EA31FE2DA45006F337F /* GameViewControl.swift */,
 				410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */,
 				410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */,
 				41792C8E1FDD60A200B5F83E /* Main.storyboard */,
@@ -604,13 +601,12 @@
 				F95E9EC51FDEA210008020C3 /* MapViewController.swift in Sources */,
 				4105BF271FE14829005B2A8C /* StringExtention.swift in Sources */,
 				ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */,
-				F95E9EC41FDEA210008020C3 /* ListViewController.swift in Sources */,
 				ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */,
 				4105BF1D1FE124A9005B2A8C /* Status.swift in Sources */,
 				4105BF231FE12772005B2A8C /* Mood.swift in Sources */,
 				41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */,
 				41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */,
-				F9BC7EA41FE2DA45006F337F /* GameViewControl.swift in Sources */,
+				F9BC7EA41FE2DA45006F337F /* GameViewControlller.swift in Sources */,
 				410BE70F1FDFDBDA00B26DF2 /* ConnectivityViewController.swift in Sources */,
 				4105BF1B1FE123DC005B2A8C /* ServiceManager.swift in Sources */,
 				4105BF251FE1423B005B2A8C /* ProfileCreationViewController.swift in Sources */,

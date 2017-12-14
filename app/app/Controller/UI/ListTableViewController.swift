@@ -87,14 +87,16 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
     }
     
     override func peerLost(withId id: MCPeerID) {
-        for i in 0 ... people.count - 1 {
-            if people[0].id == id.displayName.components(separatedBy: "|")[0] {
-                people.remove(at: i)
-                break
+        if (people.count > 0) {
+            for i in 0 ... people.count - 1 {
+                if people[0].id == id.displayName.components(separatedBy: "|")[0] {
+                    people.remove(at: i)
+                    break
+                }
             }
+            
+            self.tableView.reloadData()
         }
-        
-        self.tableView.reloadData()
     }
     
     override func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
@@ -148,7 +150,7 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
                 print(peer.displayName)
             }
             print("==================================")
-
+            
             if (ServiceManager.instance.chatService.session.connectedPeers.contains(from)) {
                 do {
                     try ServiceManager.instance.chatService.session.send(userData[5].data(using: String.Encoding.utf8)!, toPeers: [from], with: MCSessionSendDataMode.reliable)
@@ -168,7 +170,7 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
             self.present(alert, animated: true, completion: nil)
         }
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return 2

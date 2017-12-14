@@ -14,7 +14,7 @@
 		4105BF271FE14829005B2A8C /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF261FE14829005B2A8C /* StringExtention.swift */; };
 		410BE7071FDFCFCB00B26DF2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */; };
 		410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */; };
-		410BE70D1FDFD18800B26DF2 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE70B1FDFD18800B26DF2 /* Chat.storyboard */; };
+		410BE70D1FDFD18800B26DF2 /* Interactions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE70B1FDFD18800B26DF2 /* Interactions.storyboard */; };
 		410BE70F1FDFDBDA00B26DF2 /* ConnectivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */; };
 		410BE7191FDFF5E300B26DF2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 410BE71B1FDFF5E300B26DF2 /* Localizable.strings */; };
 		41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A1D1FDD8201004A0E99 /* UserProfile.swift */; };
@@ -75,9 +75,9 @@
 		4105BF261FE14829005B2A8C /* StringExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
 		410BE7061FDFCFCB00B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		410BE7091FDFD0A600B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PeerDisplay.storyboard; sourceTree = "<group>"; };
-		410BE70C1FDFD18800B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Chat.storyboard; sourceTree = "<group>"; };
+		410BE70C1FDFD18800B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interactions.storyboard; sourceTree = "<group>"; };
 		410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityViewController.swift; sourceTree = "<group>"; };
-		410BE7141FDFF5D500B26DF2 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Chat.strings; sourceTree = "<group>"; };
+		410BE7141FDFF5D500B26DF2 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Interactions.strings; sourceTree = "<group>"; };
 		410BE7151FDFF5D500B26DF2 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/PeerDisplay.strings; sourceTree = "<group>"; };
 		410BE7161FDFF5D500B26DF2 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Settings.strings; sourceTree = "<group>"; };
 		410BE7171FDFF5D500B26DF2 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 		414512C41FDFCBF1001864BB /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				410BE70B1FDFD18800B26DF2 /* Chat.storyboard */,
+				410BE70B1FDFD18800B26DF2 /* Interactions.storyboard */,
 				410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */,
 				410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */,
 				41792C8E1FDD60A200B5F83E /* Main.storyboard */,
@@ -364,7 +364,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				410BE70D1FDFD18800B26DF2 /* Chat.storyboard in Resources */,
+				410BE70D1FDFD18800B26DF2 /* Interactions.storyboard in Resources */,
 				410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */,
 				41792C951FDD60A200B5F83E /* LaunchScreen.storyboard in Resources */,
 				410BE7191FDFF5E300B26DF2 /* Localizable.strings in Resources */,
@@ -464,13 +464,13 @@
 			name = PeerDisplay.storyboard;
 			sourceTree = "<group>";
 		};
-		410BE70B1FDFD18800B26DF2 /* Chat.storyboard */ = {
+		410BE70B1FDFD18800B26DF2 /* Interactions.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				410BE70C1FDFD18800B26DF2 /* Base */,
 				410BE7141FDFF5D500B26DF2 /* it */,
 			);
-			name = Chat.storyboard;
+			name = Interactions.storyboard;
 			sourceTree = "<group>";
 		};
 		410BE71B1FDFF5E300B26DF2 /* Localizable.strings */ = {
@@ -617,11 +617,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K8GHX29B37;
+				DEVELOPMENT_TEAM = HH88N3P4EZ;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.caruso.App;
+				PRODUCT_BUNDLE_IDENTIFIER = org.assisrodrigues.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -633,11 +633,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K8GHX29B37;
+				DEVELOPMENT_TEAM = HH88N3P4EZ;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.caruso.App;
+				PRODUCT_BUNDLE_IDENTIFIER = org.assisrodrigues.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

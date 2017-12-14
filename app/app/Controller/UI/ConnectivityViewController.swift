@@ -14,8 +14,8 @@ class ConnectivityViewController: UIViewController, ProfileServiceDelegate, Broa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ServiceManager.instance.profileService.delegate = self
-        ServiceManager.instance.broadcastService.delegate = self
+//        ServiceManager.instance.profileService.delegate = self
+//        ServiceManager.instance.broadcastService.delegate = self
         ServiceManager.instance.chatService.delegate = self
         self.setDiscoveryInfo(from: ServiceManager.instance.userProfile)
         self.updateVisibility()
@@ -26,14 +26,14 @@ class ConnectivityViewController: UIViewController, ProfileServiceDelegate, Broa
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        ServiceManager.instance.profileService.delegate = nil
-        ServiceManager.instance.broadcastService.delegate = nil
-        ServiceManager.instance.chatService.delegate = nil
+//        ServiceManager.instance.profileService.delegate = nil
+//        ServiceManager.instance.broadcastService.delegate = nil
+//        ServiceManager.instance.chatService.delegate = nil
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        ServiceManager.instance.profileService.delegate = self
-        ServiceManager.instance.broadcastService.delegate = self
+//        ServiceManager.instance.profileService.delegate = self
+//        ServiceManager.instance.broadcastService.delegate = self
         ServiceManager.instance.chatService.delegate = self
     }
     
@@ -48,11 +48,11 @@ class ConnectivityViewController: UIViewController, ProfileServiceDelegate, Broa
             ServiceManager.instance.chatService.serviceAdvertiser.startAdvertisingPeer()
             ServiceManager.instance.chatService.serviceBrowser.startBrowsingForPeers()
         } else {
-            ServiceManager.instance.profileService.serviceAdvertiser.stopAdvertisingPeer()
-            ServiceManager.instance.profileService.serviceBrowser.stopBrowsingForPeers()
-
-            ServiceManager.instance.broadcastService.serviceAdvertiser.stopAdvertisingPeer()
-            ServiceManager.instance.broadcastService.serviceBrowser.stopBrowsingForPeers()
+//            ServiceManager.instance.profileService.serviceAdvertiser.stopAdvertisingPeer()
+//            ServiceManager.instance.profileService.serviceBrowser.stopBrowsingForPeers()
+//
+//            ServiceManager.instance.broadcastService.serviceAdvertiser.stopAdvertisingPeer()
+//            ServiceManager.instance.broadcastService.serviceBrowser.stopBrowsingForPeers()
 
             ServiceManager.instance.chatService.serviceAdvertiser.stopAdvertisingPeer()
             ServiceManager.instance.chatService.serviceBrowser.stopBrowsingForPeers()
@@ -75,10 +75,23 @@ class ConnectivityViewController: UIViewController, ProfileServiceDelegate, Broa
         ServiceManager.instance.chatService.discoveryInfo = info
     }
     
-    func invitePeer(withId id: MCPeerID) {
+    func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
     }
     
-    func handleInvitation(from: String) {
+    func handleInvitation(from: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+    }
+    
+    func handleMessage(from: MCPeerID, message: String) {
+        switch message {
+        case "chat":
+            self.show(UIStoryboard(name: "Interactions", bundle: nil).instantiateViewController(withIdentifier: "ChatViewController"), sender: self)
+            break
+        case "game":
+            self.show(UIStoryboard(name: "Interactions", bundle: nil).instantiateViewController(withIdentifier: "GameViewController"), sender: self)
+            break
+        default:
+            break
+        }
     }
     
     func peerFound(withId id: MCPeerID) {

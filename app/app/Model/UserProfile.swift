@@ -13,7 +13,7 @@ import ConnectivityServices
 public class UserProfile: ProfileRequirements {
     
     private let _id: String
-    private var _userName: String
+    private var _username: String
     private var _avatar: String
     private var _moods: [Mood]
     private var _status: Status
@@ -25,14 +25,14 @@ public class UserProfile: ProfileRequirements {
         }
     }
     
-    public var userName: String {
+    public var username: String {
         get {
             
-            return self._userName
+            return self._username
         }
         
-        set(userName) {
-            self._userName = userName
+        set(username) {
+            self._username = username
         }
     }
     
@@ -78,9 +78,9 @@ public class UserProfile: ProfileRequirements {
         }
     }
     
-    public init(id: String, userName: String, avatar: String, moods: [Mood], status: Status) {
+    public init(id: String, username: String, avatar: String, moods: [Mood], status: Status) {
         self._id = id
-        self._userName = userName
+        self._username = username
         self._avatar = avatar
         self._moods = moods
         self._status = status

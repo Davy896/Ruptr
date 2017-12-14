@@ -31,7 +31,8 @@ class ListTableViewCell: UITableViewCell {
         guard let person = userProfile else {
             return
         }
-        ListTitleView?.text = person.userName
+        
+        ListTitleView?.text = person.username
         ListImageView?.image = UIImage(named: person.avatar)
         mood1?.image = person.moods[0].image
         mood2?.image = person.moods[0].image

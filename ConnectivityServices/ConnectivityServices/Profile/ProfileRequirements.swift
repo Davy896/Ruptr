@@ -9,6 +9,6 @@
 public protocol ProfileRequirements {
     
     var id: String { get }
-    var userName: String { get set }
+    var username: String { get set }
     var avatar: String { get set }
 }

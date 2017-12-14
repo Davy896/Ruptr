@@ -27,6 +27,7 @@
 		41792CAB1FDD60A300B5F83E /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792CAA1FDD60A300B5F83E /* AppUITests.swift */; };
 		41792CE01FDD632800B5F83E /* ConnectivityServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; };
 		41792CE11FDD632800B5F83E /* ConnectivityServices.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */; };
 		ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED27DA3E1FDFD7E5008830A5 /* ViewDesignableSettings.swift */; };
 		ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED27DA421FDFEB6C008830A5 /* CircleView.swift */; };
 		F945CB131FE03283004D3B8F /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945CB121FE03283004D3B8F /* ListTableViewCell.swift */; };
@@ -98,10 +99,10 @@
 		41792CAA1FDD60A300B5F83E /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		41792CAC1FDD60A300B5F83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConnectivityServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		ED27DA3E1FDFD7E5008830A5 /* ViewDesignableSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewDesignableSettings.swift; path = app/View/Sources/ViewDesignableSettings.swift; sourceTree = SOURCE_ROOT; };
 		ED27DA421FDFEB6C008830A5 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		F945CB121FE03283004D3B8F /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListTableViewCell.swift; path = App/View/Sources/ListTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		F945CB141FE032F2004D3B8F /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F95E9EC11FDEA210008020C3 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		F95E9EC21FDEA210008020C3 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -138,11 +139,11 @@
 			children = (
 				41792C8C1FDD60A200B5F83E /* ViewController.swift */,
 				410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */,
-				F945CB141FE032F2004D3B8F /* ListTableViewController.swift */,
 				F95E9EC21FDEA210008020C3 /* MapViewController.swift */,
 				F95E9EC11FDEA210008020C3 /* ListViewController.swift */,
 				F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */,
 				4105BF241FE1423B005B2A8C /* ProfileCreationViewController.swift */,
+				41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -405,6 +406,7 @@
 				ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */,
 				4105BF1D1FE124A9005B2A8C /* Status.swift in Sources */,
 				4105BF231FE12772005B2A8C /* Mood.swift in Sources */,
+				41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */,
 				41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */,
 				410BE70F1FDFDBDA00B26DF2 /* ConnectivityViewController.swift in Sources */,
 				4105BF1B1FE123DC005B2A8C /* ServiceManager.swift in Sources */,

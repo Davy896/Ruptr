@@ -50,7 +50,7 @@ class ServiceManager {
     }
     
     private init(){
-        self._userProfile = UserProfile(id: "a", userName: "", avatar: "", moods: [], status: Status.ghost)
+        self._userProfile = UserProfile(id: "CALL_SET_USERPROFILE", username: "CALL_SET_USERPROFILE", avatar: "CALL_SET_USERPROFILE", moods: [], status: Status.ghost)
         self._profileService = ProfileService(profile: _userProfile)
         self._broadcastService = BroadcastService(profile: _userProfile)
         self._chatService = ChatService(profile: _userProfile)

@@ -274,6 +274,7 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="40"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="circle" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                 </subviews>

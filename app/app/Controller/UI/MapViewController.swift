@@ -16,6 +16,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         updateCircles(numberOfPeers: 20)
+        
     }
     
     override func didReceiveMemoryWarning() {

@@ -75,22 +75,25 @@
         <!--List table View Controller-->
         <scene sceneID="k0f-E6-XiH">
             <objects>
-                <tableViewController title="List table View Controller" id="Cmd-t6-NiC" customClass="ListTableViewController" customModule="FirstMini" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="List table View Controller" id="Cmd-t6-NiC" customClass="ListTableViewController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="agN-FS-Szy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PersonCell" id="e6P-TZ-iZG" customClass="ListTableViewCell" customModule="FirstMini" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PersonCell" id="e6P-TZ-iZG" customClass="ListTableViewCell" customModule="App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e6P-TZ-iZG" id="jzX-8Y-Ysi" customClass="ListTableViewCell" customModule="FirstMini" customModuleProvider="target">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e6P-TZ-iZG" id="jzX-8Y-Ysi" customClass="ListTableViewCell" customModule="App" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Lk-bn-wig">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Lk-bn-wig" customClass="RoundImgView" customModule="App" customModuleProvider="target">
                                             <rect key="frame" x="16" y="8" width="64" height="64"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="circle" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t8c-Ob-v2M">
                                             <rect key="frame" x="106" y="47" width="20" height="20"/>
@@ -119,7 +122,6 @@
                                     <outlet property="mood1" destination="t8c-Ob-v2M" id="qoV-zH-wWm"/>
                                     <outlet property="mood2" destination="JcI-vZ-LtJ" id="VSU-cx-bKf"/>
                                     <outlet property="mood3" destination="baD-A3-2xJ" id="na0-BP-5U9"/>
-                                    <segue destination="vee-4c-Xip" kind="show" id="gXZ-sY-hIJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -131,6 +133,9 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="xQJ-P6-90w"/>
                     <navigationItem key="navigationItem" id="qUO-sr-ztY"/>
+                    <connections>
+                        <outlet property="tableView" destination="agN-FS-Szy" id="8dY-Dc-UFs"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lIe-ym-RMs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

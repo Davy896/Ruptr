@@ -43,7 +43,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         avatarImageView.image = ServiceManager.instance.userProfile.avatarImage
-        usernameLabel.text = ServiceManager.instance.userProfile.userName
+        usernameLabel.text = ServiceManager.instance.userProfile.username
         setupColours(forButton: 3)
         for button in self.moodButtons {
             button.backgroundColor = UIColor.blue
@@ -56,6 +56,11 @@ class SettingsViewController: UIViewController {
     
     @IBAction func changeStatus(_ sender: UIButton) {
         self.setupColours(forButton: sender.tag)
+        if sender == statusButtons[0] {
+            ServiceManager.instance.chatService.isActive = false
+        } else {
+            ServiceManager.instance.chatService.isActive = true
+        }
     }
     
     func setupColours(forButton tag: Int) {

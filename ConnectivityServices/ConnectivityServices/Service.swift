@@ -12,10 +12,12 @@ public class Service: NSObject {
     
     internal let _serviceType: String
     internal let _peerId: MCPeerID
-    internal let _serviceAdvertiser: MCNearbyServiceAdvertiser
+    internal var _serviceAdvertiser: MCNearbyServiceAdvertiser
     internal let _serviceBrowser: MCNearbyServiceBrowser
     internal var _profile: ProfileRequirements
     internal var _peers: [MCPeerID]
+    internal var _peersDiscoveryInfos: [[String:String]]
+    internal var _discoveryInfo: [String : String]
     
     internal lazy var _session: MCSession = {
         let session = MCSession(peer: self._peerId, securityIdentity: nil, encryptionPreference: .required)
@@ -63,6 +65,39 @@ public class Service: NSObject {
         get {
             return self._peers
         }
+        
+        set(peers) {
+            self._peers = peers
+        }
+    }
+    
+    public var peersDiscoveryInfos: [[String : String]] {
+        
+        get {
+            return self._peersDiscoveryInfos
+        }
+        
+        set(peersDiscoveryInfos) {
+            self._peersDiscoveryInfos = peersDiscoveryInfos
+        }
+    }
+    
+    public var discoveryInfo: [String : String] {
+        
+        get {
+            return self._discoveryInfo
+        }
+        
+        set(discoveryInfo) {
+            self.serviceAdvertiser.stopAdvertisingPeer()
+            self.serviceBrowser.stopBrowsingForPeers()
+            self._discoveryInfo = discoveryInfo
+            self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId, discoveryInfo: discoveryInfo, serviceType: self._serviceType)
+            if (self.isActive) {
+                self.serviceAdvertiser.startAdvertisingPeer()
+                self.serviceBrowser.startBrowsingForPeers()
+            }
+        }
     }
     
     public var session: MCSession {
@@ -72,13 +107,31 @@ public class Service: NSObject {
         }
     }
     
+    public var isActive: Bool = false {
+        didSet {
+            if (self.isActive) {
+                self.serviceAdvertiser.startAdvertisingPeer()
+                self.serviceBrowser.startBrowsingForPeers()
+            } else {
+                self.serviceAdvertiser.stopAdvertisingPeer()
+                self.serviceBrowser.stopBrowsingForPeers()
+            }
+        }
+    }
+    
     internal init(profile: ProfileRequirements, serviceType: String) {
         self._profile = profile
         self._serviceType = serviceType
         self._peerId = MCPeerID(displayName: "\(self._profile.id)")
-        self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId, discoveryInfo: ["seviceType": self._serviceType, "avatar": self._profile.avatar, "userName": self._profile.userName ], serviceType: self._serviceType)
+        self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId,
+                                                            discoveryInfo: ["seviceType": self._serviceType,
+                                                                            "avatar": self._profile.avatar,
+                                                                            "username": self._profile.username ],
+                                                            serviceType: self._serviceType)
         self._serviceBrowser = MCNearbyServiceBrowser(peer: _peerId, serviceType: self._serviceType)
         self._peers = []
+        self._peersDiscoveryInfos = []
+        self._discoveryInfo = [:]
         
         super.init()
         
@@ -108,7 +161,7 @@ extension Service: MCNearbyServiceBrowserDelegate {
     public func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {}
     
     public func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-        if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType && info != nil) {
+        if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType) {
             return
         }
     }

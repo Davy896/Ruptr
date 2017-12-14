@@ -48,6 +48,7 @@ class RoundImgView: UIImageView {
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
             self.layer.cornerRadius = cornerRadius
+            self.circle = false
         }
     }
     
@@ -72,6 +73,14 @@ class RoundImgView: UIImageView {
     @IBInspectable var maskToBounds: Bool = false {
         didSet{
             self.layer.masksToBounds = maskToBounds
+        }
+    }
+    
+    @IBInspectable var circle: Bool = false {
+        didSet{
+            if (self.circle) {
+                self.layer.cornerRadius = self.frame.size.width/2
+            }
         }
     }
 }

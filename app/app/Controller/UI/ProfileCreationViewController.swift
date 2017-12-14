@@ -11,9 +11,9 @@ import UIKit
 class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     private var avatarImageName: String = ""
-    private var moodOne: Mood = Mood.Sports
-    private var moodTwo: Mood = Mood.Games
-    private var moodThree: Mood = Mood.Music
+    private var moodOne: Mood = Mood.sports
+    private var moodTwo: Mood = Mood.games
+    private var moodThree: Mood = Mood.music
     private var editableControls: [UIControl] = []
     
     @IBOutlet weak var avatarButton: UIButton!
@@ -59,16 +59,16 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         switch sender {
         case moodOneButton:
             sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
-            self.moodOne = Mood.Sports
+            self.moodOne = Mood.sports
             break
         case moodTwoButton:
             
             sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
-            self.moodTwo = Mood.Sports
+            self.moodTwo = Mood.sports
             break
         case moodThreeButton:
             sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
-            self.moodThree = Mood.Sports
+            self.moodThree = Mood.sports
             break
         default:
             break
@@ -76,7 +76,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveProfile(_ sender: UIButton) {
-        ServiceManager.instance.userProfile = UserProfile(id: String.randomAlphaNumericString(length: 20), userName: self.userNameTextField.text!, avatar: self.avatarImageName, moods: [self.moodOne, self.moodTwo, self.moodThree], status: Status.playful)
+        ServiceManager.instance.userProfile = UserProfile(id: String.randomAlphaNumericString(length: 20), username: self.userNameTextField.text!, avatar: self.avatarImageName, moods: [self.moodOne, self.moodTwo, self.moodThree], status: Status.playful)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

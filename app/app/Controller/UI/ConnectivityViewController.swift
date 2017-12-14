@@ -10,13 +10,14 @@ import UIKit
 import ConnectivityServices
 import MultipeerConnectivity
 
-class ConnectivityViewController: UIViewController {
+class ConnectivityViewController: UIViewController, ProfileServiceDelegate, BroadcastServiceDelegate , ChatServiceDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         ServiceManager.instance.profileService.delegate = self
         ServiceManager.instance.broadcastService.delegate = self
         ServiceManager.instance.chatService.delegate = self
+        self.setDiscoveryInfo(from: ServiceManager.instance.userProfile)
         self.updateVisibility()
     }
     
@@ -38,11 +39,11 @@ class ConnectivityViewController: UIViewController {
     
     func updateVisibility() {
         if (ServiceManager.instance.userProfile.status != Status.ghost) {
-            ServiceManager.instance.profileService.serviceAdvertiser.startAdvertisingPeer()
-            ServiceManager.instance.profileService.serviceBrowser.startBrowsingForPeers()
-            
-            ServiceManager.instance.broadcastService.serviceAdvertiser.startAdvertisingPeer()
-            ServiceManager.instance.broadcastService.serviceBrowser.startBrowsingForPeers()
+//            ServiceManager.instance.profileService.serviceAdvertiser.startAdvertisingPeer()
+//            ServiceManager.instance.profileService.serviceBrowser.startBrowsingForPeers()
+//            
+//            ServiceManager.instance.broadcastService.serviceAdvertiser.startAdvertisingPeer()
+//            ServiceManager.instance.broadcastService.serviceBrowser.startBrowsingForPeers()
 
             ServiceManager.instance.chatService.serviceAdvertiser.startAdvertisingPeer()
             ServiceManager.instance.chatService.serviceBrowser.startBrowsingForPeers()
@@ -57,20 +58,23 @@ class ConnectivityViewController: UIViewController {
             ServiceManager.instance.chatService.serviceBrowser.stopBrowsingForPeers()
         }
     }
-}
-
-extension ConnectivityViewController: ProfileServiceDelegate {
+    
     func connectedDevicesChanged(manager: ProfileService, connectedDevices: [String]) {
-        
     }
-}
-
-extension ConnectivityViewController: BroadcastServiceDelegate {
+    
     func receiveBroadcastedMessage(manager: BroadcastService, message: String) {
     }
-}
-
-extension ConnectivityViewController: ChatServiceDelegate {
+    
+    func setDiscoveryInfo(from profile: ProfileRequirements) {
+        let info = ["avatar": ServiceManager.instance.userProfile.avatar,
+                    "username": ServiceManager.instance.userProfile.username,
+                    "moodOne": ServiceManager.instance.userProfile.moods[0].enumToString,
+                    "moodTwo": ServiceManager.instance.userProfile.moods[1].enumToString,
+                    "moodThree": ServiceManager.instance.userProfile.moods[2].enumToString,
+                    "status": ServiceManager.instance.userProfile.status.enumToString]
+        ServiceManager.instance.chatService.discoveryInfo = info
+    }
+    
     func invitePeer(withId id: MCPeerID) {
     }
     
@@ -83,4 +87,3 @@ extension ConnectivityViewController: ChatServiceDelegate {
     func peerLost(withId id: MCPeerID) {
     }
 }
-

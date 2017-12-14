@@ -13,4 +13,5 @@ public protocol ChatServiceDelegate {
     func handleInvitation(from: String)
     func peerFound(withId id: MCPeerID)
     func peerLost(withId id: MCPeerID)
+    func setDiscoveryInfo(from profile: ProfileRequirements)
 }

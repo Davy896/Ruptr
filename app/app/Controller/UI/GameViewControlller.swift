@@ -29,7 +29,7 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.emojiKeyboard = ISEmojiView()
+         self.emojiKeyboard = ISEmojiView()
         self.emojiKeyboard.delegate = self
         
         for field in emojiTextFields {

@@ -13,8 +13,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var avatarImageView: RoundImgView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var statusView: RoundView!
-    @IBOutlet var statusButtons: [StatusButton]!
-    @IBOutlet var moodButtons: [UIButton]!
+    @IBOutlet var statusButtons: [RoundButton]!
+    @IBOutlet var moodButtons: [RoundButton]!
     @IBOutlet weak var statusTextView: UITextView!
     
     let statusColours: [UIColor] = [UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1), // ghost

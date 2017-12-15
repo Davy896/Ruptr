@@ -121,7 +121,7 @@ class StatusTextView: UITextView {
     }
 }
 
-class StatusButton: UIButton {
+class RoundButton: UIButton {
         
     @IBInspectable var topRightCorner: Bool = false {
         didSet {

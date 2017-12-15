@@ -38,7 +38,6 @@ class MapViewController: UIViewController {
         }
         circle.drawCircles(numberOf: circleIndex, onRectangle: circle.frame, withRadius: 80)
         self.view.addSubview(circle)
-        print(self.view.subviews.count)
     }
 }
 

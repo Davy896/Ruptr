@@ -64,14 +64,6 @@
             </objects>
             <point key="canvasLocation" x="748.79999999999995" y="359.82008995502252"/>
         </scene>
-        <!--ChatViewController-->
-        <scene sceneID="teD-ON-pcS">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="ChatViewController" id="vee-4c-Xip" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8bZ-SE-Fle" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2362" y="-9"/>
-        </scene>
         <!--List table View Controller-->
         <scene sceneID="k0f-E6-XiH">
             <objects>

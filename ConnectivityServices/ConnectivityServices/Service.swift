@@ -20,7 +20,7 @@ public class Service: NSObject {
     internal var _discoveryInfo: [String : String]
     
     internal lazy var _session: MCSession = {
-        let session = MCSession(peer: self._peerId, securityIdentity: nil, encryptionPreference: .required)
+        let session = MCSession(peer: self._peerId, securityIdentity: nil, encryptionPreference: .none)
         session.delegate = self
         return session
     }()
@@ -93,6 +93,7 @@ public class Service: NSObject {
             self.serviceBrowser.stopBrowsingForPeers()
             self._discoveryInfo = discoveryInfo
             self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId, discoveryInfo: discoveryInfo, serviceType: self._serviceType)
+            self._serviceAdvertiser.delegate = self
             if (self.isActive) {
                 self.serviceAdvertiser.startAdvertisingPeer()
                 self.serviceBrowser.startBrowsingForPeers()
@@ -122,11 +123,11 @@ public class Service: NSObject {
     internal init(profile: ProfileRequirements, serviceType: String) {
         self._profile = profile
         self._serviceType = serviceType
-        self._peerId = MCPeerID(displayName: "\(self._profile.id)")
+        self._peerId = MCPeerID(displayName: "\(self._profile.id)|\(self._serviceType)")
         self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId,
                                                             discoveryInfo: ["seviceType": self._serviceType,
                                                                             "avatar": self._profile.avatar,
-                                                                            "username": self._profile.username ],
+                                                                            "username": self._profile.username],
                                                             serviceType: self._serviceType)
         self._serviceBrowser = MCNearbyServiceBrowser(peer: _peerId, serviceType: self._serviceType)
         self._peers = []

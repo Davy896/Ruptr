@@ -20,7 +20,7 @@ public class ChatService: Service {
 extension ChatService { // MCNearbyServiceAdvertiserDelegate
     
     public override func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-            delegate?.handleInvitation(from: peerID.displayName)
+        delegate?.handleInvitation(from: peerID, withContext: context, invitationHandler: invitationHandler)
     }
 }
 
@@ -55,5 +55,9 @@ extension ChatService { // MCNearbyServiceBrowserDelegate
 }
 
 extension ChatService { // MCSessionDelegate
-    
+    public override func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        if let message = String(data: data, encoding: String.Encoding.utf8) {
+            self.delegate?.handleMessage(from: peerID, message: message)
+        }
+    }
 }

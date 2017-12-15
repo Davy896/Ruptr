@@ -27,7 +27,6 @@ extension ProfileService { // MCNearbyServiceAdvertiserDelegate
 extension ProfileService { // MCNearbyServiceBrowserDelegate
 
     public override func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-        print(peerID.displayName)
         browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 10)
     }
     

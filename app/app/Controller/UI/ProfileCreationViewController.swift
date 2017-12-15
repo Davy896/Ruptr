@@ -85,7 +85,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         UIView.animate(withDuration: 0.25, animations: {
             self.userNameValidationLabel.isHidden = validated.isValid
         })
-        
+        view.endEditing(true)
         return true
     }
     

@@ -54,8 +54,8 @@ class SingleChatCell: UICollectionViewCell {
         label.text = " "
         label.textColor = UIColor.white
         label.backgroundColor = UIColor.blue
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.layer.cornerRadius = 14
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.layer.cornerRadius = 15
         return label
     }()
     

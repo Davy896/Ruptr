@@ -44,23 +44,26 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         return cell
     }
     
-    fileprivate func estimateFrameForText(_ text: String) -> CGRect {
+     func estimateFrameForText(_ text: String) -> CGRect {
 //        let size = CGSize(width: UIScreen.main.bounds.width, height: 1000)
         let size = CGSize(width: 250, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         
-        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
         var height: CGFloat = 80
         let messageText = messages[indexPath.item].text
-        height = estimateFrameForText(messageText).height + 20
+        height = estimateFrameForText(messageText).height + 30
         
+//        cell.messageLabel.frame = estimateFrameForText(messageText).width
+        
+//        let width = estimateFrameForText(messageText).width
         let width = UIScreen.main.bounds.width
-        return CGSize(width: width, height: height)
+        return CGSize(width: width , height: height)
  
     }
     

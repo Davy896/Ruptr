@@ -10,7 +10,7 @@ import UIKit
 
 class ListTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var ListImageView: UIImageView!
+    @IBOutlet weak var ListImageView: RoundImgView!
     @IBOutlet weak var ListTitleView: UILabel!
     @IBOutlet weak var mood1: UIImageView!
     @IBOutlet weak var mood2: UIImageView!

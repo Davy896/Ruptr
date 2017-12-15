@@ -9,5 +9,5 @@
 import UIKit
 
 class Colours {
-    static let background = UIColor(patternImage: UIImage(named: "space_background")!)
+    static let background = UIColor(patternImage: UIImage(named: "space_background_brighter")!)
 }

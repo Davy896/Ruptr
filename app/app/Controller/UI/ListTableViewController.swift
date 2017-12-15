@@ -18,7 +18,7 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "People Around You"
+        self.title = NSLocalizedString("list", comment: "")
         self.tableView.delegate = self
         self.tableView.dataSource = self
         let peers = ServiceManager.instance.chatService.peers

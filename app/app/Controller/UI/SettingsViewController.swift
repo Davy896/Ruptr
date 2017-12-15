@@ -42,6 +42,7 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = NSLocalizedString("settings", comment: "")
         self.view.backgroundColor = Colours.background
         avatarImageView.image = ServiceManager.instance.userProfile.avatarImage
         usernameLabel.text = ServiceManager.instance.userProfile.username

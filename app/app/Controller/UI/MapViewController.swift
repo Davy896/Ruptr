@@ -14,7 +14,8 @@ class MapViewController: ConnectivityViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateCircles(numberOfPeers: 20)
+        self.title = NSLocalizedString("map", comment: "")
+        self.updateCircles(numberOfPeers: 20)
         
     }
     
@@ -27,7 +28,7 @@ class MapViewController: ConnectivityViewController {
         var circlePopulation: Int = 1
         var circleIndex: Int = 1
         let circle: CircleView
-        circle = CircleView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        circle = CircleView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 30))
         while peersMissing > 0 {
             peersMissing -= circlePopulation
             circlePopulation += circleIndex

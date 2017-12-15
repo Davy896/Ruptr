@@ -41,6 +41,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = Colours.background
         self.editableControls.append(contentsOf: [avatarButton, userNameTextField, moodOneButton, moodTwoButton, moodThreeButton])
         NotificationCenter.default.addObserver(self, selector: #selector(profileWasEdited(_:)), name: Notification.Name.UITextFieldTextDidChange, object: nil)
     }

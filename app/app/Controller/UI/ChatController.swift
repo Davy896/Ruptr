@@ -29,7 +29,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = Colours.background
         profile1.name = "1"
         profile1.profileImageName = "roguemonkeyblog"
         setupInputComponents()   //container view for chat writing

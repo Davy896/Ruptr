@@ -32,9 +32,10 @@ class CircleView: UIView {
             }
         }
         
-        UIColor.black.setStroke()
+        UIColor.white.setStroke()
         path.lineWidth = 1
         path.stroke()
+        self.backgroundColor = UIColor.clear
     }
 }
 

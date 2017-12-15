@@ -44,8 +44,24 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         return cell
     }
     
+    fileprivate func estimateFrameForText(_ text: String) -> CGRect {
+//        let size = CGSize(width: UIScreen.main.bounds.width, height: 1000)
+        let size = CGSize(width: 250, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
+    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 100)
+        
+        var height: CGFloat = 80
+        let messageText = messages[indexPath.item].text
+        height = estimateFrameForText(messageText).height + 20
+        
+        let width = UIScreen.main.bounds.width
+        return CGSize(width: width, height: height)
+ 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -72,7 +88,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         
         let sendButton = UIButton(type: .system)                        //create Button Send (type: .system -->serve per far diventare il bottone bianco quando lo premi)
-        sendButton.setTitle("Send", for: .normal)                       //
+        sendButton.setTitle(NSLocalizedString("send", comment: ""), for: .normal)                       //
         sendButton.translatesAutoresizingMaskIntoConstraints = false    //
         containerView.addSubview(sendButton)                            //
         

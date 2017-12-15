@@ -49,11 +49,13 @@ class SingleChatCell: UICollectionViewCell {
         return label
     }()
     
-    let messageLabel: UILabel = {
-        let label = UILabel()
+    let messageLabel: UITextView = {
+        let label = UITextView()
         label.text = " "
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.blue
         label.font = UIFont.systemFont(ofSize: 14)
+        label.layer.cornerRadius = 14
         return label
     }()
     
@@ -92,6 +94,7 @@ class SingleChatCell: UICollectionViewCell {
         }
         
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
+        
     }
     
     
@@ -99,6 +102,7 @@ class SingleChatCell: UICollectionViewCell {
        
         super.init(frame: frame)
          setupView()
+        
     }
     
    
@@ -123,11 +127,14 @@ class SingleChatCell: UICollectionViewCell {
         profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
+        messageLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        messageLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        messageLabel.widthAnchor.constraint(equalToConstant: 250).isActive = true
         messageLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        messageLabel.rightAnchor.constraint(equalTo: profileImageView.leftAnchor).isActive = true
-        messageLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        messageLabel.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
-        messageLabel.textColor = UIColor.black
+//        messageLabel.textColor = UIColor.
+        
+       
+        
     }
     
    

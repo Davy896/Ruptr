@@ -13,9 +13,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     private let cellId = "cellID"
     
-    var profile1 = Profile()
-    
-    
     var messages: [Messages] = []
     
     lazy var inputTextField: UITextField = {                        //this is the declaration of the input textField and the textField we need to write and having a reference to use function handleSend
@@ -29,15 +26,12 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        profile1.name = "1"
-        profile1.profileImageName = "roguemonkeyblog"
         setupInputComponents()   //container view for chat writing
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.register(SingleChatCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true
-        //        setupData()
+       
     }
     
     
@@ -117,7 +111,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         separatorLineView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true                    //
         
         
-        var titleNameChat = UIView()                                     //adding space where putting nameChat
+        let titleNameChat = UIView()                                     //adding space where putting nameChat
         titleNameChat.translatesAutoresizingMaskIntoConstraints = false  //(cercare a cosa serve)
         
         self.view.addSubview(titleNameChat)                              //adding titleNameChat to view
@@ -133,7 +127,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         var nameChat = UILabel()                                    //nameChat declaration
         nameChat.translatesAutoresizingMaskIntoConstraints = false  //
-        nameChat.text = "nameChatID"                                //
+        nameChat.text = ServiceManager.instance.userProfile.username                                //
         
         titleNameChat.addSubview(nameChat)              //adding nameChat to titleNameChat
         
@@ -161,8 +155,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     @objc func send() {            //function to send messages
         print(inputTextField.text)
-        createMessages(input: inputTextField, name: profile1)
-        
+        createMessages(input: inputTextField)
         self.collectionView?.reloadData()
     }
     
@@ -172,10 +165,11 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         return true
     }
     
-    func createMessages( input: UITextField, name: Profile) {
-        let newMessage = Messages()
-        newMessage.text = input.text
-        newMessage.profile = name
+    func createMessages( input: UITextField) {
+        let profile = ServiceManager.instance.userProfile
+        let newMessage = Messages(text: input.text! , username: profile.username, avatar: profile.avatar)
+//        newMessage.text = input.text
+        
         messages.append(newMessage)
         
     }

@@ -14,6 +14,7 @@ class ConnectivityViewController: UIViewController, ProfileServiceDelegate, Broa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = Colours.background
 //        ServiceManager.instance.profileService.delegate = self
 //        ServiceManager.instance.broadcastService.delegate = self
         ServiceManager.instance.chatService.delegate = self

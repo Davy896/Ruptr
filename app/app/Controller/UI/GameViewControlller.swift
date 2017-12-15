@@ -22,13 +22,10 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        emojiTextFields[0].becomeFirstResponder()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = NSLocalizedString("game", comment: "")
+        self.view.backgroundColor = Colours.background
         self.emojiKeyboard = ISEmojiView()
         self.emojiKeyboard.delegate = self
         
@@ -38,6 +35,11 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
                 field.isEnabled = false
             }
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        emojiTextFields[0].becomeFirstResponder()
     }
     
     func emojiViewDidSelectEmoji(emojiView: ISEmojiView, emoji: String) {

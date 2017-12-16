@@ -14,10 +14,13 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     private var moodOne: Mood = Mood.sports
     private var moodTwo: Mood = Mood.games
     private var moodThree: Mood = Mood.music
-    private var editableControls: [UIControl] = []
+    private var currentHairStyle = 0
+    private var currentHairColour = 0
+    private var currentFace = 0
+    private var currentSkin = 1
     
-    @IBOutlet weak var avatarButton: UIButton!
-    @IBOutlet weak var avatarValidationLabel: UILabel!
+    @IBOutlet weak var avatarHairImageView: RoundImgView!
+    @IBOutlet weak var avatarFaceImageView: RoundImgView!
     
     @IBOutlet weak var userNameTextField: UITextField! {
         didSet {
@@ -25,16 +28,10 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBOutlet weak var userNameValidationLabel: UILabel!
-    
+    @IBOutlet weak var userNameValidationLabel: RoundLabel!
     @IBOutlet weak var moodOneButton: UIButton!
-    @IBOutlet weak var moodOneValidationLabel: UILabel!
-    
     @IBOutlet weak var moodTwoButton: UIButton!
-    @IBOutlet weak var moodTwoValidationLabel: UILabel!
-    
     @IBOutlet weak var moodThreeButton: UIButton!
-    @IBOutlet weak var moodThreeValidationLabel: UILabel!
     
     
     @IBOutlet weak var finishButton: UIButton!
@@ -42,7 +39,10 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Colours.background
-        self.editableControls.append(contentsOf: [avatarButton, userNameTextField, moodOneButton, moodTwoButton, moodThreeButton])
+        self.avatarHairImageView.image = UIImage(named: "hairstyle_\(currentHairStyle)_black")
+        self.avatarFaceImageView.backgroundColor = Colours.skinTones[1]
+        self.avatarFaceImageView.image = UIImage(named: "expression_\(currentFace)")
+        
         NotificationCenter.default.addObserver(self, selector: #selector(profileWasEdited(_:)), name: Notification.Name.UITextFieldTextDidChange, object: nil)
     }
     
@@ -50,10 +50,88 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func selectAvatar(_ sender: UIButton) {
-        sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
-        self.avatarImageName = "roguemonkeyblog"
+    
+    @IBAction func updateAvatar(_ sender: UIButton) {
+        switch sender.tag {
+        case 0: // Hair Right
+            switch self.currentHairColour {
+            case 0:
+                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
+                break
+            case 1:
+                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_blonde")
+                break
+            case 2:
+                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_brown")
+                break
+            case 3:
+                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_special")
+                break
+            default:
+                print("Error")
+                break
+            }
+            
+            self.currentHairColour += 1
+            if (self.currentHairColour == 4) {
+                self.currentHairColour = 0
+                self.currentHairStyle += 1
+                if (self.currentHairStyle == 3) {
+                    self.currentHairStyle = 0
+                }
+            }
+            
+            break
+        case 1: // Hair Left
+            switch self.currentHairColour {
+            case 0:
+                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
+                break
+            case 1:
+                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_blonde")
+                break
+            case 2:
+                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_brown")
+                break
+            case 3:
+                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_special")
+                break
+            default:
+                print("Error")
+                break
+            }
+            
+            self.currentHairColour += 1
+            if (self.currentHairColour == 4) {
+                self.currentHairColour = 0
+                self.currentHairStyle += 1
+                if (self.currentHairStyle == 3) {
+                    self.currentHairStyle = 0
+                }
+            }
+            
+            break
+        case 2: // Face Right
+            self.currentFace = self.currentFace == 2 ? 0 : self.currentFace + 1
+            self.avatarFaceImageView.image = UIImage(named: "expression_\(currentFace)")
+            break
+        case 3: // Face Left
+            self.currentFace = self.currentFace == 0 ? 2 : self.currentFace - 1
+            self.avatarFaceImageView.image = UIImage(named: "expression_\(currentFace)")
+            break
+        case 4: // Skin Right
+            self.currentSkin = self.currentSkin == Colours.skinTones.count - 1 ? 0 : self.currentSkin + 1
+            self.avatarFaceImageView.backgroundColor = Colours.skinTones[currentSkin]
+            break
+        case 5: // Skin Left
+            self.currentSkin = self.currentSkin == 0 ? Colours.skinTones.count - 1 : self.currentSkin - 1
+            self.avatarFaceImageView.backgroundColor = Colours.skinTones[currentSkin]
+            break
+        default:
+            break
+        }
     }
+    
     
     @IBAction func selectMood(_ sender: UIButton) {
         
@@ -85,14 +163,15 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         self.userNameValidationLabel.text = validated.message
         UIView.animate(withDuration: 0.25, animations: {
             self.userNameValidationLabel.isHidden = validated.isValid
+            self.userNameValidationLabel.backgroundColor = Colours.errorBackground
         })
         view.endEditing(true)
         return true
     }
     
     private func validate(_ control: UIControl) -> (isValid: Bool,message: String?) {
-
-        if let textField = control as? UITextField{
+        
+        if let textField = control as? UITextField {
             guard let text = textField.text else {
                 return (false, nil)
             }
@@ -106,11 +185,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             }
             
             return  (text.count > 0, "This field cannot be empty.")
-        } else if let button = control as? UIButton{
-            if button.backgroundImage(for: UIControlState.normal) == nil {
-                return (false, "This field cannot be empty.")
-            }
-            return  (true, nil)
         }
         
         return (false, "Invalid operation")
@@ -118,15 +192,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     
     @objc private func profileWasEdited(_ notification: Notification) {
-        var formIsValid = true
-        for control in editableControls {
-            let (valid, _) = validate(control)
-            
-            guard valid else {
-                formIsValid = false
-                break
-            }
-        }
-        finishButton.isEnabled = formIsValid
+        finishButton.isEnabled = validate(userNameTextField).isValid
+        finishButton.backgroundColor = UIColor.white
     }
 }

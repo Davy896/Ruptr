@@ -184,11 +184,9 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
         }
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath) as! ListTableViewCell
         cell.userProfile = people[indexPath.row]
-        
         return cell
     }
     

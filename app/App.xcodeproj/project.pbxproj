@@ -29,6 +29,7 @@
 		41792CE01FDD632800B5F83E /* ConnectivityServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; };
 		41792CE11FDD632800B5F83E /* ConnectivityServices.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */; };
+		5D4A46181FE3C762007524C4 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A46171FE3C762007524C4 /* Messages.swift */; };
 		5D4FD2FE1FE2B0780043AF98 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4FD2FD1FE2B0780043AF98 /* ChatController.swift */; };
 		5D4FD3001FE2B0FD0043AF98 /* SingleChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4FD2FF1FE2B0FD0043AF98 /* SingleChatCell.swift */; };
 		61B0EE3FE7EBC6B3E7ACFD6A /* Pods_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35866D3762A7CB22DE41193B /* Pods_AppTests.framework */; };
@@ -113,6 +114,10 @@
 		41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		5C62C396886CCA7831DDE00C /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CEF8F1CB553C61D0B99B90A /* Pods-AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppUITests/Pods-AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+<<<<<<< HEAD
+		5D4A46171FE3C762007524C4 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Messages.swift; path = app/Model/Messages.swift; sourceTree = SOURCE_ROOT; };
+=======
+>>>>>>> 11810cd70fce089ab3d21a9d40365a93b32bc1c3
 		5D4FD2FD1FE2B0780043AF98 /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatController.swift; path = app/Controller/UI/ChatController.swift; sourceTree = SOURCE_ROOT; };
 		5D4FD2FF1FE2B0FD0043AF98 /* SingleChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SingleChatCell.swift; path = app/View/Sources/SingleChatCell.swift; sourceTree = SOURCE_ROOT; };
 		7C1E0282AC00E79A01EF63D2 /* Pods_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -266,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				4105BF221FE12772005B2A8C /* Mood.swift */,
+				5D4A46171FE3C762007524C4 /* Messages.swift */,
 				41667A1D1FDD8201004A0E99 /* UserProfile.swift */,
 				4105BF1C1FE124A9005B2A8C /* Status.swift */,
 			);
@@ -603,6 +609,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D4A46181FE3C762007524C4 /* Messages.swift in Sources */,
 				F945CB131FE03283004D3B8F /* ListTableViewCell.swift in Sources */,
 				5D4FD3001FE2B0FD0043AF98 /* SingleChatCell.swift in Sources */,
 				41792C8D1FDD60A200B5F83E /* ViewController.swift in Sources */,

@@ -26,13 +26,11 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-<<<<<<< HEAD
-=======
+
         self.title = NSLocalizedString("chat", comment: "")
         self.view.backgroundColor = Colours.background
-        profile1.name = "1"
-        profile1.profileImageName = "roguemonkeyblog"
->>>>>>> 11810cd70fce089ab3d21a9d40365a93b32bc1c3
+//        profile1.name = "1"
+//        profile1.profileImageName = "roguemonkeyblog"
         setupInputComponents()   //container view for chat writing
         collectionView?.delegate = self
         collectionView?.dataSource = self
@@ -193,7 +191,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     func createMessages( input: UITextField) {
         let profile = ServiceManager.instance.userProfile
-        let newMessage = Messages(text: input.text! , username: profile.username, avatar: profile.avatar)
+        let newMessage = Messages(text: input.text! , username: profile.username, avatar: profile.avatar[0])
 //        newMessage.text = input.text
         
         messages.append(newMessage)

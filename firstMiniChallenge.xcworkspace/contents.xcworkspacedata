@@ -2,11 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-<<<<<<< HEAD
-      location = "group:App/App.xcodeproj">
-=======
       location = "group:App/Pods/Pods.xcodeproj">
->>>>>>> 11810cd70fce089ab3d21a9d40365a93b32bc1c3
    </FileRef>
    <FileRef
       location = "group:ConnectivityServices/ConnectivityServices.xcodeproj">

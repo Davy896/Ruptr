@@ -8,14 +8,10 @@
 
 
 "ghost" = "Ghost";
-<<<<<<< HEAD
 "send" = "Send";
-=======
 "list" = "List";
 "map" = "Map";
 "settings" = "Settings";
 "chat" = "Chat";
 "game" = "Game";
 "profileCreation" = "Profile Creation";
-
->>>>>>> 11810cd70fce089ab3d21a9d40365a93b32bc1c3

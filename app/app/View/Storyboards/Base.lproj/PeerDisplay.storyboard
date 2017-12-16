@@ -36,7 +36,7 @@
         <scene sceneID="k0f-E6-XiH">
             <objects>
                 <tableViewController storyboardIdentifier="ListViewController" title="List" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cmd-t6-NiC" customClass="ListTableViewController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="122" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" id="agN-FS-Szy">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="122" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" id="agN-FS-Szy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -94,6 +94,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="122"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KJ3-xy-icA" customClass="RoundImgView" customModule="App" customModuleProvider="target">
+                                                    <rect key="frame" x="21" y="29" width="64" height="64"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="circle" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Lk-bn-wig" customClass="RoundImgView" customModule="App" customModuleProvider="target">
                                                     <rect key="frame" x="21" y="29" width="64" height="64"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -107,8 +115,9 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="ListImageView" destination="8Lk-bn-wig" id="jRM-ZY-Ynk"/>
-                                    <outlet property="ListTitleView" destination="WjP-vp-gAi" id="ZoJ-ns-Cqo"/>
+                                    <outlet property="faceImageView" destination="KJ3-xy-icA" id="1Cy-zn-Jlu"/>
+                                    <outlet property="hairImageView" destination="8Lk-bn-wig" id="6ZA-2O-K3s"/>
+                                    <outlet property="listTitleView" destination="WjP-vp-gAi" id="4Ja-xv-hI6"/>
                                     <outlet property="mood1" destination="t8c-Ob-v2M" id="qoV-zH-wWm"/>
                                     <outlet property="mood2" destination="JcI-vZ-LtJ" id="VSU-cx-bKf"/>
                                     <outlet property="mood3" destination="baD-A3-2xJ" id="na0-BP-5U9"/>

@@ -14,7 +14,7 @@ public class UserProfile: ProfileRequirements {
     
     private let _id: String
     private var _username: String
-    private var _avatar: String
+    private var _avatar: [String]
     private var _moods: [Mood]
     private var _status: Status
 
@@ -36,7 +36,7 @@ public class UserProfile: ProfileRequirements {
         }
     }
     
-    public var avatar: String {
+    public var avatar: [String] {
         get {
             
             return self._avatar
@@ -72,13 +72,26 @@ public class UserProfile: ProfileRequirements {
         }
     }
     
-    public var avatarImage: UIImage? {
+    public var avatarHair: UIImage? {
         get {
-            return UIImage(named: self.avatar)
+            return UIImage(named: self.avatar[0])
         }
     }
     
-    public init(id: String, username: String, avatar: String, moods: [Mood], status: Status) {
+    public var avatarFace: UIImage? {
+        get {
+            return UIImage(named: self.avatar[1])
+        }
+    }
+    
+    public var avatarSkin: UIColor {
+        get {
+            return Colours.getColour(named: self.avatar[2].components(separatedBy: "|")[0],
+                                     index: Int(self.avatar[2].components(separatedBy: "|")[1]))
+        }
+    }
+    
+    public init(id: String, username: String, avatar: [String], moods: [Mood], status: Status) {
         self._id = id
         self._username = username
         self._avatar = avatar

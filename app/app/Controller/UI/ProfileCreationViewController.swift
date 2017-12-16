@@ -10,14 +10,14 @@ import UIKit
 
 class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
-    private var avatarImageName: String = ""
+    private var avatarHairName: String = "hairstyle_0_black"
     private var moodOne: Mood = Mood.sports
     private var moodTwo: Mood = Mood.games
     private var moodThree: Mood = Mood.music
     private var currentHairStyle = 0
     private var currentHairColour = 0
     private var currentFace = 0
-    private var currentSkin = 1
+    private var currentSkin = 0
     
     @IBOutlet weak var avatarHairImageView: RoundImgView!
     @IBOutlet weak var avatarFaceImageView: RoundImgView!
@@ -39,9 +39,9 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Colours.background
-        self.avatarHairImageView.image = UIImage(named: "hairstyle_\(currentHairStyle)_black")
-        self.avatarFaceImageView.backgroundColor = Colours.skinTones[1]
-        self.avatarFaceImageView.image = UIImage(named: "expression_\(currentFace)")
+        self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
+        self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
+        self.avatarFaceImageView.image = UIImage(named: "expression_\(self.currentFace)")
         
         NotificationCenter.default.addObserver(self, selector: #selector(profileWasEdited(_:)), name: Notification.Name.UITextFieldTextDidChange, object: nil)
     }
@@ -54,24 +54,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     @IBAction func updateAvatar(_ sender: UIButton) {
         switch sender.tag {
         case 0: // Hair Right
-            switch self.currentHairColour {
-            case 0:
-                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
-                break
-            case 1:
-                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_blonde")
-                break
-            case 2:
-                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_brown")
-                break
-            case 3:
-                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_special")
-                break
-            default:
-                print("Error")
-                break
-            }
-            
+            self.selectHair()
             self.currentHairColour += 1
             if (self.currentHairColour == 4) {
                 self.currentHairColour = 0
@@ -83,30 +66,13 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             
             break
         case 1: // Hair Left
-            switch self.currentHairColour {
-            case 0:
-                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
-                break
-            case 1:
-                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_blonde")
-                break
-            case 2:
-                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_brown")
-                break
-            case 3:
-                self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_special")
-                break
-            default:
-                print("Error")
-                break
-            }
-            
-            self.currentHairColour += 1
-            if (self.currentHairColour == 4) {
-                self.currentHairColour = 0
-                self.currentHairStyle += 1
-                if (self.currentHairStyle == 3) {
-                    self.currentHairStyle = 0
+            self.selectHair()
+            self.currentHairColour -= 1
+            if (self.currentHairColour == -1) {
+                self.currentHairColour = 3
+                self.currentHairStyle -= 1
+                if (self.currentHairStyle == -1) {
+                    self.currentHairStyle = 2
                 }
             }
             
@@ -155,7 +121,13 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveProfile(_ sender: UIButton) {
-        ServiceManager.instance.userProfile = UserProfile(id: String.randomAlphaNumericString(length: 20), username: self.userNameTextField.text!, avatar: self.avatarImageName, moods: [self.moodOne, self.moodTwo, self.moodThree], status: Status.playful)
+        ServiceManager.instance.userProfile = UserProfile(id: String.randomAlphaNumericString(length: 20),
+                                                          username: self.userNameTextField.text!,
+                                                          avatar: [self.avatarHairName,
+                                                                   "expression_\(currentFace)",
+                                                                   "skinTones|\(self.currentSkin)"],
+                                                          moods: [self.moodOne, self.moodTwo, self.moodThree],
+                                                          status: Status.playful)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -190,6 +162,29 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         return (false, "Invalid operation")
     }
     
+    private func selectHair() {
+        switch self.currentHairColour {
+        case 0:
+            self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
+            self.avatarHairName = "hairstyle_\(self.currentHairStyle)_black"
+            break
+        case 1:
+            self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_blonde")
+            self.avatarHairName = "hairstyle_\(self.currentHairStyle)_blonde"
+            break
+        case 2:
+            self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_brown")
+            self.avatarHairName = "hairstyle_\(self.currentHairStyle)_brown"
+            break
+        case 3:
+            self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_special")
+            self.avatarHairName = "hairstyle_\(self.currentHairStyle)_special"
+            break
+        default:
+            print("Error")
+            break
+        }
+    }
     
     @objc private func profileWasEdited(_ notification: Notification) {
         finishButton.isEnabled = validate(userNameTextField).isValid

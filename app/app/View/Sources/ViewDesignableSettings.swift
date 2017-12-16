@@ -8,9 +8,8 @@
 
 import Foundation
 import UIKit
-@IBDesignable
 
-class RoundView: UIView {
+@IBDesignable class RoundView: UIView {
     
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
@@ -19,31 +18,39 @@ class RoundView: UIView {
     }
     
     @IBInspectable var borderWidth: CGFloat = 0 {
-        didSet{
+        didSet {
             self.layer.borderWidth = borderWidth
         }
     }
     
     @IBInspectable var borderColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.borderColor = borderColor.cgColor
         }
     }
     
     @IBInspectable var bgColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.backgroundColor = bgColor.cgColor
         }
     }
     
     @IBInspectable var maskToBounds: Bool = false {
-        didSet{
+        didSet {
             self.layer.masksToBounds = maskToBounds
+        }
+    }
+    
+    @IBInspectable var circle: Bool = false {
+        didSet {
+            if (self.circle) {
+                self.layer.cornerRadius = self.frame.size.width/2
+            }
         }
     }
 }
 
-class RoundImgView: UIImageView {
+@IBDesignable class RoundImgView: UIImageView {
     
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
@@ -53,31 +60,31 @@ class RoundImgView: UIImageView {
     }
     
     @IBInspectable var borderWidth: CGFloat = 0 {
-        didSet{
+        didSet {
             self.layer.borderWidth = borderWidth
         }
     }
     
     @IBInspectable var borderColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.borderColor = borderColor.cgColor
         }
     }
     
     @IBInspectable var bgColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.backgroundColor = bgColor.cgColor
         }
     }
     
     @IBInspectable var maskToBounds: Bool = false {
-        didSet{
+        didSet {
             self.layer.masksToBounds = maskToBounds
         }
     }
     
     @IBInspectable var circle: Bool = false {
-        didSet{
+        didSet {
             if (self.circle) {
                 self.layer.cornerRadius = self.frame.size.width/2
             }
@@ -85,7 +92,7 @@ class RoundImgView: UIImageView {
     }
 }
 
-class StatusTextView: UITextView {
+@IBDesignable class StatusTextView: UITextView {
     
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
@@ -97,32 +104,32 @@ class StatusTextView: UITextView {
     }
     
     @IBInspectable var borderWidth: CGFloat = 0 {
-        didSet{
+        didSet {
             self.layer.borderWidth = borderWidth
         }
     }
     
     @IBInspectable var borderColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.borderColor = borderColor.cgColor
         }
     }
     
     @IBInspectable var bgColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.backgroundColor = bgColor.cgColor
         }
     }
     
     @IBInspectable var maskToBounds: Bool = false {
-        didSet{
+        didSet {
             self.layer.masksToBounds = maskToBounds
         }
     }
 }
 
-class RoundButton: UIButton {
-        
+@IBDesignable class RoundButton: UIButton {
+    
     @IBInspectable var topRightCorner: Bool = false {
         didSet {
             drawCorners()
@@ -149,24 +156,24 @@ class RoundButton: UIButton {
     
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
-           drawCorners()
+            drawCorners()
         }
     }
     
     @IBInspectable var borderWidth: CGFloat = 0 {
-        didSet{
+        didSet {
             self.layer.borderWidth = borderWidth
         }
     }
     
     @IBInspectable var borderColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.borderColor = borderColor.cgColor
         }
     }
     
     @IBInspectable var bgColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.backgroundColor = bgColor.cgColor
         }
     }
@@ -177,7 +184,7 @@ class RoundButton: UIButton {
         }
     }
     
-    private func drawCorners(){
+    private func drawCorners() {
         var corners: UIRectCorner = []
         if (topRightCorner) {
             corners.insert(.topRight)
@@ -202,7 +209,7 @@ class RoundButton: UIButton {
     }
 }
 
-class RoundLabel: UILabel {
+@IBDesignable class RoundLabel: UILabel {
     
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
@@ -212,34 +219,76 @@ class RoundLabel: UILabel {
     }
     
     @IBInspectable var borderWidth: CGFloat = 0 {
-        didSet{
+        didSet {
             self.layer.borderWidth = borderWidth
         }
     }
     
     @IBInspectable var borderColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.borderColor = borderColor.cgColor
         }
     }
     
     @IBInspectable var bgColor: UIColor = UIColor.clear {
-        didSet{
+        didSet {
             self.layer.backgroundColor = bgColor.cgColor
         }
     }
     
     @IBInspectable var maskToBounds: Bool = false {
-        didSet{
-            self.layer.masksToBounds = maskToBounds
+        didSet {
+            self.layer.masksToBounds = self.maskToBounds
         }
     }
     
     @IBInspectable var circle: Bool = false {
-        didSet{
+        didSet {
             if (self.circle) {
                 self.layer.cornerRadius = self.frame.size.width/2
             }
         }
+    }
+    
+    @IBInspectable var topMargin: CGFloat = 0 {
+        didSet {
+            self.textInsets = UIEdgeInsets(top: self.topMargin, left: self.leftMargin, bottom: self.bottomMargin, right: self.rightMargin)
+        }
+    }
+    
+    @IBInspectable var bottomMargin: CGFloat = 0 {
+        didSet {
+            self.textInsets = UIEdgeInsets(top: self.topMargin, left: self.leftMargin, bottom: self.bottomMargin, right: self.rightMargin)
+        }
+    }
+    
+    @IBInspectable var leftMargin: CGFloat = 0 {
+        didSet {
+            self.textInsets = UIEdgeInsets(top: self.topMargin, left: self.leftMargin, bottom: self.bottomMargin, right: self.rightMargin)
+        }
+    }
+    
+    @IBInspectable var rightMargin: CGFloat = 0 {
+        didSet {
+            self.textInsets = UIEdgeInsets(top: self.topMargin, left: self.leftMargin, bottom: self.bottomMargin, right: self.rightMargin)
+        }
+    }
+    
+    var textInsets = UIEdgeInsets.zero {
+        didSet {
+            self.invalidateIntrinsicContentSize()
+        }
+    }
+    
+    override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        var insets = self.textInsets
+        let insetRect = UIEdgeInsetsInsetRect(bounds, insets)
+        let textRect = super.textRect(forBounds: insetRect, limitedToNumberOfLines: numberOfLines)
+        insets = UIEdgeInsets(top: -insets.top, left: -insets.left, bottom: -insets.bottom, right: -insets.right)
+        return UIEdgeInsetsInsetRect(textRect, insets)
+    }
+    
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, self.textInsets))
     }
 }

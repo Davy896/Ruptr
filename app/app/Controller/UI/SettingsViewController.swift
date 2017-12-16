@@ -10,7 +10,8 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    @IBOutlet weak var avatarImageView: RoundImgView!
+    @IBOutlet weak var avatarHairImageView: RoundImgView!
+    @IBOutlet weak var avatarFaceImageView: RoundImgView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var statusView: RoundView!
     @IBOutlet var statusButtons: [RoundButton]!
@@ -44,9 +45,12 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         self.title = NSLocalizedString("settings", comment: "")
         self.view.backgroundColor = Colours.background
-        avatarImageView.image = ServiceManager.instance.userProfile.avatarImage
-        usernameLabel.text = ServiceManager.instance.userProfile.username
-        setupColours(forButton: 3)
+        self.avatarHairImageView.image = ServiceManager.instance.userProfile.avatarHair
+        self.avatarHairImageView.backgroundColor = ServiceManager.instance.userProfile.avatarSkin
+        self.avatarFaceImageView.image = ServiceManager.instance.userProfile.avatarFace
+        self.avatarFaceImageView.backgroundColor = UIColor.clear
+        self.usernameLabel.text = ServiceManager.instance.userProfile.username
+        self.setupColours(forButton: 3)
         for button in self.moodButtons {
             button.backgroundColor = UIColor.blue
         }
@@ -71,7 +75,7 @@ class SettingsViewController: UIViewController {
         }
         self.statusView.backgroundColor = self.deselectedColour
         self.statusTextView.backgroundColor = self.deselectedColour
-
+        
         for button in self.statusButtons {
             button.backgroundColor = self.deselectedColour
         }
@@ -85,6 +89,7 @@ class SettingsViewController: UIViewController {
                     self.statusTextView.backgroundColor = self.statusColours[tag]
                     self.statusTextView.text = self.statusDescriptions[tag]
                 }, completion: nil)
+                
             } else{
                 button.backgroundColor = self.deselectedColour
             }

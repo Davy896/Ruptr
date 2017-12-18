@@ -9,7 +9,7 @@
 import UIKit
 
 //class for the chat
-class ChatController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout{
+class ChatController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
     
     private let cellId = "cellID"
     
@@ -26,6 +26,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
+        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         
         UIViewController.setViewBackground(for: self)
         
@@ -38,9 +41,71 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         collectionView?.dataSource = self
         collectionView?.register(SingleChatCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true
+        setupKeyboard()
+//        collectionView?.keyboardDismissMode = .interactive
+        
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        self.view.endEditing(true)
+    }
+    
+    
+    
+//    override var inputAccessoryView: UIView? {
+//        get {
+//            let containerView = UIView()
+//            containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+//            containerView.backgroundColor = UIColor.lightGray
+//            return containerView
+//        }
+//    }
+//
+//
+//    override func becomeFirstResponder() -> Bool {
+//        return true
+//    }
+    
+    func setupKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {             //funzione di sicurezza ceh serve per non aprire diverse tastiere
+        super.viewDidDisappear(animated)                            //
+        NotificationCenter.default.removeObserver(self)             //
+    }
+    
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect)
+        let keyboardDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]
+
+        
+        containerViewBottomAnchor?.constant = -keyboardFrame.height
+        UIView.animate(withDuration: keyboardDuration as! TimeInterval) {
+            self.view.layoutIfNeeded()
+        }
+        
+        
        
     }
     
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        let keyboardDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]
+        
+        
+        containerViewBottomAnchor?.constant = 0
+        UIView.animate(withDuration: keyboardDuration as! TimeInterval) {
+            self.view.layoutIfNeeded()
+        }
+        
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
@@ -63,13 +128,21 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
 
         let messageText = messages[indexPath.item].text
         let avatar = messages[indexPath.item].avatar
-        
+        cell.messageLabel.isEditable = false
         if messages[indexPath.item].isSend == true {
             cell.profileImageView.image = #imageLiteral(resourceName: "avatar0")
-            
-            cell.profileImageView.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
             cell.messageLabel.backgroundColor = UIColor.blue
+            
+            cell.profileImageView.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
+//            cell.profileImageView.leftAnchor.constraint(equalTo: cell.messageLabel.rightAnchor, constant: 10)
+//            cell.profileImageView.bottomAnchor.constraint(equalTo: cell.messageLabel.bottomAnchor)
+//            cell.profileImageView.widthAnchor.constraint(equalToConstant: 30)
+//            cell.profileImageView.widthAnchor.constraint(equalToConstant: 30)
+//
+            
+           
+            
         } else {
             cell.profileImageView.image = #imageLiteral(resourceName: "avatar0")
             cell.profileImageView.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
@@ -77,6 +150,10 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.messageLabel.backgroundColor = UIColor.lightGray
         }
         
+        let item = messages.count - 1
+        let inserctionIndexPath = NSIndexPath(item: item, section: 0)
+        
+        collectionView.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: true)
         
         
         return cell
@@ -110,7 +187,13 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         return CGSize(width: view.frame.width, height: 80)
     }
     
+    var containerViewBottomAnchor: NSLayoutConstraint?
+    
     func setupInputComponents() {
+        
+        
+        
+        
         
         let containerView = UIView()                                    //creation of the writing container view
         //containerView.backgroundColor = UIColor.red                   // need only for test
@@ -122,11 +205,11 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         //containerView.frame = CGRect(x: 100, y: 100, width: view.frame.width, height: 80)
         
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
-        containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true   //
+//        containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true   //
         containerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
         containerView.heightAnchor.constraint(equalToConstant: 50).isActive = true          //
-        
-        
+        containerViewBottomAnchor = containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        containerViewBottomAnchor?.isActive = true
         
         
         let sendButton = UIButton(type: .system)                        //create Button Send (type: .system -->serve per far diventare il bottone bianco quando lo premi)
@@ -225,10 +308,13 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     @objc func send() {            //function to send messages
         print(inputTextField.text)
-        
-        createMessages(input: inputTextField)
+        if inputTextField.text != "" {
+            createMessages(input: inputTextField)
+            
+            self.collectionView?.reloadData()
+        }
        
-        self.collectionView?.reloadData()
+        
     }
     
     @objc func simulate() {            //function to send messages
@@ -254,7 +340,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
 
 //        newMessage.text = input.text
         
-        messages.append(newMessage)
         
     }
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SCLAlertView
 
 class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
@@ -18,6 +19,18 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     private var currentHairColour = 0
     private var currentFace = 0
     private var currentSkin = 0
+    private let alertAppearence = SCLAlertView.SCLAppearance(kWindowWidth: 343,
+                                                             kWindowHeight: 400,
+                                                             kTitleFont: UIFont(name: "Futura-Bold", size: 17)!,
+                                                             kTextFont: UIFont(name: "Futura-Medium", size: 14)!,
+                                                             kButtonFont: UIFont(name: "Futura-Medium", size: 17)!,
+                                                             showCircularIcon: false)
+    private let moodAlertButtons = [Mood.food: RoundButton(),
+                               Mood.games: RoundButton(),
+                               Mood.music: RoundButton(),
+                               Mood.outdoor: RoundButton(),
+                               Mood.shopping: RoundButton(),
+                               Mood.sports: RoundButton()]
     
     private let displayedPositionX: CGFloat = 16
     private let firstPartHiddenPositionX: CGFloat = -400
@@ -54,6 +67,42 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         let title = UINavigationItem(title: "Profile Creation");
         navBar.setItems([title], animated: true);
         self.view.addSubview(navBar);
+        
+        for (key, button) in moodAlertButtons {
+            
+            button.frame.size = CGSize(width: self.moodOneButton.frame.size.width * 0.8,
+                                       height: self.moodOneButton.frame.size.height * 0.8)
+            button.cornerRadius = 5
+            button.bottomLeftCorner = true
+            button.bottomRightCorner = true
+            button.topLeftCorner = true
+            button.topRightCorner = true
+            button.maskToBounds = true
+
+            if (key == moodOne || key == moodTwo || key == moodThree) {
+                button.isEnabled = false
+            }
+            switch key {
+            case Mood.food:
+                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                break
+            case Mood.games:
+                button.setBackgroundImage(UIImage(named: "games"), for: UIControlState.normal)
+                break
+            case Mood.music:
+                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                break
+            case Mood.outdoor:
+                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                break
+            case Mood.shopping:
+                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                break
+            case Mood.sports:
+                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                break
+            }
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(profileWasEdited(_:)), name: Notification.Name.UITextFieldTextDidChange, object: nil)
     }
@@ -113,18 +162,40 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func selectMood(_ sender: UIButton) {
+        let alert = SCLAlertView(appearance: self.alertAppearence)
+        let subview = UIView(frame: CGRect(x: 20, y: 15, width: 343, height: 200))
+        let y = self.moodOneButton.frame.size.height + 15
+        var x = self.moodOneButton.frame.origin.x
+        var iterationIndex = 0
         
+        for (_, button) in self.moodAlertButtons {
+            if (iterationIndex == 3) {
+                x = self.moodOneButton.frame.origin.x
+            }
+            
+            if (iterationIndex > 2) {
+                button.frame.origin.y = y
+            }
+            
+            button.frame.origin.x = x
+            subview.addSubview(button)
+            x += button.frame.width + 10
+            iterationIndex += 1
+        }
+        
+        alert.customSubview = subview
         switch sender {
-        case moodOneButton:
+        case self.moodOneButton:
+            alert.showInfo("Select a mood", subTitle: "")
             sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
             self.moodOne = Mood.sports
             break
-        case moodTwoButton:
+        case self.moodTwoButton:
             
             sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
             self.moodTwo = Mood.sports
             break
-        case moodThreeButton:
+        case self.moodThreeButton:
             sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
             self.moodThree = Mood.sports
             break

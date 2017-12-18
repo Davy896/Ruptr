@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.selected)
             UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.highlighted)
         }
+        
         return true
     }
     

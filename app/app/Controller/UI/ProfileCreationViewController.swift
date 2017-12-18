@@ -26,11 +26,11 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                                                              kButtonFont: UIFont(name: "Futura-Medium", size: 17)!,
                                                              showCircularIcon: false)
     private let moodAlertButtons = [Mood.food: RoundButton(),
-                               Mood.games: RoundButton(),
-                               Mood.music: RoundButton(),
-                               Mood.outdoor: RoundButton(),
-                               Mood.shopping: RoundButton(),
-                               Mood.sports: RoundButton()]
+                                    Mood.games: RoundButton(),
+                                    Mood.music: RoundButton(),
+                                    Mood.outdoor: RoundButton(),
+                                    Mood.shopping: RoundButton(),
+                                    Mood.sports: RoundButton()]
     
     private let displayedPositionX: CGFloat = 16
     private let firstPartHiddenPositionX: CGFloat = -400
@@ -78,10 +78,12 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             button.topLeftCorner = true
             button.topRightCorner = true
             button.maskToBounds = true
+            button.addTarget(self, action: #selector(chooseMoodForProfile), for: .touchUpInside)
 
-            if (key == moodOne || key == moodTwo || key == moodThree) {
+            if (key == self.moodOne || key == self.moodTwo || key == self.moodThree) {
                 button.isEnabled = false
             }
+            
             switch key {
             case Mood.food:
                 button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
@@ -123,9 +125,8 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                     self.currentHairStyle = 0
                 }
             }
+            
             self.selectHair()
-            
-            
             break
         case 1: // Hair Left
             self.currentHairColour -= 1
@@ -136,8 +137,8 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                     self.currentHairStyle = 2
                 }
             }
-            self.selectHair()
             
+            self.selectHair()
             break
         case 2: // Face Right
             self.currentFace = self.currentFace == 2 ? 0 : self.currentFace + 1
@@ -191,7 +192,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             self.moodOne = Mood.sports
             break
         case self.moodTwoButton:
-            
             sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
             self.moodTwo = Mood.sports
             break
@@ -209,7 +209,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                                                           username: self.userNameTextField.text!,
                                                           avatar: [AvatarParts.hair: self.avatarHairName,
                                                                    AvatarParts.face: "expression_\(currentFace)",
-                                                            AvatarParts.skin: "skinTones|\(self.currentSkin)"],
+                                                                   AvatarParts.skin: "skinTones|\(self.currentSkin)"],
                                                           moods: [self.moodOne,
                                                                   self.moodTwo,
                                                                   self.moodThree],
@@ -317,5 +317,9 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         
         self.finishButton.isEnabled = validated.isValid
         self.finishButton.backgroundColor = validated.isValid ? UIColor.white : Colours.saveProfileButtonInvalidBackground
+    }
+    
+    @IBAction func chooseMoodForProfile(_ sender: UIButton) {
+        
     }
 }

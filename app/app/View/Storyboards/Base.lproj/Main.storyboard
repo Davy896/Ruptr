@@ -265,7 +265,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eOt-PZ-Pyw" customClass="RoundButton" customModule="App" customModuleProvider="target">
                                         <rect key="frame" x="1" y="296" width="105" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" backgroundImage="music"/>
+                                        <state key="normal" backgroundImage="sports"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
@@ -479,5 +479,6 @@
         <image name="games" width="105" height="80"/>
         <image name="hairstyle_0_black" width="800" height="800"/>
         <image name="music" width="105" height="80"/>
+        <image name="sports" width="105" height="80"/>
     </resources>
 </document>

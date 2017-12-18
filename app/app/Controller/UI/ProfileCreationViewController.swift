@@ -19,6 +19,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     private var currentHairColour = 0
     private var currentFace = 0
     private var currentSkin = 0
+    private var moodSelection = 1
     private let alertAppearence = SCLAlertView.SCLAppearance(kWindowWidth: 343,
                                                              kWindowHeight: 400,
                                                              kTitleFont: UIFont(name: "Futura-Bold", size: 17)!,
@@ -62,7 +63,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
         self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
         self.avatarFaceImageView.image = UIImage(named: "expression_\(self.currentFace)")
-        
         let navBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
         let title = UINavigationItem(title: "Profile Creation");
         navBar.setItems([title], animated: true);
@@ -86,7 +86,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             
             switch key {
             case Mood.food:
-                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "food"), for: UIControlState.normal)
                 break
             case Mood.games:
                 button.setBackgroundImage(UIImage(named: "games"), for: UIControlState.normal)
@@ -95,13 +95,13 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                 button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
                 break
             case Mood.outdoor:
-                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "outdoors"), for: UIControlState.normal)
                 break
             case Mood.shopping:
-                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "shopping"), for: UIControlState.normal)
                 break
             case Mood.sports:
-                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "sports"), for: UIControlState.normal)
                 break
             }
         }
@@ -187,20 +187,46 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         alert.customSubview = subview
         switch sender {
         case self.moodOneButton:
+            self.moodSelection = 1
             alert.showInfo("Select a mood", subTitle: "")
-            sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
-            self.moodOne = Mood.sports
             break
         case self.moodTwoButton:
-            sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
-            self.moodTwo = Mood.sports
+            self.moodSelection = 2
+            alert.showInfo("Select a mood", subTitle: "")
             break
         case self.moodThreeButton:
-            sender.setBackgroundImage(UIImage(named: "roguemonkeyblog"), for: UIControlState.normal)
-            self.moodThree = Mood.sports
+            self.moodSelection = 3
+            alert.showInfo("Select a mood", subTitle: "")
             break
         default:
             break
+        }
+    }
+    
+    @IBAction func chooseMoodForProfile(_ sender: UIButton) {
+        switch  moodSelection {
+        case 1:
+            moodOneButton.setBackgroundImage(sender.backgroundImage(for: UIControlState.normal), for: UIControlState.normal)
+            moodOne = Array(moodAlertButtons.filter( { (key,value) -> Bool in value == sender } ).keys)[0]
+            break
+        case 2:
+            moodTwoButton.setBackgroundImage(sender.backgroundImage(for: UIControlState.normal), for: UIControlState.normal)
+            moodTwo = Array(moodAlertButtons.filter( { (key,value) -> Bool in value == sender } ).keys)[0]
+            break
+        case 3:
+            moodThreeButton.setBackgroundImage(sender.backgroundImage(for: UIControlState.normal), for: UIControlState.normal)
+            moodThree = Array(moodAlertButtons.filter( { (key,value) -> Bool in value == sender } ).keys)[0]
+            break
+        default:
+            break
+        }
+        
+        for (key, button) in moodAlertButtons {
+            if (key == self.moodOne || key == self.moodTwo || key == self.moodThree) {
+                button.isEnabled = false
+            } else {
+                button.isEnabled = true
+            }
         }
     }
     
@@ -317,9 +343,5 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         
         self.finishButton.isEnabled = validated.isValid
         self.finishButton.backgroundColor = validated.isValid ? UIColor.white : Colours.saveProfileButtonInvalidBackground
-    }
-    
-    @IBAction func chooseMoodForProfile(_ sender: UIButton) {
-        
     }
 }

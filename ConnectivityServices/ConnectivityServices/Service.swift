@@ -126,7 +126,6 @@ public class Service: NSObject {
         self._peerId = MCPeerID(displayName: "\(self._profile.id)|\(self._serviceType)")
         self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId,
                                                             discoveryInfo: ["seviceType": self._serviceType,
-                                                                            "avatar": self._profile.avatar,
                                                                             "username": self._profile.username],
                                                             serviceType: self._serviceType)
         self._serviceBrowser = MCNearbyServiceBrowser(peer: _peerId, serviceType: self._serviceType)

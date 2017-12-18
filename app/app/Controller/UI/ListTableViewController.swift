@@ -28,7 +28,9 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
             for i in 0 ... peers.count - 1 {
                 people.append(UserProfile(id: peers[i].displayName.components(separatedBy: "|")[0],
                                           username: infos[i]["username"]!,
-                                          avatar: infos[i]["avatar"]!,
+                                          avatar: [ infos[i]["avatarHair"]!,
+                                                    infos[i]["avatarFace"]!,
+                                                    infos[i]["avatarSkin"]!],
                                           moods: [ Mood.stringToEnum(from: infos[i]["moodOne"]!),
                                                    Mood.stringToEnum(from: infos[i]["moodTwo"]!),
                                                    Mood.stringToEnum(from:infos[i]["moodThree"]!)],
@@ -48,7 +50,9 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
             for i in 0 ... peers.count - 1 {
                 people.append(UserProfile(id: peers[i].displayName.components(separatedBy: "|")[0],
                                           username: infos[i]["username"]!,
-                                          avatar: infos[i]["avatar"]!,
+                                          avatar: [ infos[i]["avatarHair"]!,
+                                                    infos[i]["avatarFace"]!,
+                                                    infos[i]["avatarSkin"]!],
                                           moods: [ Mood.stringToEnum(from: infos[i]["moodOne"]!),
                                                    Mood.stringToEnum(from: infos[i]["moodTwo"]!),
                                                    Mood.stringToEnum(from:infos[i]["moodThree"]!)],
@@ -75,7 +79,9 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
             for i in 0 ... peers.count - 1 {
                 people.append(UserProfile(id: peers[i].displayName.components(separatedBy: "|")[0],
                                           username: infos[i]["username"]!,
-                                          avatar: infos[i]["avatar"]!,
+                                          avatar: [ infos[i]["avatarHair"]!,
+                                                    infos[i]["avatarFace"]!,
+                                                    infos[i]["avatarSkin"]!],
                                           moods: [ Mood.stringToEnum(from: infos[i]["moodOne"]!),
                                                    Mood.stringToEnum(from: infos[i]["moodTwo"]!),
                                                    Mood.stringToEnum(from:infos[i]["moodThree"]!)],
@@ -184,11 +190,9 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
         }
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath) as! ListTableViewCell
         cell.userProfile = people[indexPath.row]
-        
         return cell
     }
     
@@ -196,6 +200,11 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
         guard let cell = self.tableView.cellForRow(at: indexPath) as? ListTableViewCell else {
             return
         }
+        
+        cell.hairImageView.image = ServiceManager.instance.userProfile.avatarHair
+        cell.hairImageView.backgroundColor = UIColor.clear
+        cell.faceImageView.image = ServiceManager.instance.userProfile.avatarFace
+        cell.faceImageView.backgroundColor = ServiceManager.instance.userProfile.avatarSkin
         
         guard let profile = cell.userProfile else {
             return

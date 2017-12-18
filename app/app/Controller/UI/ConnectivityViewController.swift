@@ -67,7 +67,9 @@ class ConnectivityViewController: UIViewController, ProfileServiceDelegate, Broa
     }
     
     func setDiscoveryInfo(from profile: ProfileRequirements) {
-        let info = ["avatar": ServiceManager.instance.userProfile.avatar,
+        let info = ["avatarHair": ServiceManager.instance.userProfile.avatar[0],
+                    "avatarFace": ServiceManager.instance.userProfile.avatar[1],
+                    "avatarSkin": ServiceManager.instance.userProfile.avatar[2],
                     "username": ServiceManager.instance.userProfile.username,
                     "moodOne": ServiceManager.instance.userProfile.moods[0].enumToString,
                     "moodTwo": ServiceManager.instance.userProfile.moods[1].enumToString,

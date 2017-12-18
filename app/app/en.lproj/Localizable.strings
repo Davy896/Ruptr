@@ -8,10 +8,10 @@
 
 
 "ghost" = "Ghost";
+"send" = "Send";
 "list" = "List";
 "map" = "Map";
 "settings" = "Settings";
 "chat" = "Chat";
 "game" = "Game";
 "profileCreation" = "Profile Creation";
-

@@ -19,6 +19,13 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     private var currentFace = 0
     private var currentSkin = 0
     
+    private let displayedPositionX: CGFloat = 16
+    private let firstPartHiddenPositionX: CGFloat = -400
+    private let seccondPartHiddenPositionX: CGFloat = 400
+    
+    @IBOutlet weak var firstPartView: UIView!
+    @IBOutlet weak var seccondPartView: UIView!
+    @IBOutlet weak var pageMarker: UIPageControl!
     @IBOutlet weak var avatarHairImageView: RoundImgView!
     @IBOutlet weak var avatarFaceImageView: RoundImgView!
     
@@ -38,10 +45,15 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Colours.background
+        self.setBackground()
         self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
         self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
         self.avatarFaceImageView.image = UIImage(named: "expression_\(self.currentFace)")
+        
+        let navBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
+        let title = UINavigationItem(title: "Profile Creation");
+        navBar.setItems([title], animated: true);
+        self.view.addSubview(navBar);
         
         NotificationCenter.default.addObserver(self, selector: #selector(profileWasEdited(_:)), name: Notification.Name.UITextFieldTextDidChange, object: nil)
     }
@@ -54,7 +66,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     @IBAction func updateAvatar(_ sender: UIButton) {
         switch sender.tag {
         case 0: // Hair Right
-            self.selectHair()
             self.currentHairColour += 1
             if (self.currentHairColour == 4) {
                 self.currentHairColour = 0
@@ -63,10 +74,11 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                     self.currentHairStyle = 0
                 }
             }
+            self.selectHair()
+            
             
             break
         case 1: // Hair Left
-            self.selectHair()
             self.currentHairColour -= 1
             if (self.currentHairColour == -1) {
                 self.currentHairColour = 3
@@ -75,6 +87,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                     self.currentHairStyle = 2
                 }
             }
+            self.selectHair()
             
             break
         case 2: // Face Right
@@ -123,11 +136,48 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveProfile(_ sender: UIButton) {
         ServiceManager.instance.userProfile = UserProfile(id: String.randomAlphaNumericString(length: 20),
                                                           username: self.userNameTextField.text!,
-                                                          avatar: [self.avatarHairName,
-                                                                   "expression_\(currentFace)",
-                                                                   "skinTones|\(self.currentSkin)"],
-                                                          moods: [self.moodOne, self.moodTwo, self.moodThree],
+                                                          avatar: [AvatarParts.hair: self.avatarHairName,
+                                                                   AvatarParts.face: "expression_\(currentFace)",
+                                                            AvatarParts.skin: "skinTones|\(self.currentSkin)"],
+                                                          moods: [self.moodOne,
+                                                                  self.moodTwo,
+                                                                  self.moodThree],
                                                           status: Status.playful)
+    }
+    
+    @IBAction func switchParts(_ sender: Any) {
+        if let swipe = sender as? UISwipeGestureRecognizer {
+            switch swipe.direction {
+            case UISwipeGestureRecognizerDirection.left:
+                self.pageMarker.currentPage = 1
+                UIView.animate(withDuration: 0.35, animations: {
+                    self.firstPartView.frame.origin.x = self.firstPartHiddenPositionX
+                    self.seccondPartView.frame.origin.x = self.displayedPositionX
+                })
+                break
+            case UISwipeGestureRecognizerDirection.right:
+                self.pageMarker.currentPage = 0
+                UIView.animate(withDuration: 0.35, animations: {
+                    self.firstPartView.frame.origin.x = self.displayedPositionX
+                    self.seccondPartView.frame.origin.x = self.seccondPartHiddenPositionX
+                })
+                break
+            default:
+                break
+            }
+        } else if let pageControl = sender as? UIPageControl  {
+            if pageControl.currentPage == 1 {
+                UIView.animate(withDuration: 0.35, animations: {
+                    self.firstPartView.frame.origin.x = self.firstPartHiddenPositionX
+                    self.seccondPartView.frame.origin.x = self.displayedPositionX
+                })
+            } else {
+                UIView.animate(withDuration: 0.35, animations: {
+                    self.firstPartView.frame.origin.x = self.displayedPositionX
+                    self.seccondPartView.frame.origin.x = self.seccondPartHiddenPositionX
+                })
+            }
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -187,7 +237,24 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func profileWasEdited(_ notification: Notification) {
-        finishButton.isEnabled = validate(userNameTextField).isValid
-        finishButton.backgroundColor = UIColor.white
+        let validated = self.validate(self.userNameTextField)
+        self.userNameValidationLabel.text = validated.message
+        UIView.animate(withDuration: 0.25, animations: {
+            self.userNameValidationLabel.isHidden = validated.isValid
+            self.userNameValidationLabel.backgroundColor = Colours.errorBackground
+        })
+        
+        self.finishButton.isEnabled = validated.isValid
+        self.finishButton.backgroundColor = validated.isValid ? UIColor.white : Colours.saveProfileButtonInvalidBackground
+    }
+}
+
+extension UIViewController {
+    func setBackground() {
+        let background = UIImageView(frame: self.view.frame)
+        background.image = UIImage(named: "space_background")
+        self.view.backgroundColor = Colours.background
+        self.view.addSubview(background)
+        self.view.sendSubview(toBack: background)
     }
 }

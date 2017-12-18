@@ -10,9 +10,10 @@ import MultipeerConnectivity
 public protocol ChatServiceDelegate {
     
     func invitePeer(withId id: MCPeerID, profile: ProfileRequirements)
-    func handleInvitation(from: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void)
+    func handleInvitation(from: MCPeerID, withContext context: Data?)
     func handleMessage(from: MCPeerID, message: String)
     func peerFound(withId id: MCPeerID)
     func peerLost(withId id: MCPeerID)
+    func connectedSuccessfully(with id: MCPeerID)
     func setDiscoveryInfo(from profile: ProfileRequirements)
 }

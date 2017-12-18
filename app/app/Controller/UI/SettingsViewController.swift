@@ -44,15 +44,16 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString("settings", comment: "")
-        self.view.backgroundColor = Colours.background
+        self.setBackground()
         self.avatarHairImageView.image = ServiceManager.instance.userProfile.avatarHair
-        self.avatarHairImageView.backgroundColor = ServiceManager.instance.userProfile.avatarSkin
+        self.avatarHairImageView.backgroundColor = UIColor.clear
         self.avatarFaceImageView.image = ServiceManager.instance.userProfile.avatarFace
-        self.avatarFaceImageView.backgroundColor = UIColor.clear
+        self.avatarFaceImageView.backgroundColor = ServiceManager.instance.userProfile.avatarSkin
         self.usernameLabel.text = ServiceManager.instance.userProfile.username
         self.setupColours(forButton: 3)
-        for button in self.moodButtons {
-            button.backgroundColor = UIColor.blue
+        for i in 0 ... self.moodButtons.count - 1 {
+            self.moodButtons[i].backgroundColor = UIColor.blue
+            self.moodButtons[i].setTitle(ServiceManager.instance.userProfile.moods[i].enumToString, for: UIControlState.normal)
         }
     }
     

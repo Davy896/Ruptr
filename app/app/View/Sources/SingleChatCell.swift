@@ -44,14 +44,24 @@ class SingleChatCell: UICollectionViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = " "
+        label.text = ""
         label.font = UIFont.systemFont(ofSize: 18)
         return label
     }()
     
     let messageLabel: UITextView = {
         let label = UITextView()
-        label.text = " "
+        label.text = ""
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.blue
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.layer.cornerRadius = 15
+        return label
+    }()
+    
+    let recivedMessageLabel: UITextView = {
+        let label = UITextView()
+        label.text = ""
         label.textColor = UIColor.white
         label.backgroundColor = UIColor.blue
         label.font = UIFont.systemFont(ofSize: 18)
@@ -70,11 +80,19 @@ class SingleChatCell: UICollectionViewCell {
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 34
+        imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
         return imageView
     }()
     
+    
+    let recivedProfileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 15
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
     
     let hasReadImageView: UIImageView = {
         let imageView = UIImageView()
@@ -112,26 +130,38 @@ class SingleChatCell: UICollectionViewCell {
     }
     
     
+    
+    
+    
+    
     func setupView() {
         backgroundColor = UIColor.white
         
         
         addSubview(messageLabel)
         addSubview(profileImageView)
+        addSubview(recivedMessageLabel)
+        addSubview(recivedProfileImageView)
+        
         
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        profileImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        profileImageView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        recivedProfileImageView.translatesAutoresizingMaskIntoConstraints = false
+        recivedMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        messageLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        messageLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        messageLabel.widthAnchor.constraint(equalToConstant: 250).isActive = true
-        messageLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-//        messageLabel.textColor = UIColor.
+        
+//        profileImageView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor).isActive = true
+//        profileImageView.leftAnchor.constraint(equalTo: messageLabel.rightAnchor, constant: 10).isActive = true
+//        profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+//        profileImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        profileImageView.backgroundColor = UIColor.lightGray
+        recivedProfileImageView.backgroundColor = UIColor.blue
+        
+//        messageLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+//        messageLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+//        messageLabel.widthAnchor.constraint(equalToConstant: 250).isActive = true
+//        messageLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+////        messageLabel.textColor = UIColor.
         
        
         

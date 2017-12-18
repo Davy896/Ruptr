@@ -15,7 +15,7 @@ public enum Mood {
     case food
     case shopping
     
-    var image: UIImage? {
+    public var image: UIImage? {
         get {
             switch self {
             case Mood.sports:
@@ -34,17 +34,17 @@ public enum Mood {
         }
     }
     
-    var enumToString: String {
+    public var enumToString: String {
         get {
             switch self {
             case Mood.sports:
-                return "Sport"
+                return "Sports"
             case Mood.music:
                 return "Music"
             case Mood.outdoor:
                 return "Outdoor"
             case Mood.games:
-                return "Game"
+                return "Games"
             case Mood.food:
                 return "Food"
             case Mood.shopping:
@@ -53,15 +53,15 @@ public enum Mood {
         }
     }
     
-    static func stringToEnum(from string: String) -> Mood {
+    public static func stringToEnum(from string: String) -> Mood {
         switch string {
-        case "Sport":
+        case "Sports":
             return Mood.sports
         case "Music":
             return Mood.music
         case "Outdoor":
             return Mood.outdoor
-        case "Game":
+        case "Games":
             return Mood.games
         case "Food":
             return Mood.food

@@ -6,4 +6,8 @@
 //  Copyright © 2017 Apple Dev Academy. All rights reserved.
 //
 
-import Foundation
+public enum AvatarParts {
+    case hair
+    case face
+    case skin
+}

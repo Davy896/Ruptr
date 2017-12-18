@@ -18,12 +18,8 @@ public class Service: NSObject {
     internal var _peers: [MCPeerID]
     internal var _peersDiscoveryInfos: [[String:String]]
     internal var _discoveryInfo: [String : String]
-    
-    internal lazy var _session: MCSession = {
-        let session = MCSession(peer: self._peerId, securityIdentity: nil, encryptionPreference: .none)
-        session.delegate = self
-        return session
-    }()
+    internal var _invitationHandler: ((Bool, MCSession?)->Void)!
+    internal var _session: MCSession
     
     public var serviceType: String {
         
@@ -120,6 +116,12 @@ public class Service: NSObject {
         }
     }
     
+    public var invitationHandler: ((Bool, MCSession?)->Void)! {
+        get {
+            return _invitationHandler
+        }
+    }
+    
     internal init(profile: ProfileRequirements, serviceType: String) {
         self._profile = profile
         self._serviceType = serviceType
@@ -132,11 +134,13 @@ public class Service: NSObject {
         self._peers = []
         self._peersDiscoveryInfos = []
         self._discoveryInfo = [:]
+        self._session = MCSession(peer: self._peerId, securityIdentity: nil, encryptionPreference: .none)
         
         super.init()
         
         self._serviceAdvertiser.delegate = self
         self._serviceBrowser.delegate = self
+        self._session.delegate = self
     }
     
     deinit {
@@ -153,6 +157,7 @@ extension Service: MCNearbyServiceAdvertiserDelegate {
         if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType) {
             return
         }
+        _invitationHandler = invitationHandler
     }
 }
 
@@ -175,7 +180,19 @@ extension Service: MCNearbyServiceBrowserDelegate {
 
 extension Service: MCSessionDelegate {
     
-    public func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {}
+    public func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        switch state {
+        case MCSessionState.connected:
+            print("-----------Connected-----------")
+            break
+        case MCSessionState.connecting:
+            print("-----------Connecting-----------")
+            break
+        case MCSessionState.notConnected:
+            print("-----------Not Connected-----------")
+            break
+        }
+    }
     
     public func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType) {

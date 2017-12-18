@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         if let defaultFont = UIFont(name: "Futura-Medium", size: 17) {
             UILabel.appearance().font = defaultFont
-            UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).font = defaultFont
+            UILabel.appearance(whenContainedInInstancesOf: [UIView.self]).font = defaultFont
             UITextView.appearance().font = defaultFont
             UITextField.appearance().font = defaultFont
             UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: defaultFont]
@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.selected)
             UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.highlighted)
         }
-        
         return true
     }
     

@@ -30,9 +30,12 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         
+        UIViewController.setViewBackground(for: self)
+        
         self.title = NSLocalizedString("chat", comment: "")
+//        profile1.name = "1"
+//        profile1.profileImageName = "roguemonkeyblog"
         self.view.backgroundColor = Colours.background
-
         setupInputComponents()   //container view for chat writing
         collectionView?.delegate = self
         collectionView?.dataSource = self
@@ -319,7 +322,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         let fakeMessage = UITextField()
         fakeMessage.text = "this is a fake recived messagge"
         let profile = ServiceManager.instance.userProfile
-        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatar: profile.avatar[0], isSend: false)
+        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatar: profile.avatar[AvatarParts.hair]!, isSend: false)
         
         messages.append(newMessage)
         self.collectionView?.reloadData()
@@ -333,14 +336,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     func createMessages( input: UITextField) {
         let profile = ServiceManager.instance.userProfile
-        let newMessage = Messages(text: input.text! , username: profile.username, avatar: profile.avatar[0], isSend: true)
-        messages.append(newMessage)
-        
-//        let item = messages.count
-//        let inserctionIndexPath = NSIndexPath(item: item, section: 0)
-//        collectionView?.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: true)
-        inputTextField.text = nil
-        
+        let newMessage = Messages(text: input.text! , username: profile.username, avatar: profile.avatar[AvatarParts.hair]!, isSend: true)
+
+//        newMessage.text = input.text
         
         
     }

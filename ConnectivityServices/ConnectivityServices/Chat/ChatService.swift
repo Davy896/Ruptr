@@ -20,7 +20,8 @@ public class ChatService: Service {
 extension ChatService { // MCNearbyServiceAdvertiserDelegate
     
     public override func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        delegate?.handleInvitation(from: peerID, withContext: context, invitationHandler: invitationHandler)
+        super.advertiser(advertiser, didReceiveInvitationFromPeer: peerID, withContext: context, invitationHandler: invitationHandler)
+        delegate?.handleInvitation(from: peerID, withContext: context)
     }
 }
 
@@ -29,6 +30,7 @@ extension ChatService { // MCNearbyServiceBrowserDelegate
     public override func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {}
     
     public override func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
+        super.browser(browser, foundPeer: peerID, withDiscoveryInfo: info)
         guard let info = info else {
             return
         }
@@ -42,6 +44,7 @@ extension ChatService { // MCNearbyServiceBrowserDelegate
     }
     
     public override func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+        super.browser(browser, lostPeer: peerID)
         for i in 0 ... self.peers.count - 1 {
             if (self._peers[i] == peerID) {
                 self._peers.remove(at: i)
@@ -56,8 +59,23 @@ extension ChatService { // MCNearbyServiceBrowserDelegate
 
 extension ChatService { // MCSessionDelegate
     public override func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        super.session(session, didReceive: data, fromPeer: peerID)
         if let message = String(data: data, encoding: String.Encoding.utf8) {
             self.delegate?.handleMessage(from: peerID, message: message)
+        }
+    }
+    
+    public override func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+       super.session(session, peer: peerID, didChange: state)
+        switch state {
+        case MCSessionState.connecting:
+            break
+        case MCSessionState.connected:
+            self.delegate?.connectedSuccessfully(with: peerID)
+            break
+        case MCSessionState.notConnected:
+            break
+        
         }
     }
 }

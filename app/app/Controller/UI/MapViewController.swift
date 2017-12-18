@@ -14,6 +14,9 @@ class MapViewController: ConnectivityViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        UIViewController.setViewBackground(for: self)
+        
         self.title = NSLocalizedString("map", comment: "")
         self.updateCircles(numberOfPeers: 20)
         

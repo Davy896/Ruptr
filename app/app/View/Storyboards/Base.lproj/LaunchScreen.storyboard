@@ -17,13 +17,27 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="space_background" translatesAutoresizingMaskIntoConstraints="NO" id="W6v-Et-F5m">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="W6v-Et-F5m" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="CJm-AZ-2U5"/>
+                            <constraint firstItem="W6v-Et-F5m" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="XoN-DW-0XM"/>
+                            <constraint firstAttribute="trailing" secondItem="W6v-Et-F5m" secondAttribute="trailing" id="w0G-RI-eD9"/>
+                            <constraint firstItem="W6v-Et-F5m" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="xNL-O7-33Q"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="space_background" width="750" height="1334"/>
+    </resources>
 </document>

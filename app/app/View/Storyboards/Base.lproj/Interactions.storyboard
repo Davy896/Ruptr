@@ -10,27 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Chat-->
-        <scene sceneID="l0H-ua-12l">
-            <objects>
-                <viewController storyboardIdentifier="ChatViewController" title="Chat" id="jOh-z6-JEN" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="sXe-w8-rKX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="viz-iv-Ztm"/>
-                    </view>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Suz-Zj-pAQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2350" y="-322"/>
-        </scene>
         <!--Chat Controller-->
         <scene sceneID="EIT-p9-7rT">
             <objects>
-                <collectionViewController id="QHO-Ee-Qh5" customClass="ChatController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="ChatViewController" id="QHO-Ee-Qh5" customClass="ChatController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="p5M-sN-ErV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -59,7 +42,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I91-Ub-KY7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3319" y="-340"/>
+            <point key="canvasLocation" x="2350" y="-322"/>
         </scene>
         <!--Game-->
         <scene sceneID="TJN-ZF-jPg">

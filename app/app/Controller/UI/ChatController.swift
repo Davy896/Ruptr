@@ -13,9 +13,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     private let cellId = "cellID"
     
-    var profile1 = Profile()
-    
-    
     var messages: [Messages] = []
     
     lazy var inputTextField: UITextField = {                        //this is the declaration of the input textField and the textField we need to write and having a reference to use function handleSend
@@ -29,16 +26,17 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.title = NSLocalizedString("chat", comment: "")
         self.view.backgroundColor = Colours.background
-        profile1.name = "1"
-        profile1.profileImageName = "roguemonkeyblog"
+//        profile1.name = "1"
+//        profile1.profileImageName = "roguemonkeyblog"
         setupInputComponents()   //container view for chat writing
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.register(SingleChatCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true
-        //        setupData()
+       
     }
     
     
@@ -51,8 +49,27 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         return cell
     }
     
+     func estimateFrameForText(_ text: String) -> CGRect {
+//        let size = CGSize(width: UIScreen.main.bounds.width, height: 1000)
+        let size = CGSize(width: 250, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
+    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 100)
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
+        var height: CGFloat = 80
+        let messageText = messages[indexPath.item].text
+        height = estimateFrameForText(messageText).height + 30
+        
+//        cell.messageLabel.frame = estimateFrameForText(messageText).width
+        
+//        let width = estimateFrameForText(messageText).width
+        let width = UIScreen.main.bounds.width
+        return CGSize(width: width , height: height)
+ 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -79,7 +96,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         
         let sendButton = UIButton(type: .system)                        //create Button Send (type: .system -->serve per far diventare il bottone bianco quando lo premi)
-        sendButton.setTitle("Send", for: .normal)                       //
+        sendButton.setTitle(NSLocalizedString("send", comment: ""), for: .normal)                       //
         sendButton.translatesAutoresizingMaskIntoConstraints = false    //
         containerView.addSubview(sendButton)                            //
         
@@ -118,7 +135,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         separatorLineView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true                    //
         
         
-        var titleNameChat = UIView()                                     //adding space where putting nameChat
+        let titleNameChat = UIView()                                     //adding space where putting nameChat
         titleNameChat.translatesAutoresizingMaskIntoConstraints = false  //(cercare a cosa serve)
         
         self.view.addSubview(titleNameChat)                              //adding titleNameChat to view
@@ -134,7 +151,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         var nameChat = UILabel()                                    //nameChat declaration
         nameChat.translatesAutoresizingMaskIntoConstraints = false  //
-        nameChat.text = "nameChatID"                                //
+        nameChat.text = ServiceManager.instance.userProfile.username                                //
         
         titleNameChat.addSubview(nameChat)              //adding nameChat to titleNameChat
         
@@ -162,8 +179,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     @objc func send() {            //function to send messages
         print(inputTextField.text)
-        createMessages(input: inputTextField, name: profile1)
-        
+        createMessages(input: inputTextField)
         self.collectionView?.reloadData()
     }
     
@@ -173,10 +189,11 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         return true
     }
     
-    func createMessages( input: UITextField, name: Profile) {
-        let newMessage = Messages()
-        newMessage.text = input.text
-        newMessage.profile = name
+    func createMessages( input: UITextField) {
+        let profile = ServiceManager.instance.userProfile
+        let newMessage = Messages(text: input.text! , username: profile.username, avatar: profile.avatar[0])
+//        newMessage.text = input.text
+        
         messages.append(newMessage)
         
     }

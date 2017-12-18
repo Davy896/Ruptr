@@ -28,7 +28,7 @@ class MapViewController: ConnectivityViewController {
         var circlePopulation: Int = 1
         var circleIndex: Int = 1
         let circle: CircleView
-        circle = CircleView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 30))
+        circle = CircleView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 44))
         while peersMissing > 0 {
             peersMissing -= circlePopulation
             circlePopulation += circleIndex

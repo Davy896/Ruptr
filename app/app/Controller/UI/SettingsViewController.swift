@@ -44,7 +44,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString("settings", comment: "")
-        self.setBackground()
+        UIViewController.setViewBackground(for: self)
         self.avatarHairImageView.image = ServiceManager.instance.userProfile.avatarHair
         self.avatarHairImageView.backgroundColor = UIColor.clear
         self.avatarFaceImageView.image = ServiceManager.instance.userProfile.avatarFace

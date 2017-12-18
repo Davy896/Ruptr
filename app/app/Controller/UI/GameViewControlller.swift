@@ -24,6 +24,9 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        UIViewController.setViewBackground(for: self)
+
         self.title = NSLocalizedString("game", comment: "")
         self.emojiKeyboard = ISEmojiView()
         self.emojiKeyboard.delegate = self

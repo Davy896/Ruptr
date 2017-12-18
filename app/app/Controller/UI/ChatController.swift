@@ -26,10 +26,13 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setBackground()
+        
+        UIViewController.setViewBackground(for: self)
+        
         self.title = NSLocalizedString("chat", comment: "")
 //        profile1.name = "1"
 //        profile1.profileImageName = "roguemonkeyblog"
+        self.view.backgroundColor = Colours.background
         setupInputComponents()   //container view for chat writing
         collectionView?.delegate = self
         collectionView?.dataSource = self
@@ -42,19 +45,44 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
     }
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
-        cell.message = messages[indexPath.item]
-        return cell
-    }
     
-     func estimateFrameForText(_ text: String) -> CGRect {
-//        let size = CGSize(width: UIScreen.main.bounds.width, height: 1000)
+    
+    
+    func estimateFrameForText(_ text: String) -> CGRect {
+        //        let size = CGSize(width: UIScreen.main.bounds.width, height: 1000)
         let size = CGSize(width: 250, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
     }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
+        cell.message = messages[indexPath.item]
+
+        let messageText = messages[indexPath.item].text
+        let avatar = messages[indexPath.item].avatar
+        
+        if messages[indexPath.item].isSend == true {
+            cell.profileImageView.image = #imageLiteral(resourceName: "avatar0")
+            
+            cell.profileImageView.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
+            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
+            cell.messageLabel.backgroundColor = UIColor.blue
+        } else {
+            cell.profileImageView.image = #imageLiteral(resourceName: "avatar0")
+            cell.profileImageView.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
+            cell.messageLabel.frame = CGRect(x: 50 , y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
+            cell.messageLabel.backgroundColor = UIColor.lightGray
+        }
+        
+        
+        
+        return cell
+    }
+    
+    
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -64,14 +92,21 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         height = estimateFrameForText(messageText).height + 30
         
 //        cell.messageLabel.frame = estimateFrameForText(messageText).width
-        
+       
 //        let width = estimateFrameForText(messageText).width
         let width = UIScreen.main.bounds.width
         return CGSize(width: width , height: height)
  
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 50)
+    }
+    
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
         return CGSize(width: view.frame.width, height: 80)
     }
     
@@ -145,8 +180,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         titleNameChat.topAnchor.constraint(equalTo: view.topAnchor).isActive = true         //
         titleNameChat.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
         titleNameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true         //
-        
-        
+      
         
         var nameChat = UILabel()                                    //nameChat declaration
         nameChat.translatesAutoresizingMaskIntoConstraints = false  //
@@ -154,11 +188,24 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         titleNameChat.addSubview(nameChat)              //adding nameChat to titleNameChat
         
-        nameChat.centerXAnchor.constraint(equalTo: titleNameChat.centerXAnchor, constant: 150).isActive = true    //constraints for nameChat
-        nameChat.centerYAnchor.constraint(equalTo: titleNameChat.centerYAnchor).isActive = true      //
-        nameChat.widthAnchor.constraint(equalTo: titleNameChat.widthAnchor).isActive = true  //
+        nameChat.leftAnchor.constraint(equalTo: titleNameChat.leftAnchor).isActive = true    //constraints for nameChat
+        nameChat.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true      //  //
+        nameChat.widthAnchor.constraint(equalToConstant: 200).isActive = true  //
         nameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true               //
         
+        
+        var simulateButton = UIButton()
+        simulateButton.translatesAutoresizingMaskIntoConstraints = false
+        simulateButton.setTitle(NSLocalizedString("send", comment: ""), for: .normal)
+        titleNameChat.addSubview(simulateButton)
+        
+        simulateButton.addTarget(self, action: #selector(simulate), for: .touchUpInside)      //setting send button function (handleSend isn't created yet go down)
+        simulateButton.setTitleColor(UIColor.blue, for: .normal)
+        
+        simulateButton.leftAnchor.constraint(equalTo: nameChat.rightAnchor, constant: 100).isActive = true    //constraints for nameChat
+        simulateButton.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true      //
+        simulateButton.widthAnchor.constraint(equalToConstant: 100).isActive = true  //
+        simulateButton.heightAnchor.constraint(equalToConstant: 100).isActive = true               //
         
         
         
@@ -178,7 +225,20 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     @objc func send() {            //function to send messages
         print(inputTextField.text)
+        
         createMessages(input: inputTextField)
+       
+        self.collectionView?.reloadData()
+    }
+    
+    @objc func simulate() {            //function to send messages
+        
+        let fakeMessage = UITextField()
+        fakeMessage.text = "this is a fake recived messagge"
+        let profile = ServiceManager.instance.userProfile
+        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatar: profile.avatar[AvatarParts.hair]!, isSend: false)
+        
+        messages.append(newMessage)
         self.collectionView?.reloadData()
     }
     
@@ -190,7 +250,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     func createMessages( input: UITextField) {
         let profile = ServiceManager.instance.userProfile
-        let newMessage = Messages(text: input.text! , username: profile.username, avatar: profile.avatar[AvatarParts.hair]!)
+        let newMessage = Messages(text: input.text! , username: profile.username, avatar: profile.avatar[AvatarParts.hair]!, isSend: true)
+
 //        newMessage.text = input.text
         
         messages.append(newMessage)

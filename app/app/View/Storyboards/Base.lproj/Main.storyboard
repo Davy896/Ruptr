@@ -62,6 +62,9 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="circle" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hairstyle_0_black" translatesAutoresizingMaskIntoConstraints="NO" id="Jym-al-NIL" customClass="RoundImgView" customModule="App" customModuleProvider="target">
@@ -70,8 +73,8 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="circle" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="0.0"/>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
@@ -229,7 +232,7 @@
                                 <rect key="frame" x="400" y="76" width="343" height="376"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9ug-Kt-dmy">
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="46" translatesAutoresizingMaskIntoConstraints="NO" id="9ug-Kt-dmy">
                                         <rect key="frame" x="0.0" y="141" width="343" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
@@ -262,7 +265,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eOt-PZ-Pyw" customClass="RoundButton" customModule="App" customModuleProvider="target">
                                         <rect key="frame" x="1" y="296" width="105" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" backgroundImage="roguemonkeyblog"/>
+                                        <state key="normal" backgroundImage="music"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
@@ -282,7 +285,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76d-2M-ZRW" customClass="RoundButton" customModule="App" customModuleProvider="target">
                                         <rect key="frame" x="119" y="296" width="105" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" backgroundImage="roguemonkeyblog"/>
+                                        <state key="normal" backgroundImage="games"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
@@ -302,7 +305,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pSU-4k-iZ9" customClass="RoundButton" customModule="App" customModuleProvider="target">
                                         <rect key="frame" x="238" y="296" width="105" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" backgroundImage="roguemonkeyblog"/>
+                                        <state key="normal" backgroundImage="music"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
                                                 <color key="value" red="0.74900943040000001" green="0.75707060100000001" blue="0.73724597690000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -473,7 +476,8 @@
     </scenes>
     <resources>
         <image name="expression_0" width="800" height="800"/>
+        <image name="games" width="105" height="80"/>
         <image name="hairstyle_0_black" width="800" height="800"/>
-        <image name="roguemonkeyblog" width="1200" height="808"/>
+        <image name="music" width="105" height="80"/>
     </resources>
 </document>

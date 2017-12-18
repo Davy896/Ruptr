@@ -45,7 +45,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setBackground()
+        UIViewController.setViewBackground(for: self)
         self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
         self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
         self.avatarFaceImageView.image = UIImage(named: "expression_\(self.currentFace)")
@@ -246,15 +246,5 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         
         self.finishButton.isEnabled = validated.isValid
         self.finishButton.backgroundColor = validated.isValid ? UIColor.white : Colours.saveProfileButtonInvalidBackground
-    }
-}
-
-extension UIViewController {
-    func setBackground() {
-        let background = UIImageView(frame: self.view.frame)
-        background.image = UIImage(named: "space_background")
-        self.view.backgroundColor = Colours.background
-        self.view.addSubview(background)
-        self.view.sendSubview(toBack: background)
     }
 }

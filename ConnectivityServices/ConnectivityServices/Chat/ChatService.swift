@@ -67,6 +67,15 @@ extension ChatService { // MCSessionDelegate
     
     public override func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
        super.session(session, peer: peerID, didChange: state)
-        self.delegate?.connectedSuccessfully(with: peerID)
+        switch state {
+        case MCSessionState.connecting:
+            break
+        case MCSessionState.connected:
+            self.delegate?.connectedSuccessfully(with: peerID)
+            break
+        case MCSessionState.notConnected:
+            break
+        
+        }
     }
 }

@@ -25,6 +25,7 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIViewController.setTableViewBackground(for: self)
         self.title = NSLocalizedString("list", comment: "")
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -70,6 +71,7 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
             let alert = SCLAlertView(appearance: self.alertAppearence)
             let serviceBrowser = ServiceManager.instance.chatService.serviceBrowser
             alert.addButton("Game") {
+                self.isGame = true
                 serviceBrowser.invitePeer(id,
                                           to: ServiceManager.instance.chatService.session,
                                           withContext: ListTableViewController.createUserData(for: "game"),
@@ -77,6 +79,7 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
             }
             
             alert.addButton("Chat") {
+                self.isGame = false
                 serviceBrowser.invitePeer(id,
                                           to: ServiceManager.instance.chatService.session,
                                           withContext: ListTableViewController.createUserData(for: "chat"),

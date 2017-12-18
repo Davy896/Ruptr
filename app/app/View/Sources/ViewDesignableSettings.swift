@@ -292,3 +292,45 @@ import UIKit
         super.drawText(in: UIEdgeInsetsInsetRect(rect, self.textInsets))
     }
 }
+
+@IBDesignable class RoundTextField: UITextField {
+    
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
+            self.layer.cornerRadius = cornerRadius
+            self.circle = false
+        }
+    }
+    
+    @IBInspectable var borderWidth: CGFloat = 0 {
+        didSet {
+            self.layer.borderWidth = borderWidth
+        }
+    }
+    
+    @IBInspectable var borderColor: UIColor = UIColor.clear {
+        didSet {
+            self.layer.borderColor = borderColor.cgColor
+        }
+    }
+    
+    @IBInspectable var bgColor: UIColor = UIColor.clear {
+        didSet {
+            self.layer.backgroundColor = bgColor.cgColor
+        }
+    }
+    
+    @IBInspectable var maskToBounds: Bool = false {
+        didSet {
+            self.layer.masksToBounds = self.maskToBounds
+        }
+    }
+    
+    @IBInspectable var circle: Bool = false {
+        didSet {
+            if (self.circle) {
+                self.layer.cornerRadius = self.frame.size.width/2
+            }
+        }
+    }
+}

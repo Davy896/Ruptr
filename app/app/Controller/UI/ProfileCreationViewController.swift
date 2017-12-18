@@ -46,6 +46,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var userNameTextField: UITextField! {
         didSet {
             self.userNameTextField.delegate = self
+            self.userNameTextField.borderStyle = UITextBorderStyle.roundedRect
         }
     }
     

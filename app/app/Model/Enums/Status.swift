@@ -13,7 +13,7 @@ public enum Status {
     case open
     case playful
     
-    var enumToString: String {
+    public var enumToString: String {
         get {
             switch self {
             case Status.ghost:
@@ -28,7 +28,7 @@ public enum Status {
         }
     }
     
-    static func stringToEnum(from string: String) -> Status {
+   public static func stringToEnum(from string: String) -> Status {
         switch string {
         case "Ghost":
             return Status.ghost

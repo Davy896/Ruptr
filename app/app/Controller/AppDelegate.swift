@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         if let defaultFont = UIFont(name: "Futura-Medium", size: 17) {
             UILabel.appearance().font = defaultFont
-            UILabel.appearance(whenContainedInInstancesOf: [UIView.self]).font = defaultFont
             UITextView.appearance().font = defaultFont
             UITextField.appearance().font = defaultFont
             UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: defaultFont]
@@ -51,7 +50,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
 }
-

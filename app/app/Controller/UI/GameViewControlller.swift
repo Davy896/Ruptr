@@ -45,6 +45,10 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
                 field.isEnabled = false
             }
         }
+        
+        self.navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(GameViewControlller.back(sender:)))
+        self.navigationItem.leftBarButtonItem = newBackButton
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,6 +81,11 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
                 break
             }
         }
+    }
+    
+    @objc func back(sender: UIBarButtonItem) {
+
+        _ = navigationController?.popViewController(animated: true)
     }
 }
 

@@ -19,17 +19,17 @@ public enum Mood {
         get {
             switch self {
             case Mood.sports:
-                return UIImage(named: "roguemonkeyblog")
+                return UIImage(named: "sports")
             case Mood.music:
-                return UIImage(named: "roguemonkeyblog")
+                return UIImage(named: "music")
             case Mood.outdoor:
-                return UIImage(named: "roguemonkeyblog")
+                return UIImage(named: "outdoors")
             case Mood.games:
-                return UIImage(named: "roguemonkeyblog")
+                return UIImage(named: "games")
             case Mood.food:
-                return UIImage(named: "roguemonkeyblog")
+                return UIImage(named: "food")
             case Mood.shopping:
-                return UIImage(named: "roguemonkeyblog")
+                return UIImage(named: "shopping")
             }
         }
     }

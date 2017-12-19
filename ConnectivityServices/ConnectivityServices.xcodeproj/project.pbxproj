@@ -11,14 +11,10 @@
 		4150420E1FDE9011006BB649 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4150420D1FDE9011006BB649 /* ChatService.swift */; };
 		415042131FDE9529006BB649 /* ChatServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415042121FDE9529006BB649 /* ChatServiceDelegate.swift */; };
 		41667A1C1FDD8063004A0E99 /* ProfileRequirements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A1B1FDD8063004A0E99 /* ProfileRequirements.swift */; };
-		41667A221FDD9804004A0E99 /* BroadcastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A211FDD9804004A0E99 /* BroadcastService.swift */; };
-		41667A241FDD9969004A0E99 /* BroadcastServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A231FDD9969004A0E99 /* BroadcastServiceDelegate.swift */; };
 		41792CCF1FDD61C300B5F83E /* ConnectivityServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CC51FDD61C300B5F83E /* ConnectivityServices.framework */; };
 		41792CD41FDD61C300B5F83E /* ConnectivityServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792CD31FDD61C300B5F83E /* ConnectivityServicesTests.swift */; };
 		41792CD61FDD61C300B5F83E /* ConnectivityServices.h in Headers */ = {isa = PBXBuildFile; fileRef = 41792CC81FDD61C300B5F83E /* ConnectivityServices.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		41792CE41FDD637300B5F83E /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792CE31FDD637300B5F83E /* ProfileService.swift */; };
 		41792CE61FDD64C500B5F83E /* ServiceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792CE51FDD64C500B5F83E /* ServiceTypes.swift */; };
-		41792CE81FDD72F300B5F83E /* ProfileServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792CE71FDD72F300B5F83E /* ProfileServiceDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,17 +32,13 @@
 		4150420D1FDE9011006BB649 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		415042121FDE9529006BB649 /* ChatServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceDelegate.swift; sourceTree = "<group>"; };
 		41667A1B1FDD8063004A0E99 /* ProfileRequirements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequirements.swift; sourceTree = "<group>"; };
-		41667A211FDD9804004A0E99 /* BroadcastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastService.swift; sourceTree = "<group>"; };
-		41667A231FDD9969004A0E99 /* BroadcastServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastServiceDelegate.swift; sourceTree = "<group>"; };
 		41792CC51FDD61C300B5F83E /* ConnectivityServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConnectivityServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		41792CC81FDD61C300B5F83E /* ConnectivityServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectivityServices.h; sourceTree = "<group>"; };
 		41792CC91FDD61C300B5F83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41792CCE1FDD61C300B5F83E /* ConnectivityServicesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectivityServicesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41792CD31FDD61C300B5F83E /* ConnectivityServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityServicesTests.swift; sourceTree = "<group>"; };
 		41792CD51FDD61C300B5F83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		41792CE31FDD637300B5F83E /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		41792CE51FDD64C500B5F83E /* ServiceTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTypes.swift; sourceTree = "<group>"; };
-		41792CE71FDD72F300B5F83E /* ProfileServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,9 +63,7 @@
 		4150420F1FDE9023006BB649 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				41792CE31FDD637300B5F83E /* ProfileService.swift */,
 				41667A1B1FDD8063004A0E99 /* ProfileRequirements.swift */,
-				41792CE71FDD72F300B5F83E /* ProfileServiceDelegate.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -85,15 +75,6 @@
 				415042121FDE9529006BB649 /* ChatServiceDelegate.swift */,
 			);
 			path = Chat;
-			sourceTree = "<group>";
-		};
-		415042111FDE9042006BB649 /* Broadcast */ = {
-			isa = PBXGroup;
-			children = (
-				41667A211FDD9804004A0E99 /* BroadcastService.swift */,
-				41667A231FDD9969004A0E99 /* BroadcastServiceDelegate.swift */,
-			);
-			path = Broadcast;
 			sourceTree = "<group>";
 		};
 		41792CBB1FDD61C300B5F83E = {
@@ -119,7 +100,6 @@
 			children = (
 				415042101FDE9037006BB649 /* Chat */,
 				4150420F1FDE9023006BB649 /* Profile */,
-				415042111FDE9042006BB649 /* Broadcast */,
 				41792CC81FDD61C300B5F83E /* ConnectivityServices.h */,
 				41792CC91FDD61C300B5F83E /* Info.plist */,
 				41792CE51FDD64C500B5F83E /* ServiceTypes.swift */,
@@ -249,14 +229,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				415042131FDE9529006BB649 /* ChatServiceDelegate.swift in Sources */,
-				41667A241FDD9969004A0E99 /* BroadcastServiceDelegate.swift in Sources */,
-				41792CE41FDD637300B5F83E /* ProfileService.swift in Sources */,
 				4150420E1FDE9011006BB649 /* ChatService.swift in Sources */,
 				41667A1C1FDD8063004A0E99 /* ProfileRequirements.swift in Sources */,
 				411904A91FDF143D00075626 /* Service.swift in Sources */,
-				41667A221FDD9804004A0E99 /* BroadcastService.swift in Sources */,
 				41792CE61FDD64C500B5F83E /* ServiceTypes.swift in Sources */,
-				41792CE81FDD72F300B5F83E /* ProfileServiceDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

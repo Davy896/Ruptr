@@ -36,7 +36,7 @@ class ListTableViewCell: UITableViewCell {
         self.faceImageView.image = person.avatarFace
         self.faceImageView.backgroundColor = person.avatarSkin
         self.mood1.image = person.moods[0].image
-        self.mood2.image = person.moods[0].image
-        self.mood3.image = person.moods[0].image
+        self.mood2.image = person.moods[1].image
+        self.mood3.image = person.moods[2].image
     }
 }

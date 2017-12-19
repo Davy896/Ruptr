@@ -11,15 +11,20 @@ import MultipeerConnectivity
 
 class MapViewController: ConnectivityViewController {
     
+    var circleView: CircleView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         UIViewController.setViewBackground(for: self)
-        
+        self.circleView = CircleView(frame: self.view.frame)
+        self.view.addSubview(self.circleView)
         self.title = NSLocalizedString("map", comment: "")
-        self.updateCircles(numberOfPeers: 20)
-        
+        let a = AvatarPlanetButton(frame: CGRect(x: 0, y: 0, width: 110, height: 93))
+        a.faceImageView.image = UIImage(named: "food")
+        self.view.bringSubview(toFront: a)
+        self.view.addSubview(a)
+        self.updateCircles(numberOfPeers: self.people.count)
     }
     
     override func didReceiveMemoryWarning() {
@@ -30,16 +35,17 @@ class MapViewController: ConnectivityViewController {
         var peersMissing: Int = numberOfPeers
         var circlePopulation: Int = 1
         var circleIndex: Int = 1
-        let circle: CircleView
-        circle = CircleView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 44))
         while peersMissing > 0 {
             peersMissing -= circlePopulation
             circlePopulation += circleIndex
             circleIndex += 1
         }
         
-        circle.drawCircles(numberOf: circleIndex, onRectangle: circle.frame, withRadius: 80)
-        self.view.addSubview(circle)
+        self.circleView.drawCircles(numberOf: circleIndex, onRectangle: circleView.frame, withRadius: 80)
+    }
+    
+    override func peerFound(withId id: MCPeerID) {
+        
     }
 }
 

@@ -9,15 +9,21 @@
 import UIKit
 import ConnectivityServices
 import MultipeerConnectivity
+import SCLAlertView
 
-class ConnectivityViewController: UIViewController, ProfileServiceDelegate, BroadcastServiceDelegate , ChatServiceDelegate {
+class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     var isGame = true
+    var people: [UserProfile] = []
+    let alertAppearence = SCLAlertView.SCLAppearance(kCircleIconHeight: -56,
+                                                     kTitleFont: UIFont(name: "Futura-Bold", size: 17)!,
+                                                     kTextFont: UIFont(name: "Futura-Medium", size: 14)!,
+                                                     kButtonFont: UIFont(name: "Futura-Medium", size: 17)!,
+                                                     showCloseButton: false,
+                                                     showCircularIcon: true)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        ServiceManager.instance.profileService.delegate = self
-        //        ServiceManager.instance.broadcastService.delegate = self
         ServiceManager.instance.chatService.delegate = self
         self.setDiscoveryInfo(from: ServiceManager.instance.userProfile)
         self.updateVisibility()
@@ -28,43 +34,21 @@ class ConnectivityViewController: UIViewController, ProfileServiceDelegate, Broa
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        //        ServiceManager.instance.profileService.delegate = nil
-        //        ServiceManager.instance.broadcastService.delegate = nil
         //        ServiceManager.instance.chatService.delegate = nil
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //        ServiceManager.instance.profileService.delegate = self
-        //        ServiceManager.instance.broadcastService.delegate = self
         ServiceManager.instance.chatService.delegate = self
     }
     
     func updateVisibility() {
         if (ServiceManager.instance.userProfile.status != Status.ghost) {
-            //            ServiceManager.instance.profileService.serviceAdvertiser.startAdvertisingPeer()
-            //            ServiceManager.instance.profileService.serviceBrowser.startBrowsingForPeers()
-            //
-            //            ServiceManager.instance.broadcastService.serviceAdvertiser.startAdvertisingPeer()
-            //            ServiceManager.instance.broadcastService.serviceBrowser.startBrowsingForPeers()
-            
             ServiceManager.instance.chatService.serviceAdvertiser.startAdvertisingPeer()
             ServiceManager.instance.chatService.serviceBrowser.startBrowsingForPeers()
         } else {
-            //            ServiceManager.instance.profileService.serviceAdvertiser.stopAdvertisingPeer()
-            //            ServiceManager.instance.profileService.serviceBrowser.stopBrowsingForPeers()
-            //
-            //            ServiceManager.instance.broadcastService.serviceAdvertiser.stopAdvertisingPeer()
-            //            ServiceManager.instance.broadcastService.serviceBrowser.stopBrowsingForPeers()
-            
             ServiceManager.instance.chatService.serviceAdvertiser.stopAdvertisingPeer()
             ServiceManager.instance.chatService.serviceBrowser.stopBrowsingForPeers()
         }
-    }
-    
-    func connectedDevicesChanged(manager: ProfileService, connectedDevices: [String]) {
-    }
-    
-    func receiveBroadcastedMessage(manager: BroadcastService, message: String) {
     }
     
     func setDiscoveryInfo(from profile: ProfileRequirements) {
@@ -81,18 +65,86 @@ class ConnectivityViewController: UIViewController, ProfileServiceDelegate, Broa
     }
     
     func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
+        if let userBeingInvited = profile as? UserProfile {
+            
+            let alert = SCLAlertView(appearance: self.alertAppearence)
+            let serviceBrowser = ServiceManager.instance.chatService.serviceBrowser
+            alert.addButton("Game") {
+                self.isGame = true
+                serviceBrowser.invitePeer(id,
+                                          to: ServiceManager.instance.chatService.session,
+                                          withContext: ConnectivityViewController.createUserData(for: "game"),
+                                          timeout: 20)
+            }
+            
+            alert.addButton("Chat") {
+                self.isGame = false
+                serviceBrowser.invitePeer(id,
+                                          to: ServiceManager.instance.chatService.session,
+                                          withContext: ConnectivityViewController.createUserData(for: "chat"),
+                                          timeout: 20)
+            }
+            
+            alert.addButton("Cancel", backgroundColor: UIColor.red) {
+                UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.light).impactOccurred()
+            }
+            
+            OperationQueue.main.addOperation {
+                alert.showInfo(userBeingInvited.username,
+                               subTitle: "Send invitation for",
+                               colorStyle: userBeingInvited.avatarSkin.toHexUInt(),
+                               circleIconImage: UIImage.imageByCombiningImage(firstImage: userBeingInvited.avatarFace!, withImage: userBeingInvited.avatarHair!))
+            }
+        }
     }
     
     func handleInvitation(from: MCPeerID, withContext context: Data?) {
+        if let context = context {
+            if let data = String(data: context, encoding: String.Encoding.utf8) {
+                
+                let chatService = ServiceManager.instance.chatService
+                let userData = ConnectivityViewController.decodeUserData(from: data)
+                let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? "chat." : "to play a game."
+                let alert = SCLAlertView(appearance: self.alertAppearence)
+                
+                alert.addButton("Accept") {
+                    self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
+                    chatService.invitationHandler(true, chatService.session)
+                }
+                
+                alert.addButton("Refuse", backgroundColor: UIColor.red) {
+                    UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+                    chatService.invitationHandler(false, chatService.session)
+                }
+                
+                OperationQueue.main.addOperation {
+                    alert.showInfo(userData[DecodedUserDataKeys.username]!,
+                                   subTitle: "Is inviting you to \(invitationText)",
+                        colorStyle: Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
+                                                      index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!)).toHexUInt(),
+                        circleIconImage: UIImage.imageByCombiningImage(firstImage: UIImage(named: userData[DecodedUserDataKeys.avatarHair]!)!,
+                                                                       withImage: UIImage(named: userData[DecodedUserDataKeys.avatarFace]!)!))
+                }
+            }
+        }
     }
     
     func handleMessage(from: MCPeerID, message: String) {
     }
     
     func peerFound(withId id: MCPeerID) {
+        self.updateFoundPeers()
     }
     
     func peerLost(withId id: MCPeerID) {
+        if (self.people.count > 0) {
+            for i in 0 ... self.people.count - 1 {
+                if self.people[0].id == id.displayName.components(separatedBy: "|")[0] {
+                    self.people.remove(at: i)
+                    break
+                }
+            }
+        }
     }
     
     func connectedSuccessfully(with id: MCPeerID) {
@@ -103,5 +155,51 @@ class ConnectivityViewController: UIViewController, ProfileServiceDelegate, Broa
                 self.show(UIStoryboard(name: "Interactions", bundle: nil).instantiateViewController(withIdentifier: "ChatViewController"), sender: self)
             }
         }
+    }
+    
+    func updateFoundPeers() {
+        self.people.removeAll()
+        let peers = ServiceManager.instance.chatService.peers
+        let infos = ServiceManager.instance.chatService.peersDiscoveryInfos
+        if peers.count > 0 {
+            for i in 0 ... peers.count - 1 {
+                self.people.append(UserProfile(id: peers[i].displayName.components(separatedBy: "|")[0],
+                                               username: infos[i][DecodedUserDataKeys.username.enumToString]!,
+                                               avatar: [AvatarParts.hair: infos[i][DecodedUserDataKeys.avatarHair.enumToString]!,
+                                                        AvatarParts.face: infos[i][DecodedUserDataKeys.avatarFace.enumToString]!,
+                                                        AvatarParts.skin: infos[i][DecodedUserDataKeys.avatarSkinTone.enumToString]!],
+                                               moods: [Mood.stringToEnum(from: infos[i][DecodedUserDataKeys.moodOne.enumToString]!),
+                                                       Mood.stringToEnum(from: infos[i][DecodedUserDataKeys.moodTwo.enumToString]!),
+                                                       Mood.stringToEnum(from:infos[i][DecodedUserDataKeys.moodThree.enumToString]!)],
+                                               status: Status.stringToEnum(from: infos[i][DecodedUserDataKeys.status.enumToString]!)))
+            }
+        }
+    }
+    
+    static func createUserData(for interaction: String) -> Data {
+        let userProfile = ServiceManager.instance.userProfile
+        let data = "\(userProfile.username)|" +
+            "\(userProfile.avatar[AvatarParts.hair]!)|" +
+            "\(userProfile.avatar[AvatarParts.face]!)|" +
+            "\(userProfile.avatar[AvatarParts.skin]!)|" + // skinColour|index
+            "\(userProfile.moods[0].enumToString)|" +
+            "\(userProfile.moods[1].enumToString)|" +
+            "\(userProfile.moods[2].enumToString)|" +
+        "\(userProfile.status.enumToString)|"
+        return (interaction == "chat" ? data + "chat " : data + "game").data(using: String.Encoding.utf8)!  // has 10 components separeted by |
+    }
+    
+    static func decodeUserData(from data: String) -> [DecodedUserDataKeys : String] {
+        let userData = data.components(separatedBy: "|")
+        return [.username: userData[0],
+                .avatarHair: userData[1],
+                .avatarFace: userData[2],
+                .avatarSkinTone: userData[3],
+                .avatarSkinToneIndex: userData[4],
+                .moodOne: userData[5],
+                .moodTwo: userData[6],
+                .moodThree: userData[7],
+                .status: userData[8],
+                .interactionType: userData[9]]
     }
 }

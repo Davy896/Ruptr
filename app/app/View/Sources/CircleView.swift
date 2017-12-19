@@ -12,6 +12,7 @@ class CircleView: UIView {
     
     private var radius: Double = 0
     private var numberOfCircles: Int = 0
+    var path: UIBezierPath!
     
     func drawCircles(numberOf numberOfCircles: Int ,onRectangle rect: CGRect, withRadius radius: Double) {
         self.radius = radius
@@ -36,6 +37,7 @@ class CircleView: UIView {
         path.lineWidth = 1
         path.stroke()
         self.backgroundColor = UIColor.clear
+        self.path = path
     }
 }
 

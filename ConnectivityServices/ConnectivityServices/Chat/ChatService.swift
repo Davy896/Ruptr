@@ -78,4 +78,9 @@ extension ChatService { // MCSessionDelegate
         
         }
     }
+    
+    public override func send(message: String, toPeer peer: MCPeerID) {
+        super.send(message: message, toPeer: peer)
+        self.delegate?.handleMessage(from: peer, message: message)
+    }
 }

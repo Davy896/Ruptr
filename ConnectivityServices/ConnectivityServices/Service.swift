@@ -157,6 +157,7 @@ extension Service: MCNearbyServiceAdvertiserDelegate {
         if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType) {
             return
         }
+        
         _invitationHandler = invitationHandler
     }
 }
@@ -215,6 +216,16 @@ extension Service: MCSessionDelegate {
     public func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
         if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType) {
             return
+        }
+    }
+    
+    @objc public func send(message: String, toPeer peer: MCPeerID) {
+        if (session.connectedPeers.contains(peer)) {
+            do {
+                try session.send(message.data(using: String.Encoding.utf8)!, toPeers: [peer], with: .reliable)
+            } catch let error {
+                print(error)
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ class Messages: NSObject {
     var avatarSkinColor: String
     var isSend: Bool = false
     
+    
     init(text: String, username: String, avatarHair: String,avatarEyes: String, avatarSkinColor: String, isSend: Bool) {
         self.text = text
 //        self.date = date

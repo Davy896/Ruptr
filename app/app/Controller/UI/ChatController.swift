@@ -99,50 +99,45 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
         cell.message = messages[indexPath.item]
-//        var cloud = UIView()
-//        cell.addSubview(cloud)
         let messageText = messages[indexPath.item].text
         cell.messageLabel.isEditable = false
+       
+        
         if messages[indexPath.item].isSend == true {
+            
             cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
             cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
             cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
            
-//            cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
             cell.cloud.backgroundColor = UIColor.blue
-
-            cell.cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 27 - 50 - 15, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
-            
-            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50 - 15, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
-            
             cell.messageLabel.backgroundColor = UIColor.clear
             
+            cell.cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 27 - 50 - 18, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
+            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50 - 18, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
             cell.profileImageHair.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageEyes.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageSkinColor.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageEyes.backgroundColor = Colours.getColour(named: messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[0],
                                                                       index: Int(messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[1]))
             cell.bringSubview(toFront: cell.profileImageHair)
+           cell.tail.image = #imageLiteral(resourceName: "tailRight")
             
-            
-//            cloud.translatesAutoresizingMaskIntoConstraints = false
+            cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18, y: cell.cloud.frame.height - 33, width: 20, height: 25)
 //
-//            cloud.leftAnchor.constraint(equalTo: cell.messageLabel.leftAnchor,constant: 10).isActive = true
-//            cloud.bottomAnchor.constraint(equalTo: cell.messageLabel.bottomAnchor).isActive = true
-//            cloud.widthAnchor.constraint(equalTo: cell.messageLabel.widthAnchor).isActive = true
-//            cloud.heightAnchor.constraint(equalTo: cell.messageLabel.heightAnchor).isActive = true
-            
-            
+//            cell.tail.translatesAutoresizingMaskIntoConstraints = false
+//
+//            cell.tail.leftAnchor.constraint(equalTo: cell.cloud.leftAnchor,constant: cell.cloud.widthAnchor ).isActive = true
+//            cell.tail.bottomAnchor.constraint(equalTo: cell.cloud.bottomAnchor,constant: -10).isActive = true
+//            cell.tail.widthAnchor.constraint(equalToConstant: 20).isActive = true
+//            cell.tail.heightAnchor.constraint(equalToConstant: 25).isActive = true
+//
+//
             }else {
 
             cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
             cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
             cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
             
-//
-//            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
-//            cell.messageLabel.backgroundColor = UIColor.blue
-//
             cell.profileImageHair.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageEyes.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageSkinColor.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
@@ -152,8 +147,23 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             
             cell.messageLabel.frame = CGRect(x: 50 + 9 + 12, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
             cell.cloud.frame = CGRect(x: 50 + 12, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
+           
+            
             cell.cloud.backgroundColor = UIColor.lightGray
             cell.messageLabel.backgroundColor = UIColor.clear
+            
+//             cell.tail.translatesAutoresizingMaskIntoConstraints = false
+            cell.tail.image = #imageLiteral(resourceName: "tailLeft")
+            
+//
+//            cell.tail.rightAnchor.constraint(equalTo: cell.cloud.leftAnchor,constant: 2).isActive = true
+//            cell.tail.bottomAnchor.constraint(equalTo: cell.cloud.bottomAnchor,constant: -10).isActive = true
+//            cell.tail.widthAnchor.constraint(equalToConstant: 20).isActive = true
+//            cell.tail.heightAnchor.constraint(equalToConstant: 25).isActive = true
+//
+            
+            cell.tail.frame = CGRect(x:  50 + 12 - 19, y: cell.cloud.frame.height - 33, width: 20, height: 25)
+            
         }
         
         let item = messages.count - 1

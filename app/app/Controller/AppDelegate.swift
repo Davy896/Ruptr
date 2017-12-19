@@ -16,16 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        if let defaultFont = UIFont(name: "Futura-Medium", size: 17) {
-            UILabel.appearance().font = defaultFont
-            UILabel.appearance(whenContainedInInstancesOf: [UIView.self]).font = defaultFont
-            UITextView.appearance().font = defaultFont
-            UITextField.appearance().font = defaultFont
-            UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: defaultFont]
-            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.normal)
-            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.selected)
-            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.highlighted)
-        }
+//        if let defaultFont = UIFont(name: "Futura-Medium", size: 17) {
+//            UILabel.appearance().font = defaultFont
+//            UILabel.appearance(whenContainedInInstancesOf: [UIView.self]).font = defaultFont
+//            UITextView.appearance().font = defaultFont
+//            UITextField.appearance().font = defaultFont
+//            UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: defaultFont]
+//            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.normal)
+//            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.selected)
+//            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.highlighted)
+//        }
         return true
     }
     

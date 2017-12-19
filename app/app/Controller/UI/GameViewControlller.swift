@@ -32,11 +32,12 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         UIViewController.setViewBackground(for: self)
         
         // first emoji
-//        firstEmojiField.text = arrayEmoji[Int(arc4random_uniform(UInt32(arrayEmoji.count)))]
+        firstEmojiField.text = arrayEmoji[Int(arc4random_uniform(UInt32(arrayEmoji.count)))]
 
         self.title = NSLocalizedString("game", comment: "")
         self.emojiKeyboard = ISEmojiView()
         self.emojiKeyboard.delegate = self
+        
         
         for field in emojiTextFields {
             field.inputView = emojiKeyboard

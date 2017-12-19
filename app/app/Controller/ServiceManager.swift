@@ -14,8 +14,6 @@ class ServiceManager {
     internal static let instance: ServiceManager = ServiceManager()
     
     private var _userProfile: UserProfile
-//    private var _profileService: ProfileService
-//    private var _broadcastService: BroadcastService
     private var _chatService: ChatService
     
     public var userProfile: UserProfile {
@@ -25,8 +23,6 @@ class ServiceManager {
         
         set(userProfile) { // Do this only once!!!!!!!
             self._userProfile = userProfile
-//            self._profileService = ProfileService(profile: userProfile)
-//            self._broadcastService = BroadcastService(profile: userProfile)
             self._chatService = ChatService(profile: userProfile)
         }
     }

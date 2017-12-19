@@ -157,6 +157,7 @@ extension Service: MCNearbyServiceAdvertiserDelegate {
         if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType) {
             return
         }
+        
         _invitationHandler = invitationHandler
     }
 }

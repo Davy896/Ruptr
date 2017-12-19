@@ -9,44 +9,38 @@
 import UIKit
 
 
-//class Profile: NSObject {
-//    var name: String?
-//    var profileImageName: String?
-//
-//    /*override init() {
-//     self.name = name
-//     self.profileImage = profileImage*/
-//}
-
-
-
-
-
-
-
 class SingleChatCell: UICollectionViewCell {
     
     
     var message: Messages? {
         didSet {
             nameLabel.text = message?.username
-            profileImageView.image = UIImage(named: (message?.avatar)!)
+            profileImageHair.image = UIImage(named: (message?.avatarHair)!)
+            profileImageEyes.image = UIImage(named: (message?.avatarEyes)!)
+            profileImageSkinColor.image = UIImage(named: (message?.avatarSkinColor)!)
             messageLabel.text = message?.text
+//            cloud.image = #imageLiteral(resourceName: "right")
+            
         }
     }
     
-    
-    let dividerLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        return view
-    }()
-    
+  
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 18)
         return label
+    }()
+    
+    
+    var cloud: UIView = {
+        var image = UIView()
+//        image = #imageLiteral(resourceName: "right")
+        image.backgroundColor = UIColor.blue
+        image.layer.cornerRadius = 15
+        
+        
+        return image
     }()
     
     let messageLabel: UITextView = {
@@ -59,25 +53,7 @@ class SingleChatCell: UICollectionViewCell {
         return label
     }()
     
-    let recivedMessageLabel: UITextView = {
-        let label = UITextView()
-        label.text = ""
-        label.textColor = UIColor.white
-        label.backgroundColor = UIColor.blue
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.layer.cornerRadius = 15
-        return label
-    }()
-    
-//    let timeLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = " "
-//        label.font = UIFont.systemFont(ofSize: 16)
-//        label.textAlignment = .right
-//        return label
-//    }()
-    
-    let profileImageView: UIImageView = {
+    let profileImageHair: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 15
@@ -85,8 +61,7 @@ class SingleChatCell: UICollectionViewCell {
         return imageView
     }()
     
-    
-    let recivedProfileImageView: UIImageView = {
+    let profileImageEyes: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 15
@@ -94,10 +69,10 @@ class SingleChatCell: UICollectionViewCell {
         return imageView
     }()
     
-    let hasReadImageView: UIImageView = {
+    let profileImageSkinColor: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
         return imageView
     }()
@@ -130,46 +105,17 @@ class SingleChatCell: UICollectionViewCell {
     }
     
     
-    
-    
-    
-    
     func setupView() {
         backgroundColor = UIColor.white
         
-        
+        addSubview(cloud)
         addSubview(messageLabel)
-        addSubview(profileImageView)
-        addSubview(recivedMessageLabel)
-        addSubview(recivedProfileImageView)
-        
-        
-        profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        recivedProfileImageView.translatesAutoresizingMaskIntoConstraints = false
-        recivedMessageLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-//        profileImageView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor).isActive = true
-//        profileImageView.leftAnchor.constraint(equalTo: messageLabel.rightAnchor, constant: 10).isActive = true
-//        profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-//        profileImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        profileImageView.backgroundColor = UIColor.lightGray
-        recivedProfileImageView.backgroundColor = UIColor.blue
-        
-//        messageLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-//        messageLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-//        messageLabel.widthAnchor.constraint(equalToConstant: 250).isActive = true
-//        messageLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-////        messageLabel.textColor = UIColor.
-        
-       
-        
+        addSubview(profileImageHair)
+        addSubview(profileImageEyes)
+        addSubview(profileImageSkinColor)
+
     }
-    
-   
-    
-    
+
 }
 
 

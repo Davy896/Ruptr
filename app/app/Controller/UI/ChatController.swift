@@ -14,6 +14,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     private let cellId = "cellID"
     
     var messages: [Messages] = []
+    var tap: UITapGestureRecognizer!
     
     lazy var inputTextField: UITextField = {                        //this is the declaration of the input textField and the textField we need to write and having a reference to use function handleSend
         let textField = UITextField()                               //
@@ -26,52 +27,26 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-        
         UIViewController.setViewBackground(for: self)
-        
         self.title = NSLocalizedString("chat", comment: "")
-//        profile1.name = "1"
-//        profile1.profileImageName = "roguemonkeyblog"
         self.view.backgroundColor = Colours.background
-        setupInputComponents()   //container view for chat writing
+        setupInputComponents()                              //container view for chat writing
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.register(SingleChatCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true
         setupKeyboard()
-//        collectionView?.keyboardDismissMode = .interactive
-        
+        self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.view.addGestureRecognizer(self.tap)
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        self.view.endEditing(true)
-    }
-    
-    
-    
-//    override var inputAccessoryView: UIView? {
-//        get {
-//            let containerView = UIView()
-//            containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
-//            containerView.backgroundColor = UIColor.lightGray
-//            return containerView
-//        }
-//    }
-//
-//
-//    override func becomeFirstResponder() -> Bool {
-//        return true
-//    }
     
     func setupKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
-        
     }
     
     
@@ -90,21 +65,21 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         UIView.animate(withDuration: keyboardDuration as! TimeInterval) {
             self.view.layoutIfNeeded()
         }
-        
-        
-       
     }
-    
+
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+
     
     @objc func keyboardWillHide(notification: NSNotification) {
         let keyboardDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]
-        
-        
+
+
         containerViewBottomAnchor?.constant = 0
         UIView.animate(withDuration: keyboardDuration as! TimeInterval) {
             self.view.layoutIfNeeded()
         }
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -114,40 +89,71 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     
     func estimateFrameForText(_ text: String) -> CGRect {
-        //        let size = CGSize(width: UIScreen.main.bounds.width, height: 1000)
-        let size = CGSize(width: 250, height: 1000)
+        let size = CGSize(width: 200, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
         cell.message = messages[indexPath.item]
-
+//        var cloud = UIView()
+//        cell.addSubview(cloud)
         let messageText = messages[indexPath.item].text
-        let avatar = messages[indexPath.item].avatar
         cell.messageLabel.isEditable = false
         if messages[indexPath.item].isSend == true {
-            cell.profileImageView.image = #imageLiteral(resourceName: "avatar0")
-            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
-            cell.messageLabel.backgroundColor = UIColor.blue
-            
-            cell.profileImageView.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
-//            cell.profileImageView.leftAnchor.constraint(equalTo: cell.messageLabel.rightAnchor, constant: 10)
-//            cell.profileImageView.bottomAnchor.constraint(equalTo: cell.messageLabel.bottomAnchor)
-//            cell.profileImageView.widthAnchor.constraint(equalToConstant: 30)
-//            cell.profileImageView.widthAnchor.constraint(equalToConstant: 30)
-//
-            
+            cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
+            cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
+            cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
            
+//            cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
+            cell.cloud.backgroundColor = UIColor.blue
+
+            cell.cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 27 - 50 - 15, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
             
-        } else {
-            cell.profileImageView.image = #imageLiteral(resourceName: "avatar0")
-            cell.profileImageView.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
-            cell.messageLabel.frame = CGRect(x: 50 , y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
-            cell.messageLabel.backgroundColor = UIColor.lightGray
+            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50 - 15, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
+            
+            cell.messageLabel.backgroundColor = UIColor.clear
+            
+            cell.profileImageHair.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
+            cell.profileImageEyes.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
+            cell.profileImageSkinColor.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
+            cell.profileImageEyes.backgroundColor = Colours.getColour(named: messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[0],
+                                                                      index: Int(messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[1]))
+            cell.bringSubview(toFront: cell.profileImageHair)
+            
+            
+//            cloud.translatesAutoresizingMaskIntoConstraints = false
+//
+//            cloud.leftAnchor.constraint(equalTo: cell.messageLabel.leftAnchor,constant: 10).isActive = true
+//            cloud.bottomAnchor.constraint(equalTo: cell.messageLabel.bottomAnchor).isActive = true
+//            cloud.widthAnchor.constraint(equalTo: cell.messageLabel.widthAnchor).isActive = true
+//            cloud.heightAnchor.constraint(equalTo: cell.messageLabel.heightAnchor).isActive = true
+            
+            
+            }else {
+
+            cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
+            cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
+            cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
+            
+//
+//            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
+//            cell.messageLabel.backgroundColor = UIColor.blue
+//
+            cell.profileImageHair.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
+            cell.profileImageEyes.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
+            cell.profileImageSkinColor.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
+            cell.profileImageEyes.backgroundColor = Colours.getColour(named: messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[0],
+                                                                      index: Int(messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[1]))
+            cell.bringSubview(toFront: cell.profileImageHair)
+            
+            cell.messageLabel.frame = CGRect(x: 50 + 9 + 12, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
+            cell.cloud.frame = CGRect(x: 50 + 12, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
+            cell.cloud.backgroundColor = UIColor.lightGray
+            cell.messageLabel.backgroundColor = UIColor.clear
         }
         
         let item = messages.count - 1
@@ -163,14 +169,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
         var height: CGFloat = 80
         let messageText = messages[indexPath.item].text
         height = estimateFrameForText(messageText).height + 30
-        
-//        cell.messageLabel.frame = estimateFrameForText(messageText).width
-       
-//        let width = estimateFrameForText(messageText).width
         let width = UIScreen.main.bounds.width
         return CGSize(width: width , height: height)
  
@@ -193,52 +194,68 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         
         
-        
+        let myColor = UIColor.lightGray
         
         let containerView = UIView()                                    //creation of the writing container view
-        //containerView.backgroundColor = UIColor.red                   // need only for test
-        //containerView.tintColorDidChange(UIColor.red)                 //
         containerView.translatesAutoresizingMaskIntoConstraints = false //(cercare a cosa serve)
-        containerView.backgroundColor = UIColor.white                                                                //
+        containerView.backgroundColor = UIColor.white                                                             //
         self.view.addSubview(containerView)                             //
-        
-        //containerView.frame = CGRect(x: 100, y: 100, width: view.frame.width, height: 80)
-        
+  
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
-//        containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true   //
         containerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
         containerView.heightAnchor.constraint(equalToConstant: 50).isActive = true          //
         containerViewBottomAnchor = containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         containerViewBottomAnchor?.isActive = true
         
         
-        let sendButton = UIButton(type: .system)                        //create Button Send (type: .system -->serve per far diventare il bottone bianco quando lo premi)
+        let borderInput = UIView()
+        containerView.addSubview(borderInput)
+        
+        let sendButton = UIButton(type: .system)
         sendButton.setTitle(NSLocalizedString("send", comment: ""), for: .normal)                       //
         sendButton.translatesAutoresizingMaskIntoConstraints = false    //
         containerView.addSubview(sendButton)                            //
         
         sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)      //setting send button function (handleSend isn't created yet go down)
         
-        sendButton.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true       //constrain  Button Send
-        sendButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true   //
+        sendButton.rightAnchor.constraint(equalTo: containerView.rightAnchor,constant: -5).isActive = true       //constrain  Button Send
+        sendButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true   //
         sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true                      //
-        sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true     //
+        sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true     //
+        sendButton.layer.cornerRadius = 20
+        sendButton.layer.borderColor = myColor.cgColor
+        sendButton.layer.borderWidth = 0.5
         
-        
-        /*let inputTextField = UITextField()                                          //adding textField
-         inputTextField.placeholder = "Enter message..."                               //(to create a reference between the textField and the function handleSend we have to declare the textField in the top part of the code so we don't need this part anymore)
-         inputTextField.translatesAutoresizingMaskIntoConstraints = false*/            //
+        var highlighted: Bool = false {
+            didSet {
+                if highlighted {
+                    sendButton.backgroundColor = UIColor.lightGray
+                } else {
+                    sendButton.backgroundColor = UIColor.white
+                }
+            }
+        }
         
         
         containerView.addSubview(inputTextField)            //add the textField to the containerView
         
+        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 15).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
+        inputTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true     //
+        inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -10).isActive = true          //we are using this constaraint to extend the textField right anchor untill left anchor send button
+        inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true    //
+
+        borderInput.translatesAutoresizingMaskIntoConstraints = false
         
-        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
-        inputTextField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true               //
-        //inputTextField.widthAnchor.constraint(equalToConstant: 100).isActive = true                               //
-        inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor).isActive = true                       //we are using this constaraint to extend the textField right anchor untill left anchor send button
-        inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true                 //
+        borderInput.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
+        borderInput.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
+        borderInput.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -5).isActive = true
+        borderInput.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true
         
+        borderInput.layer.cornerRadius = 20
+        borderInput.backgroundColor = UIColor.white
+        borderInput.layer.borderColor = myColor.cgColor
+        borderInput.layer.borderWidth = 0.5
+        borderInput.backgroundColor = UIColor.clear
         
         let separatorLineView = UIView()                                        //adding separator line between text field and messages
         separatorLineView.backgroundColor = UIColor.gray                        //
@@ -265,7 +282,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         titleNameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true         //
       
         
-        var nameChat = UILabel()                                    //nameChat declaration
+        let nameChat = UILabel()                                    //nameChat declaration
         nameChat.translatesAutoresizingMaskIntoConstraints = false  //
         nameChat.text = ServiceManager.instance.userProfile.username                                //
         
@@ -277,7 +294,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         nameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true               //
         
         
-        var simulateButton = UIButton()
+        let simulateButton = UIButton()
         simulateButton.translatesAutoresizingMaskIntoConstraints = false
         simulateButton.setTitle(NSLocalizedString("send", comment: ""), for: .normal)
         titleNameChat.addSubview(simulateButton)
@@ -307,10 +324,10 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }
     
     @objc func send() {            //function to send messages
-        print(inputTextField.text)
+        print(inputTextField.text ?? "")
         if inputTextField.text != "" {
             createMessages(input: inputTextField)
-            
+            inputTextField.text = ""
             self.collectionView?.reloadData()
         }
        
@@ -320,9 +337,10 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     @objc func simulate() {            //function to send messages
         
         let fakeMessage = UITextField()
-        fakeMessage.text = "this is a fake recived messagge"
+        fakeMessage.text = "this is a fake recived messagge gggggggggggggggggggggggg"
         let profile = ServiceManager.instance.userProfile
-        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatar: profile.avatar[AvatarParts.hair]!, isSend: false)
+        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatarHair: profile.avatar[AvatarParts.hair]!,avatarEyes: profile.avatar[AvatarParts.face]!, avatarSkinColor: profile.avatar[AvatarParts.skin]!, isSend: false)
+//        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatar: "hairstyle_0_black", isSend: false)
         
         messages.append(newMessage)
         self.collectionView?.reloadData()
@@ -336,9 +354,10 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     func createMessages( input: UITextField) {
         let profile = ServiceManager.instance.userProfile
-        let newMessage = Messages(text: input.text! , username: profile.username, avatar: profile.avatar[AvatarParts.hair]!, isSend: true)
+        let newMessage = Messages(text: inputTextField.text! , username: profile.username, avatarHair: profile.avatar[AvatarParts.hair]!,avatarEyes: profile.avatar[AvatarParts.face]!, avatarSkinColor: profile.avatar[AvatarParts.skin]! , isSend: true)
+        
+        messages.append(newMessage)
 
-//        newMessage.text = input.text
         
         
     }

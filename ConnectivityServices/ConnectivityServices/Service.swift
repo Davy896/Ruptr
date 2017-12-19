@@ -218,5 +218,15 @@ extension Service: MCSessionDelegate {
             return
         }
     }
+    
+    public func send(message: String, toPeer peer: MCPeerID) {
+        if (session.connectedPeers.contains(peer)) {
+            do {
+              try session.send(message.data(using: String.Encoding.utf8)!, toPeers: [peer], with: .reliable)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
 }
 

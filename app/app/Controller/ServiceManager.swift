@@ -27,18 +27,6 @@ class ServiceManager {
         }
     }
     
-//    public var profileService: ProfileService {
-//        get {
-//            return _profileService
-//        }
-//    }
-//
-//    public var broadcastService: BroadcastService {
-//        get {
-//            return _broadcastService
-//        }
-//    }
-    
     public var chatService: ChatService {
         get {
             return _chatService
@@ -47,8 +35,6 @@ class ServiceManager {
     
     private init(){
         self._userProfile = UserProfile(id: "CALL_SET_USERPROFILE", username: "CALL_SET_USERPROFILE", avatar: [AvatarParts.face: "CALL_SET_USERPROFILE"], moods: [], status: Status.ghost)
-//        self._profileService = ProfileService(profile: _userProfile)
-//        self._broadcastService = BroadcastService(profile: _userProfile)
         self._chatService = ChatService(profile: _userProfile)
     }
 }

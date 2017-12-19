@@ -16,17 +16,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-//        if let defaultFont = UIFont(name: "Futura-Medium", size: 17) {
-//            UILabel.appearance().font = defaultFont
-//            UILabel.appearance(whenContainedInInstancesOf: [UIView.self]).font = defaultFont
-//            UITextView.appearance().font = defaultFont
-//            UITextField.appearance().font = defaultFont
-//            UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: defaultFont]
-//            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.normal)
-//            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.selected)
-//            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.highlighted)
-//        }
-
+        if let defaultFont = UIFont(name: "Futura-Medium", size: 17) {
+            let navBarProxy = UINavigationBar.appearance()
+            navBarProxy.titleTextAttributes = [NSAttributedStringKey.font: defaultFont, NSAttributedStringKey.foregroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)]
+            navBarProxy.barTintColor = Colours.backgroundSecondary
+            
+            let tabBarProxy = UITabBar.appearance()
+            tabBarProxy.barTintColor  = Colours.backgroundSecondary
+            tabBarProxy.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            let barButtonItemProy = UIBarButtonItem.appearance()
+            barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.normal)
+            barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont,], for: UIControlState.selected)
+            barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.highlighted)
+        }
+        
         return true
     }
     

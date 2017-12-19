@@ -191,10 +191,10 @@
                                 <state key="normal" title="Chat"/>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SI7-zr-Fud">
-                                <rect key="frame" x="146" y="142" width="75" height="75"/>
+                                <rect key="frame" x="150" y="155" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="60"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>

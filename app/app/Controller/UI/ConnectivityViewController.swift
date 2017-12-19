@@ -71,6 +71,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             let serviceBrowser = ServiceManager.instance.chatService.serviceBrowser
             alert.addButton("Game") {
                 self.isGame = true
+                ServiceManager.instance.selectedPeer = id
                 serviceBrowser.invitePeer(id,
                                           to: ServiceManager.instance.chatService.session,
                                           withContext: ConnectivityViewController.createUserData(for: "game"),
@@ -79,6 +80,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             
             alert.addButton("Chat") {
                 self.isGame = false
+                ServiceManager.instance.selectedPeer = id
                 serviceBrowser.invitePeer(id,
                                           to: ServiceManager.instance.chatService.session,
                                           withContext: ConnectivityViewController.createUserData(for: "chat"),
@@ -109,6 +111,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 
                 alert.addButton("Accept") {
                     self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
+                    ServiceManager.instance.selectedPeer = from
                     chatService.invitationHandler(true, chatService.session)
                 }
                 
@@ -130,6 +133,19 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     }
     
     func handleMessage(from: MCPeerID, message: String) {
+        let (key, value) = (message.components(separatedBy: "|")[0], message.components(separatedBy: "|")[1])
+        print(value)
+        switch key {
+        case MPCMessageTypes.closeConnection :
+            ServiceManager.instance.chatService.session.disconnect()
+            OperationQueue.main.addOperation {
+                _ = self.navigationController?.popViewController(animated: true)
+            }
+            break
+        default:
+            break
+        }
+        
     }
     
     func peerFound(withId id: MCPeerID) {

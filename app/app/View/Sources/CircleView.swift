@@ -13,11 +13,12 @@ class CircleView: UIView {
     private var radius: Double = 0
     private var numberOfCircles: Int = 0
     var path: UIBezierPath!
+    var points: [(x: Double, y: Double)] = []
     
     func drawCircles(numberOf numberOfCircles: Int ,onRectangle rect: CGRect, withRadius radius: Double) {
         self.radius = radius
         self.numberOfCircles = numberOfCircles
-        draw(rect)
+        self.draw(rect)
     }
     
     override func draw(_ rect: CGRect) {
@@ -29,6 +30,7 @@ class CircleView: UIView {
                 let radians = j * Double.pi / 180
                 let x = Double(center.x) + radius * Double(i) * cos(radians)
                 let y = Double(center.y) + radius * Double(i) * sin(radians)
+                self.points.append((x,y))
                 path.addLine(to: CGPoint(x: x , y: y))
             }
         }

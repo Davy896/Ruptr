@@ -134,7 +134,7 @@ public class Service: NSObject {
         self._peers = []
         self._peersDiscoveryInfos = []
         self._discoveryInfo = [:]
-        self._session = MCSession(peer: self._peerId, securityIdentity: nil, encryptionPreference: .none)
+        self._session = MCSession(peer: self._peerId, securityIdentity: nil, encryptionPreference: .optional)
         
         super.init()
         
@@ -199,6 +199,7 @@ extension Service: MCSessionDelegate {
         if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType) {
             return
         }
+        print("session------", data)
     }
     
     public func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
@@ -220,6 +221,7 @@ extension Service: MCSessionDelegate {
     }
     
     @objc public func send(message: String, toPeer peer: MCPeerID) {
+        print("-----------send", message)
         if (session.connectedPeers.contains(peer)) {
             do {
                 try session.send(message.data(using: String.Encoding.utf8)!, toPeers: [peer], with: .reliable)

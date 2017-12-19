@@ -88,6 +88,7 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
             }
         }
     }
+    
 }
 
 extension UIImage {

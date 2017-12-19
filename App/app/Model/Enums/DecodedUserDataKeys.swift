@@ -19,6 +19,7 @@ enum DecodedUserDataKeys {
     case moodThree
     case status
     case interactionType
+    case emoji
     
     var enumToString: String {
         get {
@@ -43,6 +44,8 @@ enum DecodedUserDataKeys {
                 return "status"
             case DecodedUserDataKeys.interactionType:
                 return "interactionType"
+            case DecodedUserDataKeys.emoji:
+                return "emoji"
             }
         }
     }

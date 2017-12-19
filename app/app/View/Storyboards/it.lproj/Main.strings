@@ -1,9 +1,54 @@
 
+/* Class = "UITabBarItem"; title = "List"; ObjectID = "4co-Lf-fuF"; */
+"4co-Lf-fuF.title" = "List";
+
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "5LJ-eS-7KF"; */
 "5LJ-eS-7KF.title" = "Item";
 
+/* Class = "UIButton"; normalTitle = "<"; ObjectID = "80M-5X-y6b"; */
+"80M-5X-y6b.normalTitle" = "<";
+
+/* Class = "UILabel"; text = "User Name"; ObjectID = "8VD-v0-z08"; */
+"8VD-v0-z08.text" = "User Name";
+
+/* Class = "UILabel"; text = "Face"; ObjectID = "9Wg-FB-vQd"; */
+"9Wg-FB-vQd.text" = "Face";
+
+/* Class = "UIButton"; normalTitle = ">"; ObjectID = "AOE-vM-l0Q"; */
+"AOE-vM-l0Q.normalTitle" = ">";
+
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "FRe-ZO-asZ"; */
 "FRe-ZO-asZ.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = ">"; ObjectID = "Kti-WV-0qK"; */
+"Kti-WV-0qK.normalTitle" = ">";
+
+/* Class = "UILabel"; text = "Skin"; ObjectID = "MhS-pj-ocW"; */
+"MhS-pj-ocW.text" = "Skin";
+
+/* Class = "UIButton"; normalTitle = "<"; ObjectID = "QAh-tj-kjs"; */
+"QAh-tj-kjs.normalTitle" = "<";
+
+/* Class = "UIButton"; normalTitle = "<"; ObjectID = "ZY4-XA-0W1"; */
+"ZY4-XA-0W1.normalTitle" = "<";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "fFm-PR-rA6"; */
+"fFm-PR-rA6.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = ">"; ObjectID = "hAD-fa-EbW"; */
+"hAD-fa-EbW.normalTitle" = ">";
+
+/* Class = "UIButton"; normalTitle = "Finish"; ObjectID = "hbr-f5-TWk"; */
+"hbr-f5-TWk.normalTitle" = "Finish";
+
+/* Class = "UITabBarItem"; title = "Map"; ObjectID = "iGr-7h-ihK"; */
+"iGr-7h-ihK.title" = "Map";
+
+/* Class = "UILabel"; text = "Hair"; ObjectID = "lnG-FS-gB9"; */
+"lnG-FS-gB9.text" = "Hair";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "nwB-bq-U0p"; */
+"nwB-bq-U0p.title" = "Settings";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "oFB-ER-IRc"; */
 "oFB-ER-IRc.title" = "Item";

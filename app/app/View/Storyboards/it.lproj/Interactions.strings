@@ -1,3 +1,12 @@
 
-/* Class = "UIViewController"; title = "Chat"; ObjectID = "jOh-z6-JEN"; */
-"jOh-z6-JEN.title" = "Chat";
+/* Class = "UILabel"; text = "Collaborate to create your story with Emoji!"; ObjectID = "7gh-ef-QRa"; */
+"7gh-ef-QRa.text" = "Collaborate to create your story with Emoji!";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "Bry-Vy-CTC"; */
+"Bry-Vy-CTC.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "Chat"; ObjectID = "luJ-Cs-4tj"; */
+"luJ-Cs-4tj.normalTitle" = "Chat";
+
+/* Class = "UIButton"; normalTitle = "Exit Game"; ObjectID = "x8W-0V-Lk0"; */
+"x8W-0V-Lk0.normalTitle" = "Exit Game";

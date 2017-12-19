@@ -16,4 +16,5 @@ public protocol ChatServiceDelegate {
     func peerLost(withId id: MCPeerID)
     func connectedSuccessfully(with id: MCPeerID)
     func setDiscoveryInfo(from profile: ProfileRequirements)
+    func connectionLost()
 }

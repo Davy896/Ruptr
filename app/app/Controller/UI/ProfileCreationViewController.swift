@@ -79,7 +79,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             button.topLeftCorner = true
             button.topRightCorner = true
             button.maskToBounds = true
-            button.addTarget(self, action: #selector(chooseMoodForProfile), for: .touchUpInside)
+            button.addTarget(self, action: #selector(self.chooseMoodForProfile), for: .touchUpInside)
 
             if (key == self.moodOne || key == self.moodTwo || key == self.moodThree) {
                 button.isEnabled = false

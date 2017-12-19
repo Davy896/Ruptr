@@ -12,7 +12,7 @@ import MultipeerConnectivity
 import SCLAlertView
 
 class ConnectivityViewController: UIViewController, ChatServiceDelegate {
-    
+
     var isGame = true
     var people: [UserProfile] = []
     let alertAppearence = SCLAlertView.SCLAppearance(kCircleIconHeight: -56,
@@ -72,6 +72,8 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             alert.addButton("Game") {
                 self.isGame = true
                 ServiceManager.instance.selectedPeer = id
+                GameViewControlller.randomEmoji = GameViewControlller.randomizeEmoji()
+                GameViewControlller.isPlayerOne = true
                 serviceBrowser.invitePeer(id,
                                           to: ServiceManager.instance.chatService.session,
                                           withContext: ConnectivityViewController.createUserData(for: "game"),
@@ -111,6 +113,8 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 
                 alert.addButton("Accept") {
                     self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
+                    GameViewControlller.randomEmoji = userData[DecodedUserDataKeys.emoji]!
+                    GameViewControlller.isPlayerOne = false
                     ServiceManager.instance.selectedPeer = from
                     chatService.invitationHandler(true, chatService.session)
                 }
@@ -134,13 +138,18 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func handleMessage(from: MCPeerID, message: String) {
         let (key, value) = (message.components(separatedBy: "|")[0], message.components(separatedBy: "|")[1])
-        print(value)
+        print("handleMessage------", message)
         switch key {
-        case MPCMessageTypes.closeConnection :
+        case MPCMessageTypes.closeConnection:
+            sleep(1)
             ServiceManager.instance.chatService.session.disconnect()
             OperationQueue.main.addOperation {
                 _ = self.navigationController?.popViewController(animated: true)
             }
+            
+            break
+        case MPCMessageTypes.emoji:
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "received_emoji"), object: nil, userInfo: ["emoji": value])
             break
         default:
             break
@@ -173,6 +182,9 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         }
     }
     
+    func connectionLost() {
+    }
+    
     func updateFoundPeers() {
         self.people.removeAll()
         let peers = ServiceManager.instance.chatService.peers
@@ -192,6 +204,9 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         }
     }
     
+    @IBAction func unwindToListTableView(segue:UIStoryboardSegue) { }
+
+    
     static func createUserData(for interaction: String) -> Data {
         let userProfile = ServiceManager.instance.userProfile
         let data = "\(userProfile.username)|" +
@@ -202,7 +217,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             "\(userProfile.moods[1].enumToString)|" +
             "\(userProfile.moods[2].enumToString)|" +
         "\(userProfile.status.enumToString)|"
-        return (interaction == "chat" ? data + "chat " : data + "game").data(using: String.Encoding.utf8)!  // has 10 components separeted by |
+        return (interaction == "chat" ? data + "chat|\(GameViewControlller.randomEmoji)" : data + "game|\(GameViewControlller.randomEmoji)").data(using: String.Encoding.utf8)!  // has 10 components separeted by |
     }
     
     static func decodeUserData(from data: String) -> [DecodedUserDataKeys : String] {
@@ -216,6 +231,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 .moodTwo: userData[6],
                 .moodThree: userData[7],
                 .status: userData[8],
-                .interactionType: userData[9]]
+                .interactionType: userData[9],
+                .emoji: userData[10]]
     }
 }

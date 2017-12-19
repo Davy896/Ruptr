@@ -74,6 +74,7 @@ extension ChatService { // MCSessionDelegate
             self.delegate?.connectedSuccessfully(with: peerID)
             break
         case MCSessionState.notConnected:
+            self.delegate?.connectionLost()
             break
         
         }

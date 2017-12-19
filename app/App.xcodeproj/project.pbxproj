@@ -30,6 +30,7 @@
 		41792CE01FDD632800B5F83E /* ConnectivityServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; };
 		41792CE11FDD632800B5F83E /* ConnectivityServices.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */; };
+		41B2C0AE1FE94F970027EA97 /* MPCMessageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */; };
 		5D4A46181FE3C762007524C4 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A46171FE3C762007524C4 /* Messages.swift */; };
 		5D4FD2FE1FE2B0780043AF98 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4FD2FD1FE2B0780043AF98 /* ChatController.swift */; };
 		5D4FD3001FE2B0FD0043AF98 /* SingleChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4FD2FF1FE2B0FD0043AF98 /* SingleChatCell.swift */; };
@@ -117,6 +118,7 @@
 		41792CAC1FDD60A300B5F83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConnectivityServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPCMessageTypes.swift; sourceTree = "<group>"; };
 		5C62C396886CCA7831DDE00C /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CEF8F1CB553C61D0B99B90A /* Pods-AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppUITests/Pods-AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4A46171FE3C762007524C4 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Messages.swift; path = app/Model/Messages.swift; sourceTree = SOURCE_ROOT; };
@@ -301,6 +303,7 @@
 				41792C8A1FDD60A200B5F83E /* AppDelegate.swift */,
 				4105BF1A1FE123DC005B2A8C /* ServiceManager.swift */,
 				414E39C01FE7D87E0089D909 /* BackgroundExtension.swift */,
+				41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */,
 				41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */,
 				F9BC7EA41FE2DA45006F337F /* GameViewControlller.swift in Sources */,
+				41B2C0AE1FE94F970027EA97 /* MPCMessageTypes.swift in Sources */,
 				41588D361FE886D000876DC0 /* DecodedUserDataKeys.swift in Sources */,
 				410BE70F1FDFDBDA00B26DF2 /* ConnectivityViewController.swift in Sources */,
 				5D4FD2FE1FE2B0780043AF98 /* ChatController.swift in Sources */,
@@ -869,7 +873,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = HH88N3P4EZ;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -886,7 +890,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = HH88N3P4EZ;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -46,7 +46,7 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="saveProfile:" destination="4Im-TW-TOI" eventType="touchUpInside" id="G9D-kV-HGR"/>
-                                            <segue destination="VYV-oe-HMY" kind="show" id="wt2-Qt-kmv"/>
+                                            <segue destination="dra-i1-Y34" kind="show" id="T6F-bB-hrR"/>
                                         </connections>
                                     </button>
                                     <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="ROX-Bo-2yP">
@@ -250,7 +250,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="username"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="username"/>
                                     </textField>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFm-PR-rA6" customClass="RoundLabel" customModule="App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="179" width="343" height="46"/>
@@ -437,6 +437,7 @@
                 <navigationController id="mXH-tY-Xvq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="List" id="4co-Lf-fuF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BJA-vY-2z1">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -469,12 +470,21 @@
             </objects>
             <point key="canvasLocation" x="-447" y="1660"/>
         </scene>
+        <!--ChatViewController-->
+        <scene sceneID="E32-Zt-vlo">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Interactions" referencedIdentifier="ChatViewController" id="dra-i1-Y34" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qyg-nw-iyk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2137" y="837"/>
+        </scene>
         <!--Map-->
         <scene sceneID="BRA-nk-VvI">
             <objects>
                 <navigationController id="hMa-8X-ByQ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Map" id="iGr-7h-ihK"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7FW-hT-NtY">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>

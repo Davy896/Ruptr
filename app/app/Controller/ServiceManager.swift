@@ -15,10 +15,11 @@ class ServiceManager {
     
     private var _userProfile: UserProfile
     private var _chatService: ChatService
+    private var _selectedPeer: MCPeerID?
     
     public var userProfile: UserProfile {
         get {
-            return _userProfile
+            return self._userProfile
         }
         
         set(userProfile) { // Do this only once!!!!!!!
@@ -29,7 +30,16 @@ class ServiceManager {
     
     public var chatService: ChatService {
         get {
-            return _chatService
+            return self._chatService
+        }
+    }
+    
+    public var selectedPeer: MCPeerID? {
+        get {
+            return self._selectedPeer
+        }
+        set(selectedPeer) {
+            self._selectedPeer = selectedPeer
         }
     }
     

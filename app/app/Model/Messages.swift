@@ -13,14 +13,18 @@ class Messages: NSObject {
     var text: String
 //    var date: NSDate
     var username: String
-    var avatar: String
+    var avatarHair: String
+    var avatarEyes: String
+    var avatarSkinColor: String
     var isSend: Bool = false
     
-    init(text: String, username: String, avatar: String, isSend: Bool) {
+    init(text: String, username: String, avatarHair: String,avatarEyes: String, avatarSkinColor: String, isSend: Bool) {
         self.text = text
 //        self.date = date
         self.username = username
-        self.avatar = avatar
+        self.avatarHair = avatarHair
+        self.avatarEyes = avatarEyes
+        self.avatarSkinColor = avatarSkinColor
         self.isSend = isSend
     }
 }

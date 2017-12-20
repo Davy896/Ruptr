@@ -40,9 +40,40 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         setupKeyboard()
         self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(self.tap)
+        startTimer()
     }
-    
-    
+    var timeLabel = UILabel()
+    var timer = Timer()
+    var timeCount:TimeInterval = 300
+    let timeInterval:TimeInterval = 1
+
+    @objc func timeString(time:TimeInterval) -> String {
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        return String(format:"%02i:%02i", minutes, seconds)
+    }
+
+    @objc func updateTime() {
+        timeLabel.text = "\(timeString(time: timeCount))"
+        if timeCount != 0 {
+            timeCount -= 1
+
+        }else {
+            endTimer()
+
+        }
+    }
+
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+
+    }
+
+
+    func endTimer() {
+        timer.invalidate()
+    }
+
     func setupKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
@@ -100,7 +131,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
         cell.message = messages[indexPath.item]
         let messageText = messages[indexPath.item].text
-        cell.messageLabel.isEditable = false
+        
        
         
         if messages[indexPath.item].isSend == true {
@@ -120,18 +151,10 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.profileImageEyes.backgroundColor = Colours.getColour(named: messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[0],
                                                                       index: Int(messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[1]))
             cell.bringSubview(toFront: cell.profileImageHair)
-           cell.tail.image = #imageLiteral(resourceName: "tailRight")
+            cell.tail.image = UIImage(named: "tailRight")
             
             cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18, y: cell.cloud.frame.height - 33, width: 20, height: 25)
-//
-//            cell.tail.translatesAutoresizingMaskIntoConstraints = false
-//
-//            cell.tail.leftAnchor.constraint(equalTo: cell.cloud.leftAnchor,constant: cell.cloud.widthAnchor ).isActive = true
-//            cell.tail.bottomAnchor.constraint(equalTo: cell.cloud.bottomAnchor,constant: -10).isActive = true
-//            cell.tail.widthAnchor.constraint(equalToConstant: 20).isActive = true
-//            cell.tail.heightAnchor.constraint(equalToConstant: 25).isActive = true
-//
-//
+
             }else {
 
             cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
@@ -152,16 +175,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.cloud.backgroundColor = UIColor.lightGray
             cell.messageLabel.backgroundColor = UIColor.clear
             
-//             cell.tail.translatesAutoresizingMaskIntoConstraints = false
-            cell.tail.image = #imageLiteral(resourceName: "tailLeft")
-            
-//
-//            cell.tail.rightAnchor.constraint(equalTo: cell.cloud.leftAnchor,constant: 2).isActive = true
-//            cell.tail.bottomAnchor.constraint(equalTo: cell.cloud.bottomAnchor,constant: -10).isActive = true
-//            cell.tail.widthAnchor.constraint(equalToConstant: 20).isActive = true
-//            cell.tail.heightAnchor.constraint(equalToConstant: 25).isActive = true
-//
-            
+
+            cell.tail.image = UIImage(named: "tailLeft")
             cell.tail.frame = CGRect(x:  50 + 12 - 19, y: cell.cloud.frame.height - 33, width: 20, height: 25)
             
         }
@@ -199,6 +214,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }
     
     var containerViewBottomAnchor: NSLayoutConstraint?
+    
     
     func setupInputComponents() {
         
@@ -290,7 +306,13 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         titleNameChat.topAnchor.constraint(equalTo: view.topAnchor).isActive = true         //
         titleNameChat.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
         titleNameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true         //
-      
+
+        timeLabel.text = "time: \(timeString(time: timeCount))"
+        
+        
+        titleNameChat.addSubview(timeLabel)
+        
+        
         
         let nameChat = UILabel()                                    //nameChat declaration
         nameChat.translatesAutoresizingMaskIntoConstraints = false  //
@@ -315,7 +337,14 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         simulateButton.leftAnchor.constraint(equalTo: nameChat.rightAnchor, constant: 100).isActive = true    //constraints for nameChat
         simulateButton.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true      //
         simulateButton.widthAnchor.constraint(equalToConstant: 100).isActive = true  //
-        simulateButton.heightAnchor.constraint(equalToConstant: 100).isActive = true               //
+        simulateButton.heightAnchor.constraint(equalToConstant: 50).isActive = true               //
+        
+        
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+        timeLabel.leftAnchor.constraint(equalTo: nameChat.rightAnchor).isActive = true    //constraints for nameChat
+        timeLabel.bottomAnchor.constraint(equalTo: simulateButton.topAnchor).isActive = true      //
+        timeLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true  //
+        timeLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true               //
         
         
         
@@ -323,8 +352,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         separatorLineView2.backgroundColor = UIColor.gray                        //
         separatorLineView2.translatesAutoresizingMaskIntoConstraints = false     //
         titleNameChat.addSubview(separatorLineView2)                             //
-        //titleNameChat.addSubview(collectionView.heade)
-        
+       
         separatorLineView2.leftAnchor.constraint(equalTo: titleNameChat.leftAnchor).isActive = true         //contraint line separator 2
         separatorLineView2.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true     //
         separatorLineView2.widthAnchor.constraint(equalTo: titleNameChat.widthAnchor).isActive = true       //

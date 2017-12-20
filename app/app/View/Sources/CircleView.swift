@@ -24,12 +24,12 @@ class CircleView: UIView {
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath()
         let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
-        for i in 1 ... numberOfCircles {
-            path.move(to: CGPoint(x: center.x + CGFloat(radius * Double(i)), y: center.y))
+        for i in 1 ... self.numberOfCircles {
+            path.move(to: CGPoint(x: center.x + CGFloat(self.radius * Double(i)), y: center.y))
             for j in stride(from: 0, to: 361.0, by: 1) {
                 let radians = j * Double.pi / 180
-                let x = Double(center.x) + radius * Double(i) * cos(radians)
-                let y = Double(center.y) + radius * Double(i) * sin(radians)
+                let x = Double(center.x) + self.radius * Double(i) * cos(radians)
+                let y = Double(center.y) + self.radius * Double(i) * sin(radians)
                 self.points.append((x,y))
                 path.addLine(to: CGPoint(x: x , y: y))
             }

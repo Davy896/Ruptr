@@ -18,7 +18,6 @@
 		414E39C11FE7D87E0089D909 /* BackgroundExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414E39C01FE7D87E0089D909 /* BackgroundExtension.swift */; };
 		41588D361FE886D000876DC0 /* DecodedUserDataKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */; };
 		41588D381FE8899600876DC0 /* AvatarPlanetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41588D371FE8899600876DC0 /* AvatarPlanetView.swift */; };
-		41588D3A1FE889C600876DC0 /* AvatarPlanetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41588D391FE889C600876DC0 /* AvatarPlanetView.xib */; };
 		41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A1D1FDD8201004A0E99 /* UserProfile.swift */; };
 		417518A01FE3C911004972FA /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4175189F1FE3C911004972FA /* Colours.swift */; };
 		41792C8B1FDD60A200B5F83E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792C8A1FDD60A200B5F83E /* AppDelegate.swift */; };
@@ -99,7 +98,6 @@
 		414E39C01FE7D87E0089D909 /* BackgroundExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundExtension.swift; sourceTree = "<group>"; };
 		41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedUserDataKeys.swift; sourceTree = "<group>"; };
 		41588D371FE8899600876DC0 /* AvatarPlanetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPlanetView.swift; sourceTree = "<group>"; };
-		41588D391FE889C600876DC0 /* AvatarPlanetView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvatarPlanetView.xib; sourceTree = "<group>"; };
 		41667A1D1FDD8201004A0E99 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		4175189F1FE3C911004972FA /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		41792C871FDD60A200B5F83E /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -291,7 +289,6 @@
 			children = (
 				414512C51FDFCC0A001864BB /* Sources */,
 				414512C41FDFCBF1001864BB /* Storyboards */,
-				41588D391FE889C600876DC0 /* AvatarPlanetView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -461,7 +458,6 @@
 				410BE70D1FDFD18800B26DF2 /* Interactions.storyboard in Resources */,
 				410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */,
 				41792C951FDD60A200B5F83E /* LaunchScreen.storyboard in Resources */,
-				41588D3A1FE889C600876DC0 /* AvatarPlanetView.xib in Resources */,
 				410BE7191FDFF5E300B26DF2 /* Localizable.strings in Resources */,
 				41792C921FDD60A200B5F83E /* Assets.xcassets in Resources */,
 				41792C901FDD60A200B5F83E /* Main.storyboard in Resources */,

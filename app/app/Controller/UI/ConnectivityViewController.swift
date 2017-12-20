@@ -153,7 +153,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func handleMessage(from: MCPeerID, message: String) {
         let (key, value) = (message.components(separatedBy: "|")[0], message.components(separatedBy: "|")[1])
-        print("handleMessage------", message)
         switch key {
         case MPCMessageTypes.closeConnection:
             sleep(1)

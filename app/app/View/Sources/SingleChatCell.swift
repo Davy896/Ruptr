@@ -113,7 +113,7 @@ class SingleChatCell: UICollectionViewCell {
     
     
     func setupView() {
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor.clear
         
         addSubview(cloud)
         addSubview(messageLabel)

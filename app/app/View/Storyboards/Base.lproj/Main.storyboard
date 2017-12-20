@@ -46,7 +46,7 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="saveProfile:" destination="4Im-TW-TOI" eventType="touchUpInside" id="G9D-kV-HGR"/>
-                                            <segue destination="VYV-oe-HMY" kind="show" id="Ehm-u1-SGu"/>
+                                            <segue destination="VYV-oe-HMY" kind="show" id="ej0-1X-1Ni"/>
                                         </connections>
                                     </button>
                                     <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="ROX-Bo-2yP">
@@ -89,16 +89,18 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hair" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lnG-FS-gB9">
-                                                <rect key="frame" x="116" y="18" width="102" height="21"/>
+                                                <rect key="frame" x="79" y="20" width="185" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOE-vM-l0Q" customClass="RoundButton" customModule="App" customModuleProvider="target">
-                                                <rect key="frame" x="277" y="13" width="30" height="30"/>
+                                                <rect key="frame" x="272" y="10" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                <state key="normal" title="&gt;"/>
+                                                <state key="normal" title="&gt;">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
@@ -106,43 +108,29 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="bottomLeftCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                        <real key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" red="0.20392156859999999" green="0.28235294119999998" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="updateAvatar:" destination="4Im-TW-TOI" eventType="touchUpInside" id="hhs-zJ-kdq"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QAh-tj-kjs" customClass="RoundButton" customModule="App" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="15" width="30" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                <state key="normal" title="&lt;"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="bottomRightCorner" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="bottomLeftCorner" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="updateAvatar:" destination="4Im-TW-TOI" eventType="touchUpInside" id="0ce-FX-h2d"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Face" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Wg-FB-vQd">
-                                                <rect key="frame" x="116" y="67" width="102" height="21"/>
+                                                <rect key="frame" x="79" y="69" width="185" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAD-fa-EbW" customClass="RoundButton" customModule="App" customModuleProvider="target">
-                                                <rect key="frame" x="277" y="63" width="30" height="30"/>
+                                                <rect key="frame" x="272" y="59" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                <state key="normal" title="&gt;"/>
+                                                <state key="normal" title="&gt;">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
@@ -150,7 +138,10 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="bottomLeftCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                        <real key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" red="0.20392156859999999" green="0.28235294119999998" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
@@ -158,10 +149,12 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80M-5X-y6b" customClass="RoundButton" customModule="App" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="63" width="30" height="30"/>
+                                                <rect key="frame" x="31" y="60" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                <state key="normal" title="&lt;"/>
+                                                <state key="normal" title="&lt;">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
@@ -169,7 +162,10 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="bottomLeftCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                        <real key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" red="0.20392156859999999" green="0.28235294119999998" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
@@ -177,10 +173,12 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kti-WV-0qK" customClass="RoundButton" customModule="App" customModuleProvider="target">
-                                                <rect key="frame" x="277" y="117" width="30" height="30"/>
+                                                <rect key="frame" x="272" y="110" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                <state key="normal" title="&gt;"/>
+                                                <state key="normal" title="&gt;">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
@@ -188,7 +186,10 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="bottomLeftCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                        <real key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" red="0.20392156859999999" green="0.28235294119999998" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
@@ -196,10 +197,12 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZY4-XA-0W1" customClass="RoundButton" customModule="App" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="117" width="30" height="30"/>
+                                                <rect key="frame" x="31" y="109" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                <state key="normal" title="&lt;"/>
+                                                <state key="normal" title="&lt;">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
@@ -207,7 +210,10 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="bottomLeftCorner" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                        <real key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" red="0.20392156859999999" green="0.28235294119999998" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
@@ -215,11 +221,35 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Skin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MhS-pj-ocW">
-                                                <rect key="frame" x="116" y="117" width="102" height="21"/>
+                                                <rect key="frame" x="79" y="119" width="185" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QAh-tj-kjs" customClass="RoundButton" customModule="App" customModuleProvider="target">
+                                                <rect key="frame" x="31" y="10" width="40" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                <state key="normal" title="&lt;">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="bottomRightCorner" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="bottomLeftCorner" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" red="0.20392156862745098" green="0.28235294117647058" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="updateAvatar:" destination="4Im-TW-TOI" eventType="touchUpInside" id="0ce-FX-h2d"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
@@ -435,7 +465,7 @@
         <scene sceneID="thO-Sj-IIa">
             <objects>
                 <navigationController id="mXH-tY-Xvq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="List" id="4co-Lf-fuF"/>
+                    <tabBarItem key="tabBarItem" title="List" image="list_tabicon_hollow" selectedImage="list_tabicon_filled" id="4co-Lf-fuF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BJA-vY-2z1">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -481,7 +511,7 @@
         <scene sceneID="BRA-nk-VvI">
             <objects>
                 <navigationController id="hMa-8X-ByQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="iGr-7h-ihK"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="map_tabicon_hollow" selectedImage="map_tabicon_filled" id="iGr-7h-ihK"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7FW-hT-NtY">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -499,6 +529,10 @@
         <image name="expression_0" width="800" height="800"/>
         <image name="games" width="105" height="80"/>
         <image name="hairstyle_0_black" width="800" height="800"/>
+        <image name="list_tabicon_filled" width="23" height="23"/>
+        <image name="list_tabicon_hollow" width="23" height="23"/>
+        <image name="map_tabicon_filled" width="25" height="25"/>
+        <image name="map_tabicon_hollow" width="25" height="25"/>
         <image name="music" width="105" height="80"/>
         <image name="sports" width="105" height="80"/>
     </resources>

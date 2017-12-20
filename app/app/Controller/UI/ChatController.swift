@@ -27,12 +27,21 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(receivedMessage), name: NSNotification.Name(rawValue: "received_message"), object: nil)
+    
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         UIViewController.setViewBackground(for: self)
         self.title = NSLocalizedString("chat", comment: "")
         self.view.backgroundColor = Colours.background
-        setupInputComponents()                              //container view for chat writing
+        setupInputComponents()
+        
+        self.navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ChatController.back(sender:)))
+        self.navigationItem.leftBarButtonItem = newBackButton
+        
+        //container view for chat writing
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.register(SingleChatCell.self, forCellWithReuseIdentifier: cellId)
@@ -42,38 +51,45 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         self.view.addGestureRecognizer(self.tap)
         startTimer()
     }
+    
     var timeLabel = UILabel()
     var timer = Timer()
-    var timeCount:TimeInterval = 300
-    let timeInterval:TimeInterval = 1
-
+    var timeCount: TimeInterval = 300
+    let timeInterval: TimeInterval = 1
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
     @objc func timeString(time:TimeInterval) -> String {
         let minutes = Int(time) / 60 % 60
         let seconds = Int(time) % 60
         return String(format:"%02i:%02i", minutes, seconds)
     }
-
+    
     @objc func updateTime() {
         timeLabel.text = "\(timeString(time: timeCount))"
         if timeCount != 0 {
             timeCount -= 1
-
+            
         }else {
             endTimer()
-
         }
     }
-
+    
     func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-
     }
-
-
+    
+    
     func endTimer() {
         timer.invalidate()
     }
-
+    
     func setupKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
@@ -90,23 +106,23 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     @objc func keyboardWillShow(notification: NSNotification) {
         let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect)
         let keyboardDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]
-
+        
         
         containerViewBottomAnchor?.constant = -keyboardFrame.height
         UIView.animate(withDuration: keyboardDuration as! TimeInterval) {
             self.view.layoutIfNeeded()
         }
     }
-
+    
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-
+    
     
     @objc func keyboardWillHide(notification: NSNotification) {
         let keyboardDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]
-
-
+        
+        
         containerViewBottomAnchor?.constant = 0
         UIView.animate(withDuration: keyboardDuration as! TimeInterval) {
             self.view.layoutIfNeeded()
@@ -132,14 +148,14 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         cell.message = messages[indexPath.item]
         let messageText = messages[indexPath.item].text
         
-       
         
-        if messages[indexPath.item].isSend == true {
+        
+        if messages[indexPath.item].id == ServiceManager.instance.userProfile.id {
             
             cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
             cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
             cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
-           
+            
             cell.cloud.backgroundColor = UIColor.blue
             cell.messageLabel.backgroundColor = UIColor.clear
             
@@ -154,9 +170,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.tail.image = UIImage(named: "tailRight")
             
             cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18, y: cell.cloud.frame.height - 33, width: 20, height: 25)
-
-            }else {
-
+            
+        }else {
+            
             cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
             cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
             cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
@@ -170,12 +186,12 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             
             cell.messageLabel.frame = CGRect(x: 50 + 9 + 12, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
             cell.cloud.frame = CGRect(x: 50 + 12, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
-           
+            
             
             cell.cloud.backgroundColor = UIColor.lightGray
             cell.messageLabel.backgroundColor = UIColor.clear
             
-
+            
             cell.tail.image = UIImage(named: "tailLeft")
             cell.tail.frame = CGRect(x:  50 + 12 - 19, y: cell.cloud.frame.height - 33, width: 20, height: 25)
             
@@ -199,7 +215,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         height = estimateFrameForText(messageText).height + 30
         let width = UIScreen.main.bounds.width
         return CGSize(width: width , height: height)
- 
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -226,7 +242,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         containerView.translatesAutoresizingMaskIntoConstraints = false //(cercare a cosa serve)
         containerView.backgroundColor = UIColor.white                                                             //
         self.view.addSubview(containerView)                             //
-  
+        
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
         containerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
         containerView.heightAnchor.constraint(equalToConstant: 50).isActive = true          //
@@ -269,7 +285,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         inputTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true     //
         inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -10).isActive = true          //we are using this constaraint to extend the textField right anchor untill left anchor send button
         inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true    //
-
+        
         borderInput.translatesAutoresizingMaskIntoConstraints = false
         
         borderInput.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
@@ -306,13 +322,10 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         titleNameChat.topAnchor.constraint(equalTo: view.topAnchor).isActive = true         //
         titleNameChat.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
         titleNameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true         //
-
+        
         timeLabel.text = "time: \(timeString(time: timeCount))"
         
-        
         titleNameChat.addSubview(timeLabel)
-        
-        
         
         let nameChat = UILabel()                                    //nameChat declaration
         nameChat.translatesAutoresizingMaskIntoConstraints = false  //
@@ -352,7 +365,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         separatorLineView2.backgroundColor = UIColor.gray                        //
         separatorLineView2.translatesAutoresizingMaskIntoConstraints = false     //
         titleNameChat.addSubview(separatorLineView2)                             //
-       
+        
         separatorLineView2.leftAnchor.constraint(equalTo: titleNameChat.leftAnchor).isActive = true         //contraint line separator 2
         separatorLineView2.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true     //
         separatorLineView2.widthAnchor.constraint(equalTo: titleNameChat.widthAnchor).isActive = true       //
@@ -366,22 +379,21 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         if inputTextField.text != "" {
             createMessages(input: inputTextField)
             inputTextField.text = ""
-            self.collectionView?.reloadData()
         }
-       
+        
         
     }
     
     @objc func simulate() {            //function to send messages
         
-        let fakeMessage = UITextField()
-        fakeMessage.text = "this is a fake recived messagge gggggggggggggggggggggggg"
-        let profile = ServiceManager.instance.userProfile
-        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatarHair: profile.avatar[AvatarParts.hair]!,avatarEyes: profile.avatar[AvatarParts.face]!, avatarSkinColor: profile.avatar[AvatarParts.skin]!, isSend: false)
-//        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatar: "hairstyle_0_black", isSend: false)
-        
-        messages.append(newMessage)
-        self.collectionView?.reloadData()
+//        let fakeMessage = UITextField()
+//        fakeMessage.text = "this is a fake recived messagge gggggggggggggggggggggggg"
+//        let profile = ServiceManager.instance.userProfile
+//        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatarHair: profile.avatar[AvatarParts.hair]!,avatarEyes: profile.avatar[AvatarParts.face]!, avatarSkinColor: profile.avatar[AvatarParts.skin]!, isSend: false)
+//        //        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatar: "hairstyle_0_black", isSend: false)
+//
+//        messages.append(newMessage)
+//        self.collectionView?.reloadData()
     }
     
     
@@ -392,15 +404,32 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     func createMessages( input: UITextField) {
         let profile = ServiceManager.instance.userProfile
-        let newMessage = Messages(text: inputTextField.text! , username: profile.username, avatarHair: profile.avatar[AvatarParts.hair]!,avatarEyes: profile.avatar[AvatarParts.face]!, avatarSkinColor: profile.avatar[AvatarParts.skin]! , isSend: true)
-        
-        messages.append(newMessage)
-
-        
-        
+        let newMessage = Messages(text: inputTextField.text! , username: profile.username, avatarHair: profile.avatar[AvatarParts.hair]!,avatarEyes: profile.avatar[AvatarParts.face]!, avatarSkinColor: profile.avatar[AvatarParts.skin]!, id: profile.id)
+        if let peer = ServiceManager.instance.selectedPeer {
+            print(newMessage.toString())
+            ServiceManager.instance.chatService.send(message: "\(MPCMessageTypes.message)|\(newMessage.toString())", toPeer: peer.key)
+        }
     }
     
+    @objc func back(sender: UIBarButtonItem) {
+        if let peer = ServiceManager.instance.selectedPeer {
+            ServiceManager.instance.chatService.send(message: "\(MPCMessageTypes.closeConnection)|null", toPeer: peer.key)
+        }
+    }
+    
+    @objc func receivedMessage(_ notification: NSNotification){
+        if let message = notification.userInfo?["message"] as? [String] {
+            OperationQueue.main.addOperation {
+                self.messages.append(Messages.setMessage(from: message))
+                self.collectionView?.reloadData()
+            }
+        } else {
+            print("fail")
+        }
+    }
 }
+
+
 
 
 

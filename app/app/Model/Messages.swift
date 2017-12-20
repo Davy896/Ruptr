@@ -7,25 +7,36 @@
 //
 
 import UIKit
-
+import MultipeerConnectivity
 
 class Messages: NSObject {
     var text: String
-//    var date: NSDate
     var username: String
     var avatarHair: String
     var avatarEyes: String
     var avatarSkinColor: String
-    var isSend: Bool = false
+    var id: String
     
     
-    init(text: String, username: String, avatarHair: String,avatarEyes: String, avatarSkinColor: String, isSend: Bool) {
+    init(text: String, username: String, avatarHair: String,avatarEyes: String, avatarSkinColor: String, id: String) {
         self.text = text
-//        self.date = date
         self.username = username
         self.avatarHair = avatarHair
         self.avatarEyes = avatarEyes
         self.avatarSkinColor = avatarSkinColor
-        self.isSend = isSend
+        self.id = id
+    }
+    
+    func toString() -> String {
+        return "\(self.text)|\(self.username)|\(self.avatarHair)|\(self.avatarEyes)|\(self.avatarSkinColor)|\(self.id)"
+    }
+    
+    static func setMessage(from array: [String]) -> Messages {
+        return Messages(text: array[1],
+                        username: array[2],
+                        avatarHair: array[3],
+                        avatarEyes: array[4],
+                        avatarSkinColor: "\(array[5])|\(array[6])",
+                        id: array[7])
     }
 }

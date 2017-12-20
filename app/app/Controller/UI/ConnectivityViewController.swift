@@ -71,7 +71,12 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             let serviceBrowser = ServiceManager.instance.chatService.serviceBrowser
             alert.addButton("Game") {
                 self.isGame = true
-                ServiceManager.instance.selectedPeer = id
+                ServiceManager.instance.selectedPeer = (key: id,
+                                                        name: userBeingInvited.username,
+                                                        hair: userBeingInvited.avatar[AvatarParts.hair]!,
+                                                        face: userBeingInvited.avatar[AvatarParts.face]!,
+                                                        skinTone: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[0],
+                                                        skinToneIndex: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[1])
                 GameViewControlller.randomEmoji = GameViewControlller.randomizeEmoji()
                 GameViewControlller.isPlayerOne = true
                 serviceBrowser.invitePeer(id,
@@ -82,7 +87,12 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             
             alert.addButton("Chat") {
                 self.isGame = false
-                ServiceManager.instance.selectedPeer = id
+                ServiceManager.instance.selectedPeer = (key: id,
+                                                        name: userBeingInvited.username,
+                                                        hair: userBeingInvited.avatar[AvatarParts.hair]!,
+                                                        face: userBeingInvited.avatar[AvatarParts.face]!,
+                                                        skinTone: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[0],
+                                                        skinToneIndex: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[1])
                 serviceBrowser.invitePeer(id,
                                           to: ServiceManager.instance.chatService.session,
                                           withContext: ConnectivityViewController.createUserData(for: "chat"),
@@ -115,7 +125,12 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                     self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
                     GameViewControlller.randomEmoji = userData[DecodedUserDataKeys.emoji]!
                     GameViewControlller.isPlayerOne = false
-                    ServiceManager.instance.selectedPeer = from
+                    ServiceManager.instance.selectedPeer = (from,
+                                                            userData[DecodedUserDataKeys.username]!,
+                                                            userData[DecodedUserDataKeys.avatarHair]!,
+                                                            userData[DecodedUserDataKeys.avatarFace]!,
+                                                            userData[DecodedUserDataKeys.avatarSkinTone]!,
+                                                            userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
                     chatService.invitationHandler(true, chatService.session)
                 }
                 
@@ -150,6 +165,9 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             break
         case MPCMessageTypes.emoji:
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "received_emoji"), object: nil, userInfo: ["emoji": value])
+            break
+        case MPCMessageTypes.message:
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "received_message"), object: nil, userInfo: ["message": message.components(separatedBy: "|")])
             break
         default:
             break

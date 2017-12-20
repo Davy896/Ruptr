@@ -46,11 +46,7 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="saveProfile:" destination="4Im-TW-TOI" eventType="touchUpInside" id="G9D-kV-HGR"/>
-<<<<<<< HEAD
-                                            <segue destination="VYV-oe-HMY" kind="show" id="ej0-1X-1Ni"/>
-=======
                                             <segue destination="VYV-oe-HMY" kind="show" id="dz2-Nn-zLN"/>
->>>>>>> 6fb051403c99ce786ac7606ed5082e208c506580
                                         </connections>
                                     </button>
                                     <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="ROX-Bo-2yP">

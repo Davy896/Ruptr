@@ -14,4 +14,19 @@
 "settings" = "Settings";
 "chat" = "Chat";
 "game" = "Game";
-"profileCreation" = "Profile Creation";
+"profile_creation" = "Profile Creation";
+"back" = "Back";
+"chat_placeholder" = "Enter message...";
+"time" = "Time";
+"cancel" = "Cancel";
+"send_invitation" = "Send invitation for";
+"accept" = "Accept";
+"invite_message" = "is inviting you to";
+"chat_invite_message" = "chat.";
+"game_invite_message" = "to play a game.";
+"refuse" = "Refuse";
+"select_mood_alert" = "Select a mood";
+"long_username_alert" = "Your Username is too long.";
+"alphanumeric_username_alert" = "Only numbers and letters allowed.";
+"empty_username_alert" = "This field cannot be empty.";
+

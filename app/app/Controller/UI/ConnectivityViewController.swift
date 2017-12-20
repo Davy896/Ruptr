@@ -69,7 +69,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             
             let alert = SCLAlertView(appearance: self.alertAppearence)
             let serviceBrowser = ServiceManager.instance.chatService.serviceBrowser
-            alert.addButton("Game") {
+            alert.addButton(NSLocalizedString("game", comment: "")) {
                 self.isGame = true
                 ServiceManager.instance.selectedPeer = (key: id,
                                                         name: userBeingInvited.username,
@@ -85,7 +85,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                           timeout: 20)
             }
             
-            alert.addButton("Chat") {
+            alert.addButton(NSLocalizedString("chat", comment: "")) {
                 self.isGame = false
                 ServiceManager.instance.selectedPeer = (key: id,
                                                         name: userBeingInvited.username,
@@ -99,13 +99,13 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                           timeout: 20)
             }
             
-            alert.addButton("Cancel", backgroundColor: UIColor.red) {
+            alert.addButton(NSLocalizedString("cancel", comment: ""), backgroundColor: UIColor.red) {
                 UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.light).impactOccurred()
             }
             
             OperationQueue.main.addOperation {
                 alert.showInfo(userBeingInvited.username,
-                               subTitle: "Send invitation for",
+                               subTitle: NSLocalizedString("send_invitation", comment: ""),
                                colorStyle: userBeingInvited.avatarSkin.toHexUInt(),
                                circleIconImage: UIImage.imageByCombiningImage(firstImage: userBeingInvited.avatarFace!, withImage: userBeingInvited.avatarHair!))
             }
@@ -118,10 +118,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 
                 let chatService = ServiceManager.instance.chatService
                 let userData = ConnectivityViewController.decodeUserData(from: data)
-                let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? "chat." : "to play a game."
+                let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? NSLocalizedString("chat_invite_message", comment: "") : NSLocalizedString("game_invite_message", comment: "")
                 let alert = SCLAlertView(appearance: self.alertAppearence)
                 
-                alert.addButton("Accept") {
+                alert.addButton(NSLocalizedString("accept", comment: "")) {
                     self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
                     GameViewControlller.randomEmoji = userData[DecodedUserDataKeys.emoji]!
                     GameViewControlller.isPlayerOne = false
@@ -134,14 +134,14 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                     chatService.invitationHandler(true, chatService.session)
                 }
                 
-                alert.addButton("Refuse", backgroundColor: UIColor.red) {
+                alert.addButton(NSLocalizedString("refuse", comment: ""), backgroundColor: UIColor.red) {
                     UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
                     chatService.invitationHandler(false, chatService.session)
                 }
                 
                 OperationQueue.main.addOperation {
                     alert.showInfo(userData[DecodedUserDataKeys.username]!,
-                                   subTitle: "Is inviting you to \(invitationText)",
+                                   subTitle: "\(NSLocalizedString("invite_message", comment: "")) \(invitationText)",
                         colorStyle: Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
                                                       index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!)).toHexUInt(),
                         circleIconImage: UIImage.imageByCombiningImage(firstImage: UIImage(named: userData[DecodedUserDataKeys.avatarHair]!)!,

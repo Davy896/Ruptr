@@ -6,4 +6,26 @@
   Copyright © 2017 Apple Dev Academy. All rights reserved.
 */
 
+
 "ghost" = "Fantasma";
+"send" = "Invia";
+"list" = "Lista";
+"map" = "Mappa";
+"settings" = "Impostazioni";
+"chat" = "Chat";
+"game" = "Gioco";
+"profile_creation" = "Creazione Profilo";
+"back" = "Indietro";
+"chat_placeholder" = "Messaggio...";
+"time" = "Tempo";
+"cancel" = "Annulla";
+"send_invitation" = "Inoltra un invito per";
+"accept" = "Accetta";
+"invite_message" = "ti sta invitando a";
+"chat_invite_message" = "chattare.";
+"game_invite_message" = "giocare.";
+"refuse" = "Declina";
+"select_mood_alert" = "Seleziona un interesse";
+"long_username_alert" = "Nome utente troppo lungo.";
+"alphanumeric_username_alert" = "Usare solo lettere e numeri.";
+"empty_username_alert" = "Questo campo non può essere vuoto.";

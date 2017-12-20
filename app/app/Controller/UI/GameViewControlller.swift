@@ -40,7 +40,6 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         UIViewController.setViewBackground(for: self)
         NotificationCenter.default.addObserver(self, selector: #selector(receivedEmoji), name: NSNotification.Name(rawValue: "received_emoji"), object: nil)
         
-//        self.emojiTextFields.text = self
         // first emoji
         self.firstEmojiField.text = GameViewControlller.randomEmoji
         self.firstEmojiField.inputView = self.emojiKeyboard
@@ -50,6 +49,13 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         self.emojiKeyboard = ISEmojiView()
         self.emojiKeyboard.delegate = self
         self.emojiKeyboard.collectionView.backgroundColor = Colours.backgroundSecondary
+        
+        
+//        string of emoji to pass in the chat
+        var stringEmoji : String = ""
+        for element in emojiTextFields {
+            stringEmoji.append("\(element) ")
+        }
         
         
         for field in emojiTextFields {
@@ -125,7 +131,6 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         return arrayEmoji[Int(arc4random_uniform(UInt32(arrayEmoji.count)))]
     }
     
-//    var stringEmoji : [String] = emojiTextFields.joined(separator: " ")
     
     
 }

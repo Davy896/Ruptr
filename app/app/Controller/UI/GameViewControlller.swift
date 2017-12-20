@@ -72,7 +72,7 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
     
     func emojiViewDidSelectEmoji(emojiView: ISEmojiView, emoji: String) {
         if let peer = ServiceManager.instance.selectedPeer {
-            ServiceManager.instance.chatService.send(message: "\(MPCMessageTypes.emoji)|\(emoji)", toPeer: peer)
+            ServiceManager.instance.chatService.send(message: "\(MPCMessageTypes.emoji)|\(emoji)", toPeer: peer.key)
         }
     }
     
@@ -114,7 +114,7 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
     @objc func back(sender: UIBarButtonItem) {
         if let peer = ServiceManager.instance.selectedPeer {
             let service = ServiceManager.instance.chatService
-            service.send(message: "\(MPCMessageTypes.closeConnection)|nil", toPeer: peer)
+            service.send(message: "\(MPCMessageTypes.closeConnection)|nil", toPeer: peer.key)
         }
     }
     

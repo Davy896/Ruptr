@@ -15,7 +15,7 @@ class ServiceManager {
     
     private var _userProfile: UserProfile
     private var _chatService: ChatService
-    private var _selectedPeer: MCPeerID?
+    private var _selectedPeer: (key: MCPeerID, name: String, hair: String, face: String, skinTone: String, skinToneIndex: String)?
     
     public var userProfile: UserProfile {
         get {
@@ -34,7 +34,7 @@ class ServiceManager {
         }
     }
     
-    public var selectedPeer: MCPeerID? {
+    public var selectedPeer: (key: MCPeerID,name: String, hair: String, face: String, skinTone: String, skinToneIndex: String)? {
         get {
             return self._selectedPeer
         }

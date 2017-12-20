@@ -11,4 +11,5 @@ import Foundation
 struct MPCMessageTypes {
     static let closeConnection = "close_connection"
     static let emoji = "emoji"
+    static let message = "message"
 }

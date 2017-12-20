@@ -36,7 +36,6 @@ class MapViewController: ConnectivityViewController {
     }
     
     func updateCircles(numberOfPeers: Int) {
-        print(numberOfPeers)
         var peersMissing: Int = numberOfPeers
         var circlePopulation: Int = 1
         var circleIndex: Int = 1
@@ -51,7 +50,7 @@ class MapViewController: ConnectivityViewController {
     
     override func peerFound(withId id: MCPeerID) {
         super.peerFound(withId: id)
-        updateCircles(numberOfPeers: self.people.count)
+        self.updateCircles(numberOfPeers: self.people.count)
     }
 }
 

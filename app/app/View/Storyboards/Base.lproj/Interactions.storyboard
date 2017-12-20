@@ -30,7 +30,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="5qH-Z4-aOG">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="chatBubble" id="5qH-Z4-aOG">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -44,15 +44,20 @@
                             <outlet property="delegate" destination="QHO-Ee-Qh5" id="zKj-v4-1g9"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <outlet property="chatCollectionView" destination="p5M-sN-ErV" id="531-VA-TJ1"/>
+                        <segue destination="M1h-HA-crS" kind="unwind" identifier="unwindChat" unwindAction="unwindToListTableViewWithSegue:" id="fLB-1l-h8H"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I91-Ub-KY7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="M1h-HA-crS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2350" y="-322"/>
+            <point key="canvasLocation" x="2350" y="1177"/>
         </scene>
         <!--Item-->
         <scene sceneID="UQX-v9-DUY">
             <objects>
-                <viewController storyboardIdentifier="GameViewController" id="6Og-rI-0pW" customClass="GameViewControlller" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameViewController" id="6Og-rI-0pW" customClass="GameViewController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FGD-Un-Gbd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -171,12 +176,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x8W-0V-Lk0">
-                                <rect key="frame" x="243" y="377" width="70" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <state key="normal" title="Exit Game"/>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Collaborate to create your story with Emoji!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gh-ef-QRa">
                                 <rect key="frame" x="12" y="79" width="350" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -184,12 +183,6 @@
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="luJ-Cs-4tj">
-                                <rect key="frame" x="62" y="377" width="70" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <state key="normal" title="Chat"/>
-                            </button>
                             <textField opaque="NO" tag="-1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SI7-zr-Fud">
                                 <rect key="frame" x="150" y="155" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -197,22 +190,53 @@
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="60"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You are waiting for the other player" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KK5-YC-DcB">
+                                <rect key="frame" x="12" y="507" width="347" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQH-XS-T1k" customClass="RoundButton" customModule="App" customModuleProvider="target">
+                                <rect key="frame" x="77" y="507" width="221" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
+                                <state key="normal" title="Chat"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="bottomRightCorner" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="bottomLeftCorner" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="maskToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="QHO-Ee-Qh5" kind="show" id="ewj-cL-kEX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="yvq-w3-phy"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="Bry-Vy-CTC"/>
                     <connections>
+                        <outlet property="chatButton" destination="sQH-XS-T1k" id="eUS-Te-Q2O"/>
                         <outlet property="firstEmojiField" destination="SI7-zr-Fud" id="B29-1c-Qxk"/>
+                        <outlet property="waitingLabel" destination="KK5-YC-DcB" id="vO6-xa-xEw"/>
                         <outletCollection property="emojiTextFields" destination="JmJ-6U-slk" collectionClass="NSMutableArray" id="LGd-gv-mfW"/>
                         <outletCollection property="emojiTextFields" destination="l2U-l7-DCa" collectionClass="NSMutableArray" id="6Wn-vg-nyM"/>
                         <outletCollection property="emojiTextFields" destination="VTN-HE-5r7" collectionClass="NSMutableArray" id="ih1-y3-XiX"/>
                         <outletCollection property="emojiTextFields" destination="1C5-Jv-l7x" collectionClass="NSMutableArray" id="FV3-HX-uiP"/>
                         <outletCollection property="emojiTextFields" destination="hXi-M2-5YY" collectionClass="NSMutableArray" id="DDV-ZK-iov"/>
                         <outletCollection property="emojiTextFields" destination="h2a-Qm-3Hu" collectionClass="NSMutableArray" id="dga-Ap-Jr8"/>
+                        <segue destination="obT-Uf-zkN" kind="unwind" identifier="unwindChat" unwindAction="unwindToListTableViewWithSegue:" id="CMX-5A-TQA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GfI-JG-ieh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="obT-Uf-zkN" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2349.5999999999999" y="362.96851574212894"/>
         </scene>

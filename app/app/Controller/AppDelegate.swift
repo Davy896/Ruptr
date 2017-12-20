@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.normal)
             barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont,], for: UIControlState.selected)
             barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.highlighted)
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         }
         
         return true

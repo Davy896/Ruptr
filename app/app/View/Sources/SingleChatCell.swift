@@ -50,6 +50,7 @@ class SingleChatCell: UICollectionViewCell {
         label.backgroundColor = UIColor.blue
         label.font = UIFont.systemFont(ofSize: 18)
         label.layer.cornerRadius = 15
+        label.isEditable = false
         return label
     }()
     
@@ -113,7 +114,7 @@ class SingleChatCell: UICollectionViewCell {
     
     
     func setupView() {
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor.clear
         
         addSubview(cloud)
         addSubview(messageLabel)

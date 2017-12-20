@@ -18,7 +18,6 @@
 		414E39C11FE7D87E0089D909 /* BackgroundExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414E39C01FE7D87E0089D909 /* BackgroundExtension.swift */; };
 		41588D361FE886D000876DC0 /* DecodedUserDataKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */; };
 		41588D381FE8899600876DC0 /* AvatarPlanetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41588D371FE8899600876DC0 /* AvatarPlanetView.swift */; };
-		41588D3A1FE889C600876DC0 /* AvatarPlanetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41588D391FE889C600876DC0 /* AvatarPlanetView.xib */; };
 		41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A1D1FDD8201004A0E99 /* UserProfile.swift */; };
 		417518A01FE3C911004972FA /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4175189F1FE3C911004972FA /* Colours.swift */; };
 		41792C8B1FDD60A200B5F83E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792C8A1FDD60A200B5F83E /* AppDelegate.swift */; };
@@ -45,7 +44,7 @@
 		F945CB131FE03283004D3B8F /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945CB121FE03283004D3B8F /* ListTableViewCell.swift */; };
 		F95E9EC31FDEA210008020C3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */; };
 		F95E9EC51FDEA210008020C3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E9EC21FDEA210008020C3 /* MapViewController.swift */; };
-		F9BC7EA41FE2DA45006F337F /* GameViewControlller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC7EA31FE2DA45006F337F /* GameViewControlller.swift */; };
+		F9BC7EA41FE2DA45006F337F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC7EA31FE2DA45006F337F /* GameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,7 +98,6 @@
 		414E39C01FE7D87E0089D909 /* BackgroundExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundExtension.swift; sourceTree = "<group>"; };
 		41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedUserDataKeys.swift; sourceTree = "<group>"; };
 		41588D371FE8899600876DC0 /* AvatarPlanetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPlanetView.swift; sourceTree = "<group>"; };
-		41588D391FE889C600876DC0 /* AvatarPlanetView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvatarPlanetView.xib; sourceTree = "<group>"; };
 		41667A1D1FDD8201004A0E99 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		4175189F1FE3C911004972FA /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		41792C871FDD60A200B5F83E /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,7 +134,7 @@
 		F945CB121FE03283004D3B8F /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListTableViewCell.swift; path = App/View/Sources/ListTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F95E9EC21FDEA210008020C3 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		F9BC7EA31FE2DA45006F337F /* GameViewControlller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewControlller.swift; path = App/Controller/UI/GameViewControlller.swift; sourceTree = SOURCE_ROOT; };
+		F9BC7EA31FE2DA45006F337F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = App/Controller/UI/GameViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,7 +182,7 @@
 		4105BF191FE123BB005B2A8C /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				F9BC7EA31FE2DA45006F337F /* GameViewControlller.swift */,
+				F9BC7EA31FE2DA45006F337F /* GameViewController.swift */,
 				5D4FD2FD1FE2B0780043AF98 /* ChatController.swift */,
 				410BE70E1FDFDBDA00B26DF2 /* ConnectivityViewController.swift */,
 				F95E9EC21FDEA210008020C3 /* MapViewController.swift */,
@@ -291,7 +289,6 @@
 			children = (
 				414512C51FDFCC0A001864BB /* Sources */,
 				414512C41FDFCBF1001864BB /* Storyboards */,
-				41588D391FE889C600876DC0 /* AvatarPlanetView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -461,7 +458,6 @@
 				410BE70D1FDFD18800B26DF2 /* Interactions.storyboard in Resources */,
 				410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */,
 				41792C951FDD60A200B5F83E /* LaunchScreen.storyboard in Resources */,
-				41588D3A1FE889C600876DC0 /* AvatarPlanetView.xib in Resources */,
 				410BE7191FDFF5E300B26DF2 /* Localizable.strings in Resources */,
 				41792C921FDD60A200B5F83E /* Assets.xcassets in Resources */,
 				41792C901FDD60A200B5F83E /* Main.storyboard in Resources */,
@@ -659,7 +655,7 @@
 				ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */,
 				41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */,
 				41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */,
-				F9BC7EA41FE2DA45006F337F /* GameViewControlller.swift in Sources */,
+				F9BC7EA41FE2DA45006F337F /* GameViewController.swift in Sources */,
 				41B2C0AE1FE94F970027EA97 /* MPCMessageTypes.swift in Sources */,
 				41588D361FE886D000876DC0 /* DecodedUserDataKeys.swift in Sources */,
 				410BE70F1FDFDBDA00B26DF2 /* ConnectivityViewController.swift in Sources */,

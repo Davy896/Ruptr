@@ -15,6 +15,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     var messages: [Messages] = []
     var tap: UITapGestureRecognizer!
+    var stringEmoji: String = ""
+    @IBOutlet weak var chatCollectionView : UICollectionView!
     
     lazy var inputTextField: UITextField = {                        //this is the declaration of the input textField and the textField we need to write and having a reference to use function handleSend
         let textField = UITextField()                               //
@@ -29,10 +31,10 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(receivedMessage), name: NSNotification.Name(rawValue: "received_message"), object: nil)
-    
-        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
-        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-        UIViewController.setViewBackground(for: self)
+        
+        chatCollectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
+        chatCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        UIViewController.setCollectionViewViewBackground(for: self)
         self.title = NSLocalizedString("chat", comment: "")
         self.view.backgroundColor = Colours.background
         setupInputComponents()
@@ -42,14 +44,17 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         self.navigationItem.leftBarButtonItem = newBackButton
         
         //container view for chat writing
-        collectionView?.delegate = self
-        collectionView?.dataSource = self
-        collectionView?.register(SingleChatCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.alwaysBounceVertical = true
+        chatCollectionView.delegate = self
+        chatCollectionView.dataSource = self
+        chatCollectionView.register(SingleChatCell.self, forCellWithReuseIdentifier: cellId)
+        chatCollectionView.alwaysBounceVertical = true
         setupKeyboard()
         self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(self.tap)
         startTimer()
+        self.inputTextField.text = self.stringEmoji
+        self.send()
+        self.inputTextField.text = ""
     }
     
     var timeLabel = UILabel()
@@ -58,10 +63,21 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     let timeInterval: TimeInterval = 1
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let background = self.view.viewWithTag(0451) {
+            UIView.animate(withDuration: 0.35, animations: {
+                background.alpha = 0.6
+            })
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -95,13 +111,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {             //funzione di sicurezza ceh serve per non aprire diverse tastiere
-        super.viewDidDisappear(animated)                            //
-        NotificationCenter.default.removeObserver(self)             //
-    }
-    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect)
@@ -188,7 +197,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.cloud.frame = CGRect(x: 50 + 12, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
             
             
-            cell.cloud.backgroundColor = UIColor.lightGray
+            cell.cloud.backgroundColor = UIColor(red:  151/255, green: 151/255, blue: 151/255, alpha: 1)
             cell.messageLabel.backgroundColor = UIColor.clear
             
             
@@ -234,13 +243,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     func setupInputComponents() {
         
-        
-        
-        let myColor = UIColor.lightGray
-        
         let containerView = UIView()                                    //creation of the writing container view
         containerView.translatesAutoresizingMaskIntoConstraints = false //(cercare a cosa serve)
-        containerView.backgroundColor = UIColor.white                                                             //
+        containerView.backgroundColor = Colours.backgroundSecondary     //
         self.view.addSubview(containerView)                             //
         
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
@@ -265,19 +270,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true                      //
         sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true     //
         sendButton.layer.cornerRadius = 20
-        sendButton.layer.borderColor = myColor.cgColor
+        sendButton.layer.borderColor = UIColor.gray.cgColor
         sendButton.layer.borderWidth = 0.5
-        
-        var highlighted: Bool = false {
-            didSet {
-                if highlighted {
-                    sendButton.backgroundColor = UIColor.lightGray
-                } else {
-                    sendButton.backgroundColor = UIColor.white
-                }
-            }
-        }
-        
+        sendButton.backgroundColor = UIColor.white
         
         containerView.addSubview(inputTextField)            //add the textField to the containerView
         
@@ -295,9 +290,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         borderInput.layer.cornerRadius = 20
         borderInput.backgroundColor = UIColor.white
-        borderInput.layer.borderColor = myColor.cgColor
+        borderInput.layer.borderColor = UIColor.gray.cgColor
         borderInput.layer.borderWidth = 0.5
-        borderInput.backgroundColor = UIColor.clear
         
         let separatorLineView = UIView()                                        //adding separator line between text field and messages
         separatorLineView.backgroundColor = UIColor.gray                        //
@@ -309,96 +303,19 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         separatorLineView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true           //
         separatorLineView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true       //
         separatorLineView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true                    //
-        
-        
-        let titleNameChat = UIView()                                     //adding space where putting nameChat
-        titleNameChat.translatesAutoresizingMaskIntoConstraints = false  //(cercare a cosa serve)
-        
-        self.view.addSubview(titleNameChat)                              //adding titleNameChat to view
-        
-        titleNameChat.backgroundColor = UIColor.white
-        
-        titleNameChat.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting titleNameChat constraints
-        titleNameChat.topAnchor.constraint(equalTo: view.topAnchor).isActive = true         //
-        titleNameChat.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
-        titleNameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true         //
-        
-        timeLabel.text = "\(NSLocalizedString("time", comment: "")): \(timeString(time: timeCount))"
-        
-        titleNameChat.addSubview(timeLabel)
-        
-        let nameChat = UILabel()                                    //nameChat declaration
-        nameChat.translatesAutoresizingMaskIntoConstraints = false  //
-        nameChat.text = ServiceManager.instance.userProfile.username                                //
-        
-        titleNameChat.addSubview(nameChat)              //adding nameChat to titleNameChat
-        
-        nameChat.leftAnchor.constraint(equalTo: titleNameChat.leftAnchor).isActive = true    //constraints for nameChat
-        nameChat.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true      //  //
-        nameChat.widthAnchor.constraint(equalToConstant: 200).isActive = true  //
-        nameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true               //
-        
-        
-        let simulateButton = UIButton()
-        simulateButton.translatesAutoresizingMaskIntoConstraints = false
-        simulateButton.setTitle(NSLocalizedString("send", comment: ""), for: .normal)
-        titleNameChat.addSubview(simulateButton)
-        
-        simulateButton.addTarget(self, action: #selector(simulate), for: .touchUpInside)      //setting send button function (handleSend isn't created yet go down)
-        simulateButton.setTitleColor(UIColor.blue, for: .normal)
-        
-        simulateButton.leftAnchor.constraint(equalTo: nameChat.rightAnchor, constant: 100).isActive = true    //constraints for nameChat
-        simulateButton.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true      //
-        simulateButton.widthAnchor.constraint(equalToConstant: 100).isActive = true  //
-        simulateButton.heightAnchor.constraint(equalToConstant: 50).isActive = true               //
-        
-        
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
-        timeLabel.leftAnchor.constraint(equalTo: nameChat.rightAnchor).isActive = true    //constraints for nameChat
-        timeLabel.bottomAnchor.constraint(equalTo: simulateButton.topAnchor).isActive = true      //
-        timeLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true  //
-        timeLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true               //
-        
-        
-        
-        let separatorLineView2 = UIView()                                        //adding separator line2  between titleNameChat and messages
-        separatorLineView2.backgroundColor = UIColor.gray                        //
-        separatorLineView2.translatesAutoresizingMaskIntoConstraints = false     //
-        titleNameChat.addSubview(separatorLineView2)                             //
-        
-        separatorLineView2.leftAnchor.constraint(equalTo: titleNameChat.leftAnchor).isActive = true         //contraint line separator 2
-        separatorLineView2.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true     //
-        separatorLineView2.widthAnchor.constraint(equalTo: titleNameChat.widthAnchor).isActive = true       //
-        separatorLineView2.heightAnchor.constraint(equalToConstant: 0.5).isActive = true                    //
-        
-        
+        timeLabel.text = "time: \(timeString(time: timeCount))"
     }
     
-    @objc func send() {            //function to send messages
-        print(inputTextField.text ?? "")
+    @objc func send() {
+        //function to send messages
         if inputTextField.text != "" {
             createMessages(input: inputTextField)
             inputTextField.text = ""
         }
-        
-        
     }
-    
-    @objc func simulate() {            //function to send messages
-        
-//        let fakeMessage = UITextField()
-//        fakeMessage.text = "this is a fake recived messagge gggggggggggggggggggggggg"
-//        let profile = ServiceManager.instance.userProfile
-//        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatarHair: profile.avatar[AvatarParts.hair]!,avatarEyes: profile.avatar[AvatarParts.face]!, avatarSkinColor: profile.avatar[AvatarParts.skin]!, isSend: false)
-//        //        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatar: "hairstyle_0_black", isSend: false)
-//
-//        messages.append(newMessage)
-//        self.collectionView?.reloadData()
-    }
-    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {          // this function allow you to send messages using enter
-        send()
+        self.send()
         return true
     }
     
@@ -406,7 +323,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         let profile = ServiceManager.instance.userProfile
         let newMessage = Messages(text: inputTextField.text! , username: profile.username, avatarHair: profile.avatar[AvatarParts.hair]!,avatarEyes: profile.avatar[AvatarParts.face]!, avatarSkinColor: profile.avatar[AvatarParts.skin]!, id: profile.id)
         if let peer = ServiceManager.instance.selectedPeer {
-            print(newMessage.toString())
             ServiceManager.instance.chatService.send(message: "\(MPCMessageTypes.message)|\(newMessage.toString())", toPeer: peer.key)
         }
     }
@@ -421,10 +337,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         if let message = notification.userInfo?["message"] as? [String] {
             OperationQueue.main.addOperation {
                 self.messages.append(Messages.setMessage(from: message))
-                self.collectionView?.reloadData()
+                self.chatCollectionView.reloadData()
             }
-        } else {
-            print("fail")
         }
     }
 }

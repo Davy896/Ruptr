@@ -77,8 +77,8 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                                         face: userBeingInvited.avatar[AvatarParts.face]!,
                                                         skinTone: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[0],
                                                         skinToneIndex: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[1])
-                GameViewControlller.randomEmoji = GameViewControlller.randomizeEmoji()
-                GameViewControlller.isPlayerOne = true
+                GameViewController.randomEmoji = GameViewController.randomizeEmoji()
+                GameViewController.isPlayerOne = true
                 serviceBrowser.invitePeer(id,
                                           to: ServiceManager.instance.chatService.session,
                                           withContext: ConnectivityViewController.createUserData(for: "game"),
@@ -123,8 +123,8 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 
                 alert.addButton(NSLocalizedString("accept", comment: "")) {
                     self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
-                    GameViewControlller.randomEmoji = userData[DecodedUserDataKeys.emoji]!
-                    GameViewControlller.isPlayerOne = false
+                    GameViewController.randomEmoji = userData[DecodedUserDataKeys.emoji]!
+                    GameViewController.isPlayerOne = false
                     ServiceManager.instance.selectedPeer = (from,
                                                             userData[DecodedUserDataKeys.username]!,
                                                             userData[DecodedUserDataKeys.avatarHair]!,
@@ -153,7 +153,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func handleMessage(from: MCPeerID, message: String) {
         let (key, value) = (message.components(separatedBy: "|")[0], message.components(separatedBy: "|")[1])
-        print("handleMessage------", message)
         switch key {
         case MPCMessageTypes.closeConnection:
             sleep(1)
@@ -224,7 +223,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     @IBAction func unwindToListTableView(segue:UIStoryboardSegue) { }
 
-    
     static func createUserData(for interaction: String) -> Data {
         let userProfile = ServiceManager.instance.userProfile
         let data = "\(userProfile.username)|" +
@@ -235,7 +233,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             "\(userProfile.moods[1].enumToString)|" +
             "\(userProfile.moods[2].enumToString)|" +
         "\(userProfile.status.enumToString)|"
-        return (interaction == "chat" ? data + "chat|\(GameViewControlller.randomEmoji)" : data + "game|\(GameViewControlller.randomEmoji)").data(using: String.Encoding.utf8)!  // has 10 components separeted by |
+        return (interaction == "chat" ? data + "chat|\(GameViewController.randomEmoji)" : data + "game|\(GameViewController.randomEmoji)").data(using: String.Encoding.utf8)!  // has 10 components separeted by |
     }
     
     static func decodeUserData(from data: String) -> [DecodedUserDataKeys : String] {

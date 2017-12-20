@@ -15,6 +15,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     var messages: [Messages] = []
     var tap: UITapGestureRecognizer!
+    var stringEmoji: String = ""
     @IBOutlet weak var chatCollectionView : UICollectionView!
     
     lazy var inputTextField: UITextField = {                        //this is the declaration of the input textField and the textField we need to write and having a reference to use function handleSend
@@ -51,6 +52,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(self.tap)
         startTimer()
+        self.inputTextField.text = self.stringEmoji
+        self.send()
+        self.inputTextField.text = ""
     }
     
     var timeLabel = UILabel()

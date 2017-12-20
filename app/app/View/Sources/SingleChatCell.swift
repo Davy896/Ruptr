@@ -50,6 +50,7 @@ class SingleChatCell: UICollectionViewCell {
         label.backgroundColor = UIColor.blue
         label.font = UIFont.systemFont(ofSize: 18)
         label.layer.cornerRadius = 15
+        label.isEditable = false
         return label
     }()
     

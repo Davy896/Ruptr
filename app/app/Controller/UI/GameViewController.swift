@@ -10,10 +10,12 @@ import UIKit
 import ISEmojiView
 import MultipeerConnectivity
 
-class GameViewControlller: UIViewController, ISEmojiViewDelegate {
+class GameViewController: UIViewController, ISEmojiViewDelegate {
     
     @IBOutlet var emojiTextFields: [UITextField]!
     @IBOutlet weak var firstEmojiField: UITextField!
+    @IBOutlet weak var chatButton: UIButton!
+    @IBOutlet weak var waitingLabel: UILabel!
     
     
     var isPlayerOneTurn: Bool = true
@@ -22,7 +24,7 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
     
     static var randomEmoji = "😀"
     static var isPlayerOne = false
-    
+    var stringEmoji : String = ""
     
     
     var currentTag = 0
@@ -41,7 +43,7 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(receivedEmoji), name: NSNotification.Name(rawValue: "received_emoji"), object: nil)
         
         // first emoji
-        self.firstEmojiField.text = GameViewControlller.randomEmoji
+        self.firstEmojiField.text = GameViewController.randomEmoji
         self.firstEmojiField.inputView = self.emojiKeyboard
         self.firstEmojiField.isEnabled = false
         
@@ -50,17 +52,12 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         self.emojiKeyboard.delegate = self
         self.emojiKeyboard.collectionView.backgroundColor = Colours.backgroundSecondary
         
-        
-//        string of emoji to pass in the chat
-        var stringEmoji : String = ""
-        for element in emojiTextFields {
-            stringEmoji.append("\(element) ")
-        }
+        self.waitingLabel.isHidden = GameViewController.isPlayerOne
         
         
-        for field in emojiTextFields {
-            field.inputView = emojiKeyboard
-            if (field.tag == 0 && GameViewControlller.isPlayerOne) {
+        for field in self.emojiTextFields {
+            field.inputView = self.emojiKeyboard
+            if (field.tag == 0 && GameViewController.isPlayerOne) {
                 field.isEnabled = true
             } else {
                 field.isEnabled = false
@@ -68,13 +65,13 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         }
         
         self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(GameViewControlller.back(sender:)))
+        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(GameViewController.back(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (GameViewControlller.isPlayerOne) {
+        if (GameViewController.isPlayerOne) {
             self.emojiTextFields[0].becomeFirstResponder()
         }
     }
@@ -89,10 +86,24 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         self.tabBarController?.tabBar.isHidden = false
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.destination is ChatController
+        {
+            let vc = segue.destination as? ChatController
+            for element in self.emojiTextFields {
+                self.stringEmoji.append("\(element.text!) ")
+            }
+            vc?.stringEmoji = self.stringEmoji
+        }
+    }
+    
     func emojiViewDidSelectEmoji(emojiView: ISEmojiView, emoji: String) {
         if let peer = ServiceManager.instance.selectedPeer {
             ServiceManager.instance.chatService.send(message: "\(MPCMessageTypes.emoji)|\(emoji)", toPeer: peer.key)
         }
+        
+        
     }
     
     
@@ -108,6 +119,7 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
     @objc func receivedEmoji(_ notification: NSNotification){
         if let emoji = notification.userInfo?["emoji"] as? String {
             OperationQueue.main.addOperation {
+                self.waitingLabel.isHidden = false
                 for textField in self.emojiTextFields {
                     if (textField.tag == self.currentTag) {
                         textField.insertText(emoji)
@@ -115,8 +127,8 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
                             self.currentTag = nextField.tag
                             self.isPlayerOneTurn = !self.isPlayerOneTurn
                             textField.isEnabled = false
-                            nextField.isEnabled = (GameViewControlller.isPlayerOne && self.isPlayerOneTurn && self.currentTag % 2 == 0) ||
-                                (!GameViewControlller.isPlayerOne && !self.isPlayerOneTurn && self.currentTag % 2 == 1)
+                            nextField.isEnabled = (GameViewController.isPlayerOne && self.isPlayerOneTurn && self.currentTag % 2 == 0) ||
+                                (!GameViewController.isPlayerOne && !self.isPlayerOneTurn && self.currentTag % 2 == 1)
                             nextField.becomeFirstResponder()
                         } else {
                             textField.resignFirstResponder()
@@ -125,10 +137,16 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
                         break
                     }
                 }
+                
+                if (self.currentTag == 5) {
+                   self.waitingLabel.isHidden = true
+                    UIView.animate(withDuration: 2, animations: {
+                        self.chatButton.alpha = 1
+                    })
+                }
             }
         }
     }
-    
     
     @objc func back(sender: UIBarButtonItem) {
         if let peer = ServiceManager.instance.selectedPeer {

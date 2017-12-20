@@ -70,6 +70,16 @@ class GameViewControlller: UIViewController, ISEmojiViewDelegate {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
     func emojiViewDidSelectEmoji(emojiView: ISEmojiView, emoji: String) {
         if let peer = ServiceManager.instance.selectedPeer {
             ServiceManager.instance.chatService.send(message: "\(MPCMessageTypes.emoji)|\(emoji)", toPeer: peer.key)

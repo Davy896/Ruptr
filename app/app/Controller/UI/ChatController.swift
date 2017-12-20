@@ -29,7 +29,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(receivedMessage), name: NSNotification.Name(rawValue: "received_message"), object: nil)
-    
+        
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         UIViewController.setViewBackground(for: self)
@@ -58,10 +58,12 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     let timeInterval: TimeInterval = 1
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -95,13 +97,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {             //funzione di sicurezza ceh serve per non aprire diverse tastiere
-        super.viewDidDisappear(animated)                            //
-        NotificationCenter.default.removeObserver(self)             //
-    }
-    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect)
@@ -234,8 +229,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     func setupInputComponents() {
         
-        
-        
         let myColor = UIColor.lightGray
         
         let containerView = UIView()                                    //creation of the writing container view
@@ -338,29 +331,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         nameChat.widthAnchor.constraint(equalToConstant: 200).isActive = true  //
         nameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true               //
         
-        
-        let simulateButton = UIButton()
-        simulateButton.translatesAutoresizingMaskIntoConstraints = false
-        simulateButton.setTitle(NSLocalizedString("send", comment: ""), for: .normal)
-        titleNameChat.addSubview(simulateButton)
-        
-        simulateButton.addTarget(self, action: #selector(simulate), for: .touchUpInside)      //setting send button function (handleSend isn't created yet go down)
-        simulateButton.setTitleColor(UIColor.blue, for: .normal)
-        
-        simulateButton.leftAnchor.constraint(equalTo: nameChat.rightAnchor, constant: 100).isActive = true    //constraints for nameChat
-        simulateButton.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true      //
-        simulateButton.widthAnchor.constraint(equalToConstant: 100).isActive = true  //
-        simulateButton.heightAnchor.constraint(equalToConstant: 50).isActive = true               //
-        
-        
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
-        timeLabel.leftAnchor.constraint(equalTo: nameChat.rightAnchor).isActive = true    //constraints for nameChat
-        timeLabel.bottomAnchor.constraint(equalTo: simulateButton.topAnchor).isActive = true      //
-        timeLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true  //
-        timeLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true               //
-        
-        
-        
         let separatorLineView2 = UIView()                                        //adding separator line2  between titleNameChat and messages
         separatorLineView2.backgroundColor = UIColor.gray                        //
         separatorLineView2.translatesAutoresizingMaskIntoConstraints = false     //
@@ -384,21 +354,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
     }
     
-    @objc func simulate() {            //function to send messages
-        
-//        let fakeMessage = UITextField()
-//        fakeMessage.text = "this is a fake recived messagge gggggggggggggggggggggggg"
-//        let profile = ServiceManager.instance.userProfile
-//        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatarHair: profile.avatar[AvatarParts.hair]!,avatarEyes: profile.avatar[AvatarParts.face]!, avatarSkinColor: profile.avatar[AvatarParts.skin]!, isSend: false)
-//        //        let newMessage = Messages(text: fakeMessage.text! , username: profile.username, avatar: "hairstyle_0_black", isSend: false)
-//
-//        messages.append(newMessage)
-//        self.collectionView?.reloadData()
-    }
-    
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {          // this function allow you to send messages using enter
-        send()
+        self.send()
         return true
     }
     

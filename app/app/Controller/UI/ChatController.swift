@@ -40,9 +40,40 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         setupKeyboard()
         self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(self.tap)
+        startTimer()
     }
-    
-    
+    var timeLabel = UILabel()
+    var timer = Timer()
+    var timeCount:TimeInterval = 300
+    let timeInterval:TimeInterval = 1
+
+    @objc func timeString(time:TimeInterval) -> String {
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        return String(format:"%02i:%02i", minutes, seconds)
+    }
+
+    @objc func updateTime() {
+        timeLabel.text = "\(timeString(time: timeCount))"
+        if timeCount != 0 {
+            timeCount -= 1
+
+        }else {
+            endTimer()
+
+        }
+    }
+
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+
+    }
+
+
+    func endTimer() {
+        timer.invalidate()
+    }
+
     func setupKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
@@ -99,50 +130,37 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
         cell.message = messages[indexPath.item]
-//        var cloud = UIView()
-//        cell.addSubview(cloud)
         let messageText = messages[indexPath.item].text
-        cell.messageLabel.isEditable = false
+        
+       
+        
         if messages[indexPath.item].isSend == true {
+            
             cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
             cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
             cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
            
-//            cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
             cell.cloud.backgroundColor = UIColor.blue
-
-            cell.cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 27 - 50 - 15, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
-            
-            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50 - 15, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
-            
             cell.messageLabel.backgroundColor = UIColor.clear
             
+            cell.cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 27 - 50 - 18, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
+            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50 - 18, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
             cell.profileImageHair.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageEyes.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageSkinColor.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageEyes.backgroundColor = Colours.getColour(named: messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[0],
                                                                       index: Int(messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[1]))
             cell.bringSubview(toFront: cell.profileImageHair)
+            cell.tail.image = UIImage(named: "tailRight")
             
-            
-//            cloud.translatesAutoresizingMaskIntoConstraints = false
-//
-//            cloud.leftAnchor.constraint(equalTo: cell.messageLabel.leftAnchor,constant: 10).isActive = true
-//            cloud.bottomAnchor.constraint(equalTo: cell.messageLabel.bottomAnchor).isActive = true
-//            cloud.widthAnchor.constraint(equalTo: cell.messageLabel.widthAnchor).isActive = true
-//            cloud.heightAnchor.constraint(equalTo: cell.messageLabel.heightAnchor).isActive = true
-            
-            
+            cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18, y: cell.cloud.frame.height - 33, width: 20, height: 25)
+
             }else {
 
             cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
             cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
             cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
             
-//
-//            cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
-//            cell.messageLabel.backgroundColor = UIColor.blue
-//
             cell.profileImageHair.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageEyes.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageSkinColor.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
@@ -152,8 +170,15 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             
             cell.messageLabel.frame = CGRect(x: 50 + 9 + 12, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
             cell.cloud.frame = CGRect(x: 50 + 12, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
+           
+            
             cell.cloud.backgroundColor = UIColor.lightGray
             cell.messageLabel.backgroundColor = UIColor.clear
+            
+
+            cell.tail.image = UIImage(named: "tailLeft")
+            cell.tail.frame = CGRect(x:  50 + 12 - 19, y: cell.cloud.frame.height - 33, width: 20, height: 25)
+            
         }
         
         let item = messages.count - 1
@@ -189,6 +214,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }
     
     var containerViewBottomAnchor: NSLayoutConstraint?
+    
     
     func setupInputComponents() {
         
@@ -280,7 +306,13 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         titleNameChat.topAnchor.constraint(equalTo: view.topAnchor).isActive = true         //
         titleNameChat.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
         titleNameChat.heightAnchor.constraint(equalToConstant: 100).isActive = true         //
-      
+
+        timeLabel.text = "time: \(timeString(time: timeCount))"
+        
+        
+        titleNameChat.addSubview(timeLabel)
+        
+        
         
         let nameChat = UILabel()                                    //nameChat declaration
         nameChat.translatesAutoresizingMaskIntoConstraints = false  //
@@ -305,7 +337,14 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         simulateButton.leftAnchor.constraint(equalTo: nameChat.rightAnchor, constant: 100).isActive = true    //constraints for nameChat
         simulateButton.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true      //
         simulateButton.widthAnchor.constraint(equalToConstant: 100).isActive = true  //
-        simulateButton.heightAnchor.constraint(equalToConstant: 100).isActive = true               //
+        simulateButton.heightAnchor.constraint(equalToConstant: 50).isActive = true               //
+        
+        
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+        timeLabel.leftAnchor.constraint(equalTo: nameChat.rightAnchor).isActive = true    //constraints for nameChat
+        timeLabel.bottomAnchor.constraint(equalTo: simulateButton.topAnchor).isActive = true      //
+        timeLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true  //
+        timeLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true               //
         
         
         
@@ -313,8 +352,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         separatorLineView2.backgroundColor = UIColor.gray                        //
         separatorLineView2.translatesAutoresizingMaskIntoConstraints = false     //
         titleNameChat.addSubview(separatorLineView2)                             //
-        //titleNameChat.addSubview(collectionView.heade)
-        
+       
         separatorLineView2.leftAnchor.constraint(equalTo: titleNameChat.leftAnchor).isActive = true         //contraint line separator 2
         separatorLineView2.bottomAnchor.constraint(equalTo: titleNameChat.bottomAnchor).isActive = true     //
         separatorLineView2.widthAnchor.constraint(equalTo: titleNameChat.widthAnchor).isActive = true       //

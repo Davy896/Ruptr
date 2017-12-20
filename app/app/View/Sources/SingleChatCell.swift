@@ -20,7 +20,7 @@ class SingleChatCell: UICollectionViewCell {
             profileImageSkinColor.image = UIImage(named: (message?.avatarSkinColor)!)
             messageLabel.text = message?.text
 //            cloud.image = #imageLiteral(resourceName: "right")
-            
+//            tail.image = #imageLiteral(resourceName: "tail3")
         }
     }
     
@@ -77,6 +77,13 @@ class SingleChatCell: UICollectionViewCell {
         return imageView
     }()
     
+    let tail: UIImageView = {
+        var tailImage = UIImageView()
+//        tailImage.image = #imageLiteral(resourceName: "Path")
+        return tailImage
+    }()
+    
+    
     func addConstraintsWithFormat(format: String, views: UIView...) {
         
         var viewsDictionary = [String: UIView]()
@@ -113,7 +120,7 @@ class SingleChatCell: UICollectionViewCell {
         addSubview(profileImageHair)
         addSubview(profileImageEyes)
         addSubview(profileImageSkinColor)
-
+        addSubview(tail)
     }
 
 }

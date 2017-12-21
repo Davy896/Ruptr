@@ -1,12 +1,12 @@
 
 /* Class = "UILabel"; text = "Collaborate to create your story with Emoji!"; ObjectID = "7gh-ef-QRa"; */
-"7gh-ef-QRa.text" = "Collaborate to create your story with Emoji!";
+"7gh-ef-QRa.text" = "Create una storia insieme usando le emoji!";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "Bry-Vy-CTC"; */
-"Bry-Vy-CTC.title" = "Item";
+"Bry-Vy-CTC.title" = "Oggetto";
 
 /* Class = "UILabel"; text = "You are waiting for the other player"; ObjectID = "KK5-YC-DcB"; */
-"KK5-YC-DcB.text" = "You are waiting for the other player";
+"KK5-YC-DcB.text" = "L'altro giocatore sta scegliendo";
 
 /* Class = "UIButton"; normalTitle = "Chat"; ObjectID = "sQH-XS-T1k"; */
 "sQH-XS-T1k.normalTitle" = "Chat";

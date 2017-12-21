@@ -129,8 +129,8 @@
 		B4669FAD40BA578168AA386D /* Pods-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppTests/Pods-AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED27DA3E1FDFD7E5008830A5 /* ViewDesignableSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewDesignableSettings.swift; path = app/View/Sources/ViewDesignableSettings.swift; sourceTree = SOURCE_ROOT; };
 		ED27DA421FDFEB6C008830A5 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
-		EDA92EA01FE9A14600C8E86E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = ../../../app/View/Storyboards/it.lproj/Interactions.strings; sourceTree = "<group>"; };
-		EDA92EA21FE9A86E00C8E86E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = ../../../app/View/Storyboards/it.lproj/Main.strings; sourceTree = "<group>"; };
+		ED32CCA31FEBBC3000DAEF3A /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = ../../../app/View/Storyboards/it.lproj/Interactions.strings; sourceTree = "<group>"; };
+		ED32CCA51FEBBCB600DAEF3A /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = ../../../app/View/Storyboards/it.lproj/Main.strings; sourceTree = "<group>"; };
 		F945CB121FE03283004D3B8F /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListTableViewCell.swift; path = App/View/Sources/ListTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F95E9EC01FDEA210008020C3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F95E9EC21FDEA210008020C3 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -719,7 +719,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				410BE70C1FDFD18800B26DF2 /* Base */,
-				EDA92EA01FE9A14600C8E86E /* it */,
+				ED32CCA31FEBBC3000DAEF3A /* it */,
 			);
 			name = Interactions.storyboard;
 			sourceTree = "<group>";
@@ -737,7 +737,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				41792C8F1FDD60A200B5F83E /* Base */,
-				EDA92EA21FE9A86E00C8E86E /* it */,
+				ED32CCA51FEBBCB600DAEF3A /* it */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -873,7 +873,7 @@
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.assisrodrigues.App;
+				PRODUCT_BUNDLE_IDENTIFIER = org.caruso.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -890,7 +890,7 @@
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.assisrodrigues.App;
+				PRODUCT_BUNDLE_IDENTIFIER = org.caruso.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

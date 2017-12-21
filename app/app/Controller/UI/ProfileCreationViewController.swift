@@ -65,7 +65,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
         self.avatarFaceImageView.image = UIImage(named: "expression_\(self.currentFace)")
         let navBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
-        let title = UINavigationItem(title: "Profile Creation");
+        let title = UINavigationItem(title: NSLocalizedString("profile_creation", comment: ""));
         navBar.setItems([title], animated: true);
         self.view.addSubview(navBar);
         
@@ -189,15 +189,15 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         switch sender {
         case self.moodOneButton:
             self.moodSelection = 1
-            alert.showInfo("Select a mood", subTitle: "")
+            alert.showInfo(NSLocalizedString("select_mood_alert", comment: ""), subTitle: "")
             break
         case self.moodTwoButton:
             self.moodSelection = 2
-            alert.showInfo("Select a mood", subTitle: "")
+            alert.showInfo(NSLocalizedString("select_mood_alert", comment: ""), subTitle: "")
             break
         case self.moodThreeButton:
             self.moodSelection = 3
-            alert.showInfo("Select a mood", subTitle: "")
+            alert.showInfo(NSLocalizedString("select_mood_alert", comment: ""), subTitle: "")
             break
         default:
             break
@@ -297,14 +297,14 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             }
             
             if (text.count >= 20) {
-                return (false, "Your Username is too long")
+                return (false, NSLocalizedString("long_username_alert", comment: ""))
             }
             
             if (!text.isAlphanumeric) {
-                return (false, "Only numbers and letters allowed")
+                return (false, NSLocalizedString("alphanumeric_username_alert", comment: ""))
             }
             
-            return  (text.count > 0, "This field cannot be empty.")
+            return  (text.count > 0, NSLocalizedString("empty_username_alert", comment: ""))
         }
         
         return (false, "Invalid operation")

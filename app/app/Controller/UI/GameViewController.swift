@@ -65,7 +65,7 @@ class GameViewController: UIViewController, ISEmojiViewDelegate {
         }
         
         self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(GameViewController.back(sender:)))
+        let newBackButton = UIBarButtonItem(title: NSLocalizedString("back", comment: ""), style: UIBarButtonItemStyle.plain, target: self, action: #selector(GameViewControlller.back(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton
     }
     

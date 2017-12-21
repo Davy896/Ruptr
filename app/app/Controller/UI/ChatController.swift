@@ -20,7 +20,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     lazy var inputTextField: UITextField = {                        //this is the declaration of the input textField and the textField we need to write and having a reference to use function handleSend
         let textField = UITextField()                               //
-        textField.placeholder = "Enter message..."                  //
+        textField.placeholder = NSLocalizedString("chat_placeholder", comment: "")                  //
         textField.translatesAutoresizingMaskIntoConstraints = false //
         textField.delegate = self                                   //we need this to use enter to send messages
         return textField                                            //
@@ -40,7 +40,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         setupInputComponents()
         
         self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ChatController.back(sender:)))
+        let newBackButton = UIBarButtonItem(title: NSLocalizedString("back", comment: ""), style: UIBarButtonItemStyle.plain, target: self, action: #selector(ChatController.back(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton
         
         //container view for chat writing

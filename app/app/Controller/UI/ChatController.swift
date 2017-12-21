@@ -64,7 +64,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = true
+        if let tabBarController = tabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,7 +80,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.isHidden = false
     }
     
     @objc func timeString(time:TimeInterval) -> String {
@@ -197,7 +198,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.cloud.frame = CGRect(x: 50 + 12, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
             
             
-            cell.cloud.backgroundColor = UIColor(red:  151/255, green: 151/255, blue: 151/255, alpha: 1)
+            cell.cloud.backgroundColor = Colours.receivedSpeechBubble
             cell.messageLabel.backgroundColor = UIColor.clear
             
             

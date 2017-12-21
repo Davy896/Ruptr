@@ -165,8 +165,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             ServiceManager.instance.chatService.session.disconnect()
             OperationQueue.main.addOperation {
                 if let navigationController = self.navigationController {
-                    self.tabBarController?.tabBar.isHidden = false
-                    _ = navigationController.popToRootViewController(animated: true)
+                    if let tabBarController = self.tabBarController {
+                        tabBarController.tabBar.isHidden = false
+                        _ = navigationController.popToRootViewController(animated: true)
+                    }
                 }
             }
             

@@ -24,7 +24,7 @@ class MapViewController: ConnectivityViewController {
         a.faceImageView.image = UIImage(named: "food")
         self.view.bringSubview(toFront: a)
         self.view.addSubview(a)
-        self.updateCircles(numberOfPeers: self.people.count)
+        self.updateCircles(numberOfPeers: 20)
     }
     
     override func didReceiveMemoryWarning() {
@@ -32,7 +32,7 @@ class MapViewController: ConnectivityViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.updateCircles(numberOfPeers: self.people.count)
+        self.updateCircles(numberOfPeers: 20)
     }
     
     func updateCircles(numberOfPeers: Int) {
@@ -50,7 +50,7 @@ class MapViewController: ConnectivityViewController {
     
     override func peerFound(withId id: MCPeerID) {
         super.peerFound(withId: id)
-        self.updateCircles(numberOfPeers: self.people.count)
+        self.updateCircles(numberOfPeers: 20)
     }
 }
 

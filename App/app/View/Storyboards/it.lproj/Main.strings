@@ -1,30 +1,33 @@
 
 /* Class = "UITabBarItem"; title = "List"; ObjectID = "4co-Lf-fuF"; */
-"4co-Lf-fuF.title" = "Lista";
+"4co-Lf-fuF.title" = "List";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "5LJ-eS-7KF"; */
-"5LJ-eS-7KF.title" = "Oggetto";
+"5LJ-eS-7KF.title" = "Item";
 
 /* Class = "UIButton"; normalTitle = "<"; ObjectID = "80M-5X-y6b"; */
 "80M-5X-y6b.normalTitle" = "<";
 
 /* Class = "UILabel"; text = "User Name"; ObjectID = "8VD-v0-z08"; */
-"8VD-v0-z08.text" = "Nome Utente";
+"8VD-v0-z08.text" = "User Name";
 
 /* Class = "UILabel"; text = "Face"; ObjectID = "9Wg-FB-vQd"; */
-"9Wg-FB-vQd.text" = "Volto";
+"9Wg-FB-vQd.text" = "Face";
 
 /* Class = "UIButton"; normalTitle = ">"; ObjectID = "AOE-vM-l0Q"; */
 "AOE-vM-l0Q.normalTitle" = ">";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "FRe-ZO-asZ"; */
-"FRe-ZO-asZ.title" = "Oggetto";
+"FRe-ZO-asZ.title" = "Item";
+
+/* Class = "UINavigationItem"; title = "Profile"; ObjectID = "IVj-mL-ptE"; */
+"IVj-mL-ptE.title" = "Profile";
 
 /* Class = "UIButton"; normalTitle = ">"; ObjectID = "Kti-WV-0qK"; */
 "Kti-WV-0qK.normalTitle" = ">";
 
 /* Class = "UILabel"; text = "Skin"; ObjectID = "MhS-pj-ocW"; */
-"MhS-pj-ocW.text" = "Carnagione";
+"MhS-pj-ocW.text" = "Skin";
 
 /* Class = "UIButton"; normalTitle = "<"; ObjectID = "QAh-tj-kjs"; */
 "QAh-tj-kjs.normalTitle" = "<";
@@ -39,16 +42,16 @@
 "hAD-fa-EbW.normalTitle" = ">";
 
 /* Class = "UIButton"; normalTitle = "Finish"; ObjectID = "hbr-f5-TWk"; */
-"hbr-f5-TWk.normalTitle" = "Finito";
+"hbr-f5-TWk.normalTitle" = "Finish";
 
 /* Class = "UITabBarItem"; title = "Map"; ObjectID = "iGr-7h-ihK"; */
-"iGr-7h-ihK.title" = "Mappa";
+"iGr-7h-ihK.title" = "Map";
 
 /* Class = "UILabel"; text = "Hair"; ObjectID = "lnG-FS-gB9"; */
-"lnG-FS-gB9.text" = "Capelli";
+"lnG-FS-gB9.text" = "Hair";
 
 /* Class = "UITabBarItem"; title = "Settings"; ObjectID = "nwB-bq-U0p"; */
-"nwB-bq-U0p.title" = "Impostazioni";
+"nwB-bq-U0p.title" = "Settings";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "oFB-ER-IRc"; */
-"oFB-ER-IRc.title" = "Oggetto";
+"oFB-ER-IRc.title" = "Item";

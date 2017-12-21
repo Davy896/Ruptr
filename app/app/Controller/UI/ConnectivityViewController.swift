@@ -12,7 +12,7 @@ import MultipeerConnectivity
 import SCLAlertView
 
 class ConnectivityViewController: UIViewController, ChatServiceDelegate {
-
+    
     var isGame = true
     var people: [UserProfile] = []
     let alertAppearence = SCLAlertView.SCLAppearance(kCircleIconHeight: -56,
@@ -39,6 +39,12 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         ServiceManager.instance.chatService.delegate = self
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? ChatController {
+            vc.stringEmoji = ""
+        }
     }
     
     func updateVisibility() {
@@ -158,7 +164,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             sleep(1)
             ServiceManager.instance.chatService.session.disconnect()
             OperationQueue.main.addOperation {
-                _ = self.navigationController?.popViewController(animated: true)
+                if let navigationController = self.navigationController {
+                    self.tabBarController?.tabBar.isHidden = false
+                    _ = navigationController.popToRootViewController(animated: true)
+                }
             }
             
             break
@@ -222,7 +231,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     }
     
     @IBAction func unwindToListTableView(segue:UIStoryboardSegue) { }
-
+    
     static func createUserData(for interaction: String) -> Data {
         let userProfile = ServiceManager.instance.userProfile
         let data = "\(userProfile.username)|" +

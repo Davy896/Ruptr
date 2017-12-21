@@ -86,15 +86,13 @@ class GameViewController: UIViewController, ISEmojiViewDelegate {
         self.tabBarController?.tabBar.isHidden = false
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        if segue.destination is ChatController
-        {
-            let vc = segue.destination as? ChatController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? ChatController {
             for element in self.emojiTextFields {
                 self.stringEmoji.append("\(element.text!) ")
             }
-            vc?.stringEmoji = self.stringEmoji
+            
+            vc.stringEmoji = self.stringEmoji
         }
     }
     

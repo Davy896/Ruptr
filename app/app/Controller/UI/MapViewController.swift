@@ -20,10 +20,14 @@ class MapViewController: ConnectivityViewController {
         self.circleView = CircleView(frame: self.view.frame)
         self.view.addSubview(self.circleView)
         self.title = NSLocalizedString("map", comment: "")
-        let a = AvatarPlanetButton(frame: CGRect(x: 0, y: 0, width: 110, height: 93))
-        a.faceImageView.image = UIImage(named: "food")
-        self.view.bringSubview(toFront: a)
+        let a = AvatarPlanetButton(frame: CGRect(x: 50, y: 200, width: 40, height: 40))
+        a.hairImageView.image = ServiceManager.instance.userProfile.avatarHair
+        a.faceImageView.image = ServiceManager.instance.userProfile.avatarFace
+        a.backgroundColor = ServiceManager.instance.userProfile.avatarSkin
+        a.borderColor = UIColor.blue
+        a.addTarget(self, action: #selector(showInvitationPrompt(_:)), for: UIControlEvents.touchUpInside)
         self.view.addSubview(a)
+        self.view.bringSubview(toFront: a)
         self.updateCircles(numberOfPeers: ServiceManager.instance.chatService.peers.count)
     }
     
@@ -38,14 +42,14 @@ class MapViewController: ConnectivityViewController {
     func updateCircles(numberOfPeers: Int) {
         var peersMissing: Int = numberOfPeers
         var circlePopulation: Int = 1
-        var circleIndex: Int = 1
+        var circleIndex: Int = 0
         while peersMissing > 0 {
             peersMissing -= circlePopulation
-            circlePopulation += circleIndex
+            circlePopulation += (circleIndex + 1)
             circleIndex += 1
         }
         
-        self.circleView.drawCircles(numberOf: circleIndex, onRectangle: circleView.frame, withRadius: 80)
+        self.circleView.drawCircles(numberOf: circleIndex, onRectangle: circleView.frame, withRadius: 40)
         self.circleView.setNeedsDisplay()
     }
     
@@ -57,6 +61,10 @@ class MapViewController: ConnectivityViewController {
     override func peerLost(withId id: MCPeerID) {
         super.peerLost(withId: id)
         self.updateCircles(numberOfPeers: ServiceManager.instance.chatService.peers.count)
+    }
+    
+    @IBAction func showInvitationPrompt(_ sender: UIButton) {
+        print("ndaklsjdkladjlksakldasjkldsajdklsjdlkas")
     }
 }
 

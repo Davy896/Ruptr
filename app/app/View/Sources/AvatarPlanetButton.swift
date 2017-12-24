@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AvatarPlanetButton: UIButton {
+class AvatarPlanetButton: RoundButton {
 
     var hairImageView: RoundImgView!
     var faceImageView: RoundImgView!
@@ -25,21 +25,29 @@ class AvatarPlanetButton: UIButton {
     }
 
     private func setupSubviews() {
-        self.hairImageView = RoundImgView(frame: CGRect(x: 23, y: 0, width: 64, height: 64))
+        self.hairImageView = RoundImgView()
+        self.hairImageView.frame.size = self.frame.size
         self.hairImageView.circle = true
         self.hairImageView.maskToBounds = true
         
-        self.faceImageView = RoundImgView(frame: CGRect(x: 23, y: 0, width: 64, height: 64))
+        self.faceImageView = RoundImgView()
+        self.faceImageView.frame.size = self.frame.size
         self.faceImageView.circle = true
         self.faceImageView.maskToBounds = true
 
         self.userNameLabel = RoundLabel(frame: CGRect(x: 0, y: 72, width: 110, height: 21))
         self.userNameLabel.cornerRadius = 5
         self.userNameLabel.maskToBounds = true
+        
         self.addSubview(hairImageView)
         self.addSubview(faceImageView)
         self.addSubview(userNameLabel)
+        
+        self.circle = true
+        self.maskToBounds = true
+        self.borderWidth = 5
     }
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

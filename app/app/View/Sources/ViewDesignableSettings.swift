@@ -207,6 +207,14 @@ import UIKit
         mask.path = path.cgPath
         self.layer.mask = mask
     }
+    
+    @IBInspectable var circle: Bool = false {
+        didSet {
+            if (self.circle) {
+                self.layer.cornerRadius = self.frame.size.width/2
+            }
+        }
+    }
 }
 
 @IBDesignable class RoundLabel: UILabel {

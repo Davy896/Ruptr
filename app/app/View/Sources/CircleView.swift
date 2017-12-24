@@ -24,7 +24,7 @@ class CircleView: UIView {
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath()
         let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
-        for i in 1 ... self.numberOfCircles {
+        for i in 0 ... self.numberOfCircles {
             path.move(to: CGPoint(x: center.x + CGFloat(self.radius * Double(i)), y: center.y))
             for j in stride(from: 0, to: 361.0, by: 1) {
                 let radians = j * Double.pi / 180

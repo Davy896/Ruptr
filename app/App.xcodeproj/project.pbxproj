@@ -28,6 +28,7 @@
 		41792CAB1FDD60A300B5F83E /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792CAA1FDD60A300B5F83E /* AppUITests.swift */; };
 		41792CE01FDD632800B5F83E /* ConnectivityServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; };
 		41792CE11FDD632800B5F83E /* ConnectivityServices.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		41956FB11FF129FC00C5D31C /* CircleViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41956FB01FF129FC00C5D31C /* CircleViewDelegate.swift */; };
 		41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */; };
 		41B2C0AE1FE94F970027EA97 /* MPCMessageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */; };
 		5D4A46181FE3C762007524C4 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A46171FE3C762007524C4 /* Messages.swift */; };
@@ -113,6 +114,7 @@
 		41792CAA1FDD60A300B5F83E /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		41792CAC1FDD60A300B5F83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConnectivityServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		41956FB01FF129FC00C5D31C /* CircleViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleViewDelegate.swift; sourceTree = "<group>"; };
 		41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPCMessageTypes.swift; sourceTree = "<group>"; };
 		5C62C396886CCA7831DDE00C /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,6 +215,7 @@
 				ED27DA421FDFEB6C008830A5 /* CircleView.swift */,
 				5D4FD2FF1FE2B0FD0043AF98 /* SingleChatCell.swift */,
 				41588D371FE8899600876DC0 /* AvatarPlanetButton.swift */,
+				41956FB01FF129FC00C5D31C /* CircleViewDelegate.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				414E39C11FE7D87E0089D909 /* BackgroundExtension.swift in Sources */,
 				5D4A46181FE3C762007524C4 /* Messages.swift in Sources */,
 				5DF1F1751FE7B7A200B64229 /* Status.swift in Sources */,
+				41956FB11FF129FC00C5D31C /* CircleViewDelegate.swift in Sources */,
 				F945CB131FE03283004D3B8F /* ListTableViewCell.swift in Sources */,
 				5D4FD3001FE2B0FD0043AF98 /* SingleChatCell.swift in Sources */,
 				41792C8B1FDD60A200B5F83E /* AppDelegate.swift in Sources */,

@@ -18,26 +18,27 @@ class CircleView: UIView {
     }
     var numberOfCircles: Int = 0 {
         didSet {
-            draw(self.frame)
+            self.draw(self.frame)
             self.setNeedsDisplay()
         }
     }
+    
     var points: [CGPoint] = []
-    var endCircleIndex: [Int] = []
+    var circleFirstIndex: [Int] = []
     var delegate: CircleViewDelegate?
     
     override func draw(_ rect: CGRect) {
         self.layer.sublayers = nil
         self.points.removeAll()
-        self.endCircleIndex.removeAll()
+        self.circleFirstIndex.removeAll()
         if self.numberOfCircles > 0 {            
             let center = CGPoint(x: (rect.width  / 2) - rect.minX, y: (rect.height / 2) - rect.minY)
             var layers: [CAShapeLayer] = []
             for i in 1 ... self.numberOfCircles {
                 let shapeLayer = CAShapeLayer()
-                shapeLayer.fillColor = UIColor.clear.cgColor
-                shapeLayer.strokeColor = UIColor.white.cgColor
                 shapeLayer.lineWidth = 4
+                shapeLayer.strokeColor = UIColor.white.cgColor
+                shapeLayer.fillColor = UIColor.clear.cgColor
                 let path = UIBezierPath()
                 path.move(to: CGPoint(x: center.x + CGFloat(self.radius * Double(i)), y: center.y))
                 for j in 0 ... 362 {
@@ -49,16 +50,16 @@ class CircleView: UIView {
                     path.addLine(to: point)
                 }
                 
-                self.endCircleIndex.append((i + 1) * 361)
+                self.circleFirstIndex.append(i - 1)
                 path.close()
                 shapeLayer.path = path.cgPath
                 
-                let animation = CABasicAnimation(keyPath: "strokeEnd")
-                animation.fromValue = 0
-                animation.duration = 0.35
+                let animation = CABasicAnimation(keyPath: "strokeColor")
+                animation.fromValue = UIColor.clear.cgColor
+                animation.toValue = UIColor.white.cgColor
+                animation.duration = 0.5
                 animation.delegate = self
                 shapeLayer.add(animation, forKey: "StrokeAnimations")
-                
                 layers.append(shapeLayer)
             }
             
@@ -74,6 +75,7 @@ class CircleView: UIView {
 extension CircleView: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if (flag) {
+            
             delegate?.handleDrawingCompletion()
         }
     }

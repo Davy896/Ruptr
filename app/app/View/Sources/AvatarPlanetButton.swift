@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
 class AvatarPlanetButton: RoundButton {
     
     var hairImageView: RoundImgView!
     var faceImageView: RoundImgView!
     var userNameLabel: RoundLabel!
+    var id: String!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -39,9 +41,11 @@ class AvatarPlanetButton: RoundButton {
         self.userNameLabel.cornerRadius = 5
         self.userNameLabel.maskToBounds = true
         
-        self.addSubview(hairImageView)
-        self.addSubview(faceImageView)
-        self.addSubview(userNameLabel)
+        self.addSubview(self.hairImageView)
+        self.addSubview(self.faceImageView)
+        self.addSubview(self.userNameLabel)
+        
+        self.bringSubview(toFront: self.hairImageView)
         
         self.circle = true
         self.maskToBounds = true
@@ -55,6 +59,7 @@ class AvatarPlanetButton: RoundButton {
         button.faceImageView.image = profile.avatarFace
         button.faceImageView.backgroundColor = profile.avatarSkin
         button.userNameLabel.text = profile.username
+        button.id = profile.id
         return button
     }
     

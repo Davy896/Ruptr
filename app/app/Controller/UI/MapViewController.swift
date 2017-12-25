@@ -12,7 +12,18 @@ import MultipeerConnectivity
 class MapViewController: ConnectivityViewController {
     
     var circleView: CircleView!
-    var avatarButtons: [MCPeerID: AvatarPlanetButton] = [:]
+    var avatarButtons: [MCPeerID: (avatar: AvatarPlanetButton, originalPosition: CGPoint)] = [:]
+    
+    private func checkButtonColision(_ button: AvatarPlanetButton) -> Bool {
+        let margins: CGFloat = 16
+        for (_, existingButton) in self.avatarButtons {
+            if (CGRect(origin: button.frame.origin, size: CGSize(width: button.frame.width + margins, height: button.frame.height + margins)).intersects(existingButton.avatar.frame)) {
+                return true
+            }
+        }
+        
+        return false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +35,7 @@ class MapViewController: ConnectivityViewController {
         self.circleView.isUserInteractionEnabled = true
         self.circleView.radius = 80
         self.circleView.delegate = self
-        self.updateNumberOf(peers: ServiceManager.instance.chatService.peers.count)
+        self.updateNumberOfCircles(from: self.people.count)
         self.view.addSubview(self.circleView)
     }
     
@@ -35,11 +46,15 @@ class MapViewController: ConnectivityViewController {
     override func peerFound(withId id: MCPeerID) {
         super.peerFound(withId: id)
         if let peer = self.people.last {
-            self.updateNumberOf(peers: ServiceManager.instance.chatService.peers.count)
+            self.updateNumberOfCircles(from: self.people.count)
             let button = AvatarPlanetButton.createAvatarButton(from: peer, size: CGSize(width: 65, height: 65))
-            button.center = self.circleView.points[Int(arc4random_uniform(UInt32(self.circleView.points.count)))]
+            
+            repeat {
+                button.center = self.circleView.points[Int(arc4random_uniform(UInt32(361))) + 361 * (self.circleView.circleFirstIndex.last ?? 0)]
+            } while (self.checkButtonColision(button))
+            
             button.addTarget(self, action: #selector(showInvitationPrompt(_:)), for: UIControlEvents.touchUpInside)
-            self.avatarButtons[id] = button
+            self.avatarButtons[id] = (button, button.center)
             self.view.addSubview(button)
         }
     }
@@ -48,12 +63,12 @@ class MapViewController: ConnectivityViewController {
         super.peerLost(withId: id)
         if let peerRemoved = self.avatarButtons.removeValue(forKey: id) {
             UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-                peerRemoved.alpha = 0
+                peerRemoved.avatar.alpha = 0
             }, completion: nil)
-            peerRemoved.removeFromSuperview()
+            peerRemoved.avatar.removeFromSuperview()
         }
         
-        self.updateNumberOf(peers: ServiceManager.instance.chatService.peers.count)
+        self.updateNumberOfCircles(from: self.people.count)
     }
     
     @IBAction func showInvitationPrompt(_ sender: AvatarPlanetButton) {
@@ -69,8 +84,8 @@ class MapViewController: ConnectivityViewController {
             self.circleView.center = CGPoint(x: self.circleView.center.x + translation.x,
                                              y: self.circleView.center.y + translation.y)
             for (_, button) in self.avatarButtons {
-                button.center = CGPoint(x: button.center.x + translation.x,
-                                        y: button.center.y + translation.y)
+                button.avatar.center = CGPoint(x: button.avatar.center.x + translation.x,
+                                               y: button.avatar.center.y + translation.y)
             }
             
             sender.setTranslation(CGPoint.zero, in: self.view)
@@ -83,8 +98,9 @@ class MapViewController: ConnectivityViewController {
             UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.circleView.center = endPosition
                 for (_, button) in self.avatarButtons {
-                    endPosition = CGPoint(x: button.center.x + (velocity.x * 0.1), y: button.center.y + (velocity.y * 0.1))
-                    button.center = endPosition
+                    endPosition = CGPoint(x: button.avatar.center.x + (velocity.x * 0.1),
+                                          y: button.avatar.center.y + (velocity.y * 0.1))
+                    button.avatar.center = endPosition
                 }
             }, completion: nil)
             break
@@ -94,14 +110,15 @@ class MapViewController: ConnectivityViewController {
     }
     
     @IBAction func centerCircles(_ sender: UITapGestureRecognizer) {
-        UIView.animate(withDuration: 0.35,
-                       delay: 0,
-                       options: UIViewAnimationOptions.curveEaseOut,
-                       animations: { self.circleView.center = self.view.center },
-                       completion: nil)
+        UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            self.circleView.center = self.view.center
+            for (_, button) in self.avatarButtons {
+                button.avatar.center = button.originalPosition
+            }
+        }, completion: nil)
     }
     
-    func updateNumberOf(peers numberOfPeers: Int) {
+    func updateNumberOfCircles(from numberOfPeers: Int) {
         var peersMissing: Int = numberOfPeers
         var circlePopulation: Int = 1
         var circleIndex: Int = 0
@@ -121,19 +138,8 @@ extension MapViewController: CircleViewDelegate  {
             UIView.animate(withDuration: 0.35,
                            delay: 0,
                            options: UIViewAnimationOptions.curveEaseIn,
-                           animations: { button.alpha = 1 },
+                           animations: { button.avatar.alpha = 1 },
                            completion: nil)
-        }
-    }
-}
-
-extension Dictionary where Key: Comparable, Value: Equatable {
-    func minus(dict: [Key:Value]) -> [Key:Value] {
-        let entriesInSelfAndNotInDict = filter { dict[$0.key] != self[$0.0] }
-        return entriesInSelfAndNotInDict.reduce([Key:Value]()) { (res, entry) -> [Key:Value] in
-            var res = res
-            res[entry.0] = entry.1
-            return res
         }
     }
 }

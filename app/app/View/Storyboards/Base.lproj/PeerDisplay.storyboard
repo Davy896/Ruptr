@@ -23,12 +23,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="SKt-S5-e9q"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="47Y-EK-L5y" appends="YES" id="uGJ-9h-VhS"/>
+                            <outletCollection property="gestureRecognizers" destination="gHQ-ni-a9B" appends="YES" id="p6F-H0-iIz"/>
+                        </connections>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bSu-WO-08I" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="47Y-EK-L5y">
+                    <connections>
+                        <action selector="centerCircles:" destination="zcj-xO-MSe" id="zR2-u8-ZQp"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="gHQ-ni-a9B">
+                    <connections>
+                        <action selector="moveCircles:" destination="zcj-xO-MSe" id="fSc-4i-G7y"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1489" y="-420"/>
         </scene>

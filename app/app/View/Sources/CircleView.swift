@@ -24,6 +24,7 @@ class CircleView: UIView {
     }
     
     var points: [CGPoint] = []
+    var translation: (x: CGFloat, y: CGFloat) = (0, 0)
     var circleFirstIndex: [Int] = []
     var delegate: CircleViewDelegate?
     

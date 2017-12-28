@@ -56,19 +56,9 @@ class MapViewController: ConnectivityViewController {
     }
     
     @IBAction func showInvitationPrompt(_ sender: AvatarPlanetButton) {
-        self.panCircleView.isEnabled = false
-        self.circleView.translation.x += self.circleView.center.x - sender.center.x
-        self.circleView.translation.y += self.circleView.center.y - sender.center.y
-        UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-            self.circleView.center.x += self.circleView.translation.x
-            self.circleView.center.y += self.circleView.translation.y
-            for (_, button) in self.avatarButtons {
-                button.center.x += self.circleView.translation.x
-                button.center.y += self.circleView.translation.y
-            }
-        }, completion: { finished in
-            self.panCircleView.isEnabled = true
-        })
+        if (sender.center != self.view.center) {
+            self.centerCircles(sender)
+        }
     }
     
     @IBAction func moveCircles(_ sender: UIPanGestureRecognizer) {
@@ -109,10 +99,10 @@ class MapViewController: ConnectivityViewController {
     }
     
     @IBAction func tapCenterCircles(_ sender: UITapGestureRecognizer) {
-       self.centerCircles()
+        self.centerCircles()
     }
     
-    func centerCircles() {
+    func centerCircles(_ sender: AvatarPlanetButton? = nil) {
         self.panCircleView.isEnabled = false
         UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.circleView.center.x -= self.circleView.translation.x
@@ -121,9 +111,26 @@ class MapViewController: ConnectivityViewController {
                 button.center.x -= self.circleView.translation.x
                 button.center.y -= self.circleView.translation.y
             }
+            
         }, completion: { finished in
             self.circleView.translation = (0,0)
             self.panCircleView.isEnabled = true
+            if let sender = sender {
+                self.panCircleView.isEnabled = false
+                self.circleView.translation.x -=  sender.center.x - self.circleView.center.x
+                self.circleView.translation.y -=  sender.center.y - self.circleView.center.y
+                UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                    self.circleView.center.x += self.circleView.translation.x
+                    self.circleView.center.y += self.circleView.translation.y
+                    for (_, button) in self.avatarButtons {
+                        button.center.x += self.circleView.translation.x
+                        button.center.y += self.circleView.translation.y
+                    }
+                    
+                }, completion: { finished in
+                    self.panCircleView.isEnabled = true
+                })
+            }
         })
     }
     

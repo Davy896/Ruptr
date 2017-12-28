@@ -11,6 +11,7 @@ import MultipeerConnectivity
 
 class MapViewController: ConnectivityViewController {
     
+    @IBOutlet var panCircleView: UIPanGestureRecognizer!
     var circleView: CircleView!
     var avatarButtons: [String: AvatarPlanetButton] = [:]
     
@@ -55,7 +56,19 @@ class MapViewController: ConnectivityViewController {
     }
     
     @IBAction func showInvitationPrompt(_ sender: AvatarPlanetButton) {
-        print("\(sender.userNameLabel.text ?? "nil")")
+        self.panCircleView.isEnabled = false
+        self.circleView.translation.x += self.circleView.center.x - sender.center.x
+        self.circleView.translation.y += self.circleView.center.y - sender.center.y
+        UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            self.circleView.center.x += self.circleView.translation.x
+            self.circleView.center.y += self.circleView.translation.y
+            for (_, button) in self.avatarButtons {
+                button.center.x += self.circleView.translation.x
+                button.center.y += self.circleView.translation.y
+            }
+        }, completion: { finished in
+            self.panCircleView.isEnabled = true
+        })
     }
     
     @IBAction func moveCircles(_ sender: UIPanGestureRecognizer) {
@@ -95,7 +108,12 @@ class MapViewController: ConnectivityViewController {
         }
     }
     
-    @IBAction func centerCircles(_ sender: UITapGestureRecognizer) {
+    @IBAction func tapCenterCircles(_ sender: UITapGestureRecognizer) {
+       self.centerCircles()
+    }
+    
+    func centerCircles() {
+        self.panCircleView.isEnabled = false
         UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.circleView.center.x -= self.circleView.translation.x
             self.circleView.center.y -= self.circleView.translation.y
@@ -103,10 +121,14 @@ class MapViewController: ConnectivityViewController {
                 button.center.x -= self.circleView.translation.x
                 button.center.y -= self.circleView.translation.y
             }
-        }, completion: { finished in self.circleView.translation = (0,0) })
+        }, completion: { finished in
+            self.circleView.translation = (0,0)
+            self.panCircleView.isEnabled = true
+        })
     }
     
     func reloadData() {
+        self.centerCircles()
         if (self.people.count > 0) {
             for view in self.view.subviews {
                 if let button = view as? AvatarPlanetButton {
@@ -125,21 +147,22 @@ class MapViewController: ConnectivityViewController {
             }
             
             self.circleView.numberOfCircles = circleIndex
+            
             circleIndex = 0
             circlePopulation = 1
             for i in 0 ... self.people.count - 1 {
                 let button = AvatarPlanetButton.createAvatarButton(from: self.people[i], size: CGSize(width: 65, height: 65))
                 repeat {
                     let center = self.circleView.points[Int(arc4random_uniform(UInt32(361))) + 361 * self.circleView.circleFirstIndex[circleIndex] ]
-                    button.center = CGPoint(x: center.x + self.circleView.translation.x, y: center.y + self.circleView.translation.y)
+                    button.center = CGPoint(x: center.x, y: center.y)
                 } while (self.checkButtonColision(button))
                 
                 button.addTarget(self, action: #selector(showInvitationPrompt(_:)), for: UIControlEvents.touchUpInside)
                 self.avatarButtons[self.people[i].id] = button
                 self.view.addSubview(button)
-                if (circlePopulation == i) {
+                if (i == 0 || circlePopulation == i) {
                     circleIndex += 1
-                    circlePopulation += i
+                    circlePopulation += i + 1
                 }
             }
         }

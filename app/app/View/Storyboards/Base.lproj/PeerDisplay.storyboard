@@ -32,11 +32,14 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <connections>
+                        <outlet property="panCircleView" destination="gHQ-ni-a9B" id="ZxO-mx-h6F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bSu-WO-08I" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="47Y-EK-L5y">
                     <connections>
-                        <action selector="centerCircles:" destination="zcj-xO-MSe" id="zR2-u8-ZQp"/>
+                        <action selector="tapCenterCircles:" destination="zcj-xO-MSe" id="zR2-u8-ZQp"/>
                     </connections>
                 </tapGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="gHQ-ni-a9B">

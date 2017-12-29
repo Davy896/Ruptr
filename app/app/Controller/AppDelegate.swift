@@ -19,16 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let defaultFont = UIFont(name: "Futura-Medium", size: 17) {
             let navBarProxy = UINavigationBar.appearance()
             navBarProxy.titleTextAttributes = [NSAttributedStringKey.font: defaultFont, NSAttributedStringKey.foregroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)]
+            navBarProxy.barTintColor = Colours.backgroundSecondary
             navBarProxy.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             navBarProxy.setBackgroundImage(UIImage.setUpGradient(withColours: [Colours.backgroundSecondary.cgColor,
                                                                                Colours.background.cgColor],
                                                                  framedIn: CGRect(x: 0,
                                                                                   y: 0,
                                                                                   width: UIScreen.main.bounds.size.height * 2,
-                                                                                  height: 64)),
-                                           for: .default)
-            navBarProxy.shadowImage = UIImage()
-            
+                                                                                  height: 64)), for: .default)
+
             let tabBarProxy = UITabBar.appearance()
             tabBarProxy.barTintColor  = Colours.backgroundSecondary
             tabBarProxy.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -38,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                                  y: 0,
                                                                                  width: UIScreen.main.bounds.size.height * 2,
                                                                                  height: 49))
-            tabBarProxy.shadowImage = UIImage()
             
             let barButtonItemProy = UIBarButtonItem.appearance()
             barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.normal)

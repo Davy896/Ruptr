@@ -62,6 +62,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         UIViewController.setViewBackground(for: self)
         self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
         self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
@@ -157,7 +158,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             break
         }
     }
-    
     
     @IBAction func selectMood(_ sender: UIButton) {
         let alert = SCLAlertView(appearance: self.alertAppearence)

@@ -72,7 +72,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
         if let userBeingInvited = profile as? UserProfile {
-            
             let alert = SCLAlertView(appearance: self.alertAppearence)
             let serviceBrowser = ServiceManager.instance.chatService.serviceBrowser
             alert.addButton(NSLocalizedString("game", comment: "")) {

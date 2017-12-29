@@ -38,6 +38,12 @@ class MapViewController: ConnectivityViewController {
     
     var isPromptVisible: Bool = false {
         didSet {
+            if let items = self.tabBarController?.tabBar.items {
+                for button in items {
+                    button.isEnabled = !self.isPromptVisible
+                }
+            }
+            
             UIView.animate(withDuration: 0.35) {
                 if (self.isPromptVisible) {
                     self.transparencyView.alpha = 0.7
@@ -124,7 +130,6 @@ class MapViewController: ConnectivityViewController {
     }
     
     @IBAction func tapCenterCircles(_ sender: UITapGestureRecognizer) {
-        self.isGestureEnabled = false
         self.centerCircles()
     }
     
@@ -132,10 +137,12 @@ class MapViewController: ConnectivityViewController {
         if (sender.center != self.view.center) {
             self.selectedAvatarButton = sender
             self.centerCircles()
-            UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut,
-                           animations: self.translateCirclesWith(button: sender), completion: nil)
             self.isPromptVisible = true
-            self.isGestureEnabled = false
+            UIView.animate(withDuration: 0.35,
+                           delay: 0,
+                           options: UIViewAnimationOptions.curveEaseOut,
+                           animations: self.translateCirclesWith(button: sender),
+                           completion: { finished in self.isGestureEnabled = false })
             self.view.insertSubview(self.invitationView, belowSubview: self.selectedAvatarButton! )
             self.usernameLabel.text = self.selectedAvatarButton!.userNameLabel.text
             self.gameButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
@@ -150,19 +157,27 @@ class MapViewController: ConnectivityViewController {
                             if let center = self.previousSelectedAvatarButtonCenter {
                                 button.center = center
                             }
-                        }
-        }, completion: { finished in
-            if (finished) {
-                self.selectedAvatarButton = nil
-            }
-        })
+                        } },
+                       completion: { finished in
+                        if (finished) {
+                            self.selectedAvatarButton = nil
+                            self.isGestureEnabled = true
+                        } })
+        
         self.isPromptVisible = false
     }
     
     func centerCircles() {
-        UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: self.translateCirclesWith(),
-                       completion: { finished in if (finished) { self.circleView.translation = (0,0); self.isGestureEnabled = true }
-        })
+        self.isGestureEnabled = false
+        UIView.animate(withDuration: 0.35,
+                       delay: 0,
+                       options: UIViewAnimationOptions.curveEaseOut,
+                       animations: self.translateCirclesWith(),
+                       completion: { finished in
+                        if (finished) {
+                            self.circleView.translation = (0,0)
+                            self.isGestureEnabled = true
+                        } })
     }
     
     func reloadData() {
@@ -246,6 +261,7 @@ class MapViewController: ConnectivityViewController {
             }
         } else if let sender = button {
             return  {
+                self.isGestureEnabled = false
                 sender.center = self.avatarFrameView.center
             }
         } else {

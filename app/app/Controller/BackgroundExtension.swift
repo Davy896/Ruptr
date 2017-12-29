@@ -23,7 +23,7 @@ extension UIViewController {
         let background = UIImageView(frame: controller.view.frame)
         background.tag = 0451
         background.image = UIImage(named: "space_background")
-        controller.tableView.backgroundView =  UIView(frame: controller.view.frame)
+        controller.tableView.backgroundView = UIView(frame: controller.view.frame)
         controller.tableView.backgroundView?.backgroundColor = Colours.background
         controller.tableView.backgroundView?.addSubview(background)
         controller.tableView.backgroundView?.sendSubview(toBack: background)

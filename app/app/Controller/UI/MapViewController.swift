@@ -28,10 +28,6 @@ class MapViewController: ConnectivityViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        UIViewController.setViewBackground(for: self)
-        self.title = NSLocalizedString("map", comment: "")
-        
         self.circleView = CircleView(frame: self.view.frame)
         self.circleView.isUserInteractionEnabled = true
         self.circleView.radius = 60

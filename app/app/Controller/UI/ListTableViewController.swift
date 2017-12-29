@@ -18,7 +18,6 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         UIViewController.setTableViewBackground(for: self)
-        self.title = NSLocalizedString("list", comment: "")
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.updateFoundPeers()

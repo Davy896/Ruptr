@@ -58,17 +58,14 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var finishButton: UIButton!
     
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UIViewController.setViewBackground(for: self)
         self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
         self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
         self.avatarFaceImageView.image = UIImage(named: "expression_\(self.currentFace)")
-        let navBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
-        let title = UINavigationItem(title: NSLocalizedString("profile_creation", comment: ""));
-        navBar.setItems([title], animated: true);
-        self.view.addSubview(navBar);
-        
         for (key, button) in moodAlertButtons {
             
             button.frame.size = CGSize(width: self.moodOneButton.frame.size.width * 0.8,
@@ -113,8 +110,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    
+
     @IBAction func updateAvatar(_ sender: UIButton) {
         switch sender.tag {
         case 0: // Hair Right

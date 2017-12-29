@@ -46,3 +46,18 @@ extension UIColor {
         return (UInt)(r*255)<<16 | (UInt)(g*255)<<8 | (UInt)(b*255)<<0
     }
 }
+
+extension UIImage {
+    
+    static func setUpGradient(withColours colours: [CGColor], framedIn frame: CGRect) -> UIImage {
+        let gradient = CAGradientLayer()
+        gradient.frame = frame
+        gradient.colors = colours
+        UIGraphicsBeginImageContext(gradient.frame.size)
+        gradient.render(in: UIGraphicsGetCurrentContext()!)
+        let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return gradientImage!
+    }
+}

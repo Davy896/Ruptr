@@ -24,7 +24,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIViewController.setViewBackground(for: self)
         ServiceManager.instance.chatService.delegate = self
         self.setDiscoveryInfo(from: ServiceManager.instance.userProfile)
         self.updateVisibility()

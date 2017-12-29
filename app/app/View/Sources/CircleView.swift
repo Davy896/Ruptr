@@ -76,7 +76,6 @@ class CircleView: UIView {
 extension CircleView: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if (flag) {
-            
             delegate?.handleDrawingCompletion()
         }
     }

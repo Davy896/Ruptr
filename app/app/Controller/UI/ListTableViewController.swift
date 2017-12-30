@@ -14,10 +14,12 @@ import SCLAlertView
 class ListTableViewController: ConnectivityViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         UIViewController.setTableViewBackground(for: self)
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.updateFoundPeers()
@@ -46,6 +48,71 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
     override func peerLost(withId id: MCPeerID) {
         super.peerLost(withId: id)
         self.tableView.reloadData()
+    }
+    
+    override func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
+        super.invitePeer(withId: id, profile: profile)
+        if let userBeingInvited = profile as? UserProfile {
+            if let items = self.tabBarController?.tabBar.items {
+                for item in items {
+                    item.isEnabled = false
+                }
+                
+                let alert = SCLAlertView(appearance: self.alertAppearence)
+                let serviceBrowser = ServiceManager.instance.chatService.serviceBrowser
+                alert.addButton(NSLocalizedString("game", comment: "")) {
+                    for item in items {
+                        item.isEnabled = true
+                    }
+                    
+                    self.isGame = true
+                    ServiceManager.instance.selectedPeer = (key: id,
+                                                            name: userBeingInvited.username,
+                                                            hair: userBeingInvited.avatar[AvatarParts.hair]!,
+                                                            face: userBeingInvited.avatar[AvatarParts.face]!,
+                                                            skinTone: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[0],
+                                                            skinToneIndex: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[1])
+                    GameViewController.randomEmoji = GameViewController.randomizeEmoji()
+                    GameViewController.isPlayerOne = true
+                    serviceBrowser.invitePeer(id,
+                                              to: ServiceManager.instance.chatService.session,
+                                              withContext: ConnectivityViewController.createUserData(for: "game"),
+                                              timeout: 20)
+                }
+                
+                alert.addButton(NSLocalizedString("chat", comment: "")) {
+                    for item in items {
+                        item.isEnabled = true
+                    }
+                    
+                    self.isGame = false
+                    ServiceManager.instance.selectedPeer = (key: id,
+                                                            name: userBeingInvited.username,
+                                                            hair: userBeingInvited.avatar[AvatarParts.hair]!,
+                                                            face: userBeingInvited.avatar[AvatarParts.face]!,
+                                                            skinTone: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[0],
+                                                            skinToneIndex: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[1])
+                    serviceBrowser.invitePeer(id,
+                                              to: ServiceManager.instance.chatService.session,
+                                              withContext: ConnectivityViewController.createUserData(for: "chat"),
+                                              timeout: 20)
+                }
+                
+                alert.addButton(NSLocalizedString("cancel", comment: ""), backgroundColor: UIColor.red) {
+                    UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.light).impactOccurred()
+                    for item in items {
+                        item.isEnabled = true
+                    }
+                }
+                
+                OperationQueue.main.addOperation {
+                    alert.showInfo(userBeingInvited.username,
+                                   subTitle: NSLocalizedString("send_invitation", comment: ""),
+                                   colorStyle: userBeingInvited.avatarSkin.toHexUInt(),
+                                   circleIconImage: UIImage.imageByCombiningImage(firstImage: userBeingInvited.avatarFace!, withImage: userBeingInvited.avatarHair!))
+                }
+            }
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -151,18 +151,19 @@ class MapViewController: ConnectivityViewController {
     }
     
     @IBAction func dismissInvitationPrompt(_ sender: RoundButton) {
-        UIView.animate(withDuration: 0.35,
-                       animations: {
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        UIView.animate(withDuration: 0.35, animations: {
                         if let button = self.selectedAvatarButton {
                             if let center = self.previousSelectedAvatarButtonCenter {
                                 button.center = center
                             }
-                        } },
-                       completion: { finished in
+                        }
+        },completion: { finished in
                         if (finished) {
                             self.selectedAvatarButton = nil
                             self.isGestureEnabled = true
-                        } })
+                        }
+        })
         
         self.isPromptVisible = false
     }

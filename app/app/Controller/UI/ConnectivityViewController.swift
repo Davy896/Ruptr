@@ -13,6 +13,7 @@ import SCLAlertView
 
 class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
+    
     var isGame = true
     var people: [UserProfile] = []
     let alertAppearence = SCLAlertView.SCLAppearance(kCircleIconHeight: -56,
@@ -70,57 +71,16 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         ServiceManager.instance.chatService.discoveryInfo = info
     }
     
-    func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
-        if let userBeingInvited = profile as? UserProfile {
-            let alert = SCLAlertView(appearance: self.alertAppearence)
-            let serviceBrowser = ServiceManager.instance.chatService.serviceBrowser
-            alert.addButton(NSLocalizedString("game", comment: "")) {
-                self.isGame = true
-                ServiceManager.instance.selectedPeer = (key: id,
-                                                        name: userBeingInvited.username,
-                                                        hair: userBeingInvited.avatar[AvatarParts.hair]!,
-                                                        face: userBeingInvited.avatar[AvatarParts.face]!,
-                                                        skinTone: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[0],
-                                                        skinToneIndex: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[1])
-                GameViewController.randomEmoji = GameViewController.randomizeEmoji()
-                GameViewController.isPlayerOne = true
-                serviceBrowser.invitePeer(id,
-                                          to: ServiceManager.instance.chatService.session,
-                                          withContext: ConnectivityViewController.createUserData(for: "game"),
-                                          timeout: 20)
-            }
-            
-            alert.addButton(NSLocalizedString("chat", comment: "")) {
-                self.isGame = false
-                ServiceManager.instance.selectedPeer = (key: id,
-                                                        name: userBeingInvited.username,
-                                                        hair: userBeingInvited.avatar[AvatarParts.hair]!,
-                                                        face: userBeingInvited.avatar[AvatarParts.face]!,
-                                                        skinTone: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[0],
-                                                        skinToneIndex: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[1])
-                serviceBrowser.invitePeer(id,
-                                          to: ServiceManager.instance.chatService.session,
-                                          withContext: ConnectivityViewController.createUserData(for: "chat"),
-                                          timeout: 20)
-            }
-            
-            alert.addButton(NSLocalizedString("cancel", comment: ""), backgroundColor: UIColor.red) {
-                UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.light).impactOccurred()
-            }
-            
-            OperationQueue.main.addOperation {
-                alert.showInfo(userBeingInvited.username,
-                               subTitle: NSLocalizedString("send_invitation", comment: ""),
-                               colorStyle: userBeingInvited.avatarSkin.toHexUInt(),
-                               circleIconImage: UIImage.imageByCombiningImage(firstImage: userBeingInvited.avatarFace!, withImage: userBeingInvited.avatarHair!))
-            }
-        }
-    }
+    func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {}
     
     func handleInvitation(from: MCPeerID, withContext context: Data?) {
         if let context = context {
             if let data = String(data: context, encoding: String.Encoding.utf8) {
-                
+                if let items = self.tabBarController?.tabBar.items {
+                    for item in items {
+                        item.isEnabled = false
+                    }
+              
                 let chatService = ServiceManager.instance.chatService
                 let userData = ConnectivityViewController.decodeUserData(from: data)
                 let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? NSLocalizedString("chat_invite_message", comment: "") : NSLocalizedString("game_invite_message", comment: "")
@@ -128,6 +88,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 
                 alert.addButton(NSLocalizedString("accept", comment: "")) {
                     self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
+                    for item in items {
+                        item.isEnabled = true
+                    }
+                    
                     GameViewController.randomEmoji = userData[DecodedUserDataKeys.emoji]!
                     GameViewController.isPlayerOne = false
                     ServiceManager.instance.selectedPeer = (from,
@@ -141,6 +105,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 
                 alert.addButton(NSLocalizedString("refuse", comment: ""), backgroundColor: UIColor.red) {
                     UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+                    for item in items {
+                        item.isEnabled = true
+                    }
+                    
                     chatService.invitationHandler(false, chatService.session)
                 }
                 
@@ -153,6 +121,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                                                        withImage: UIImage(named: userData[DecodedUserDataKeys.avatarFace]!)!))
                 }
             }
+                  }
         }
     }
     
@@ -209,8 +178,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         }
     }
     
-    func connectionLost() {
-    }
+    func connectionLost() {}
     
     func updateFoundPeers() {
         self.people.removeAll()
@@ -230,8 +198,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             }
         }
     }
-    
-    @IBAction func unwindToListTableView(segue:UIStoryboardSegue) { }
     
     static func createUserData(for interaction: String) -> Data {
         let userProfile = ServiceManager.instance.userProfile

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4105BF1B1FE123DC005B2A8C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF1A1FE123DC005B2A8C /* ServiceManager.swift */; };
 		4105BF251FE1423B005B2A8C /* ProfileCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF241FE1423B005B2A8C /* ProfileCreationViewController.swift */; };
-		4105BF271FE14829005B2A8C /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF261FE14829005B2A8C /* StringExtention.swift */; };
+		4105BF271FE14829005B2A8C /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105BF261FE14829005B2A8C /* StringExtension.swift */; };
 		410BE7071FDFCFCB00B26DF2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7051FDFCFCB00B26DF2 /* Settings.storyboard */; };
 		410BE70A1FDFD0A600B26DF2 /* PeerDisplay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE7081FDFD0A600B26DF2 /* PeerDisplay.storyboard */; };
 		410BE70D1FDFD18800B26DF2 /* Interactions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410BE70B1FDFD18800B26DF2 /* Interactions.storyboard */; };
@@ -28,6 +28,7 @@
 		41792CAB1FDD60A300B5F83E /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792CAA1FDD60A300B5F83E /* AppUITests.swift */; };
 		41792CE01FDD632800B5F83E /* ConnectivityServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; };
 		41792CE11FDD632800B5F83E /* ConnectivityServices.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		418CA8931FF7D76F00E83EC9 /* OperatorOverloadExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418CA8921FF7D76F00E83EC9 /* OperatorOverloadExtension.swift */; };
 		41956FB11FF129FC00C5D31C /* CircleViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41956FB01FF129FC00C5D31C /* CircleViewDelegate.swift */; };
 		41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */; };
 		41B2C0AE1FE94F970027EA97 /* MPCMessageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */; };
@@ -86,7 +87,7 @@
 		401E5A2A7A6BC8F4E0591217 /* Pods-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppTests/Pods-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4105BF1A1FE123DC005B2A8C /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		4105BF241FE1423B005B2A8C /* ProfileCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCreationViewController.swift; sourceTree = "<group>"; };
-		4105BF261FE14829005B2A8C /* StringExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
+		4105BF261FE14829005B2A8C /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		410BE7061FDFCFCB00B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		410BE7091FDFD0A600B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PeerDisplay.storyboard; sourceTree = "<group>"; };
 		410BE70C1FDFD18800B26DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interactions.storyboard; sourceTree = "<group>"; };
@@ -114,6 +115,7 @@
 		41792CAA1FDD60A300B5F83E /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		41792CAC1FDD60A300B5F83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConnectivityServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		418CA8921FF7D76F00E83EC9 /* OperatorOverloadExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorOverloadExtension.swift; sourceTree = "<group>"; };
 		41956FB01FF129FC00C5D31C /* CircleViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleViewDelegate.swift; sourceTree = "<group>"; };
 		41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPCMessageTypes.swift; sourceTree = "<group>"; };
@@ -253,7 +255,8 @@
 				41792C911FDD60A200B5F83E /* Assets.xcassets */,
 				410BE71B1FDFF5E300B26DF2 /* Localizable.strings */,
 				41792C961FDD60A200B5F83E /* Info.plist */,
-				4105BF261FE14829005B2A8C /* StringExtention.swift */,
+				418CA8921FF7D76F00E83EC9 /* OperatorOverloadExtension.swift */,
+				4105BF261FE14829005B2A8C /* StringExtension.swift */,
 				4175189F1FE3C911004972FA /* Colours.swift */,
 			);
 			path = App;
@@ -654,7 +657,8 @@
 				F95E9EC31FDEA210008020C3 /* SettingsViewController.swift in Sources */,
 				F95E9EC51FDEA210008020C3 /* MapViewController.swift in Sources */,
 				41588D381FE8899600876DC0 /* AvatarPlanetButton.swift in Sources */,
-				4105BF271FE14829005B2A8C /* StringExtention.swift in Sources */,
+				4105BF271FE14829005B2A8C /* StringExtension.swift in Sources */,
+				418CA8931FF7D76F00E83EC9 /* OperatorOverloadExtension.swift in Sources */,
 				ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */,
 				ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */,
 				41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */,

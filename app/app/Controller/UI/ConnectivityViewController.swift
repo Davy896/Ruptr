@@ -13,9 +13,9 @@ import SCLAlertView
 
 class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
-    
     var isGame = true
     var people: [UserProfile] = []
+    
     let alertAppearence = SCLAlertView.SCLAppearance(kCircleIconHeight: -56,
                                                      kTitleFont: UIFont(name: "Futura-Bold", size: 17)!,
                                                      kTextFont: UIFont(name: "Futura-Medium", size: 14)!,
@@ -80,48 +80,48 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                     for item in items {
                         item.isEnabled = false
                     }
-              
-                let chatService = ServiceManager.instance.chatService
-                let userData = ConnectivityViewController.decodeUserData(from: data)
-                let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? NSLocalizedString("chat_invite_message", comment: "") : NSLocalizedString("game_invite_message", comment: "")
-                let alert = SCLAlertView(appearance: self.alertAppearence)
-                
-                alert.addButton(NSLocalizedString("accept", comment: "")) {
-                    self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
-                    for item in items {
-                        item.isEnabled = true
+                    
+                    let chatService = ServiceManager.instance.chatService
+                    let userData = ConnectivityViewController.decodeUserData(from: data)
+                    let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? NSLocalizedString("chat_invite_message", comment: "") : NSLocalizedString("game_invite_message", comment: "")
+                    let alert = SCLAlertView(appearance: self.alertAppearence)
+                    
+                    alert.addButton(NSLocalizedString("accept", comment: "")) {
+                        self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
+                        for item in items {
+                            item.isEnabled = true
+                        }
+                        
+                        GameViewController.randomEmoji = userData[DecodedUserDataKeys.emoji]!
+                        GameViewController.isPlayerOne = false
+                        ServiceManager.instance.selectedPeer = (from,
+                                                                userData[DecodedUserDataKeys.username]!,
+                                                                userData[DecodedUserDataKeys.avatarHair]!,
+                                                                userData[DecodedUserDataKeys.avatarFace]!,
+                                                                userData[DecodedUserDataKeys.avatarSkinTone]!,
+                                                                userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
+                        chatService.invitationHandler(true, chatService.session)
                     }
                     
-                    GameViewController.randomEmoji = userData[DecodedUserDataKeys.emoji]!
-                    GameViewController.isPlayerOne = false
-                    ServiceManager.instance.selectedPeer = (from,
-                                                            userData[DecodedUserDataKeys.username]!,
-                                                            userData[DecodedUserDataKeys.avatarHair]!,
-                                                            userData[DecodedUserDataKeys.avatarFace]!,
-                                                            userData[DecodedUserDataKeys.avatarSkinTone]!,
-                                                            userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
-                    chatService.invitationHandler(true, chatService.session)
-                }
-                
-                alert.addButton(NSLocalizedString("refuse", comment: ""), backgroundColor: UIColor.red) {
-                    UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-                    for item in items {
-                        item.isEnabled = true
+                    alert.addButton(NSLocalizedString("refuse", comment: ""), backgroundColor: UIColor.red) {
+                        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+                        for item in items {
+                            item.isEnabled = true
+                        }
+                        
+                        chatService.invitationHandler(false, chatService.session)
                     }
                     
-                    chatService.invitationHandler(false, chatService.session)
-                }
-                
-                OperationQueue.main.addOperation {
-                    alert.showInfo(userData[DecodedUserDataKeys.username]!,
-                                   subTitle: "\(NSLocalizedString("invite_message", comment: "")) \(invitationText)",
-                        colorStyle: Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
-                                                      index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!)).toHexUInt(),
-                        circleIconImage: UIImage.imageByCombiningImage(firstImage: UIImage(named: userData[DecodedUserDataKeys.avatarHair]!)!,
-                                                                       withImage: UIImage(named: userData[DecodedUserDataKeys.avatarFace]!)!))
+                    OperationQueue.main.addOperation {
+                        alert.showInfo(userData[DecodedUserDataKeys.username]!,
+                                       subTitle: "\(NSLocalizedString("invite_message", comment: "")) \(invitationText)",
+                            colorStyle: Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
+                                                          index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!)).toHexUInt(),
+                            circleIconImage: UIImage.imageByCombiningImage(firstImage: UIImage(named: userData[DecodedUserDataKeys.avatarHair]!)!,
+                                                                           withImage: UIImage(named: userData[DecodedUserDataKeys.avatarFace]!)!))
+                    }
                 }
             }
-                  }
         }
     }
     

@@ -43,6 +43,9 @@ class MapViewController: ConnectivityViewController {
                 }
             }
             
+            print(self.invitationView.frame.origin.x)
+            print(self.invitationView.frame.minX)
+            
             UIView.animate(withDuration: 0.35) {
                 if (self.isPromptVisible) {
                     self.transparencyView.alpha = 0.7

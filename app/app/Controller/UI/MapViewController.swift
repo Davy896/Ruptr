@@ -14,13 +14,6 @@ class MapViewController: ConnectivityViewController {
     @IBOutlet var panCircleView: UIPanGestureRecognizer!
     @IBOutlet var tapCircleView: UITapGestureRecognizer!
     
-    @IBOutlet var transparencyView: UIView!
-    @IBOutlet var invitationView: UIView!
-    @IBOutlet weak var avatarFrameView: RoundView!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var gameButton: RoundButton!
-    @IBOutlet weak var chatButton: RoundButton!
-    
     var circleView: CircleView!
     var avatarButtons: [String: AvatarPlanetButton] = [:]
     var selectedAvatarButton: AvatarPlanetButton? = nil {
@@ -35,22 +28,16 @@ class MapViewController: ConnectivityViewController {
     
     var previousSelectedAvatarButtonCenter: CGPoint? = nil
     
-    var isPromptVisible: Bool = false{
+   override var isPromptVisible: Bool {
         didSet {
             if let items = self.tabBarController?.tabBar.items {
                 for button in items {
                     button.isEnabled = !self.isPromptVisible
                 }
             }
-            
-            print(self.invitationView.frame.origin.x)
-            print(self.invitationView.frame.minX)
-            
+            self.isGestureEnabled = false
             UIView.animate(withDuration: 0.35) {
                 if (self.isPromptVisible) {
-                    self.transparencyView.alpha = 0.7
-                    self.invitationView.alpha = 1
-                    self.avatarFrameView.alpha = 1
                     self.circleView.alpha = 0
                     for (_ , button) in self.avatarButtons {
                         if (button != self.selectedAvatarButton) {
@@ -58,9 +45,6 @@ class MapViewController: ConnectivityViewController {
                         }
                     }
                 } else {
-                    self.transparencyView.alpha = 0
-                    self.invitationView.alpha = 0
-                    self.avatarFrameView.alpha = 0
                     self.circleView.alpha = 1
                     for (_ , button) in self.avatarButtons {
                         button.alpha = 1
@@ -80,9 +64,7 @@ class MapViewController: ConnectivityViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UIViewController.setViewBackground(for: self)
-        self.setUpPromptViews()
         self.circleView = CircleView(frame: self.view.frame)
-        self.circleView.isUserInteractionEnabled = true
         self.circleView.radius = 60
         self.circleView.delegate = self
         self.view.addSubview(self.circleView)
@@ -135,9 +117,8 @@ class MapViewController: ConnectivityViewController {
     }
     
     @IBAction func showInvitationPrompt(_ sender: AvatarPlanetButton) {
-        if (sender.center != self.view.center) {
+        if (sender.center != self.avatarFrameView.center) {
             self.selectedAvatarButton = sender
-            self.centerCircles()
             self.isPromptVisible = true
             UIView.animate(withDuration: 0.35,
                            delay: 0,
@@ -146,13 +127,14 @@ class MapViewController: ConnectivityViewController {
                            completion: { completed in self.isGestureEnabled = false })
             self.view.insertSubview(self.invitationView, belowSubview: self.selectedAvatarButton! )
             self.usernameLabel.text = self.selectedAvatarButton!.userNameLabel.text
-            self.gameButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
-            self.chatButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
+            self.gameButton.bgColor = self.selectedAvatarButton!.faceImageView.backgroundColor!
+            self.chatButton.bgColor = self.selectedAvatarButton!.faceImageView.backgroundColor!
+            self.centerCircles()
         }
     }
     
-    @IBAction func dismissInvitationPrompt(_ sender: RoundButton) {
-        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+    @IBAction override func dismissInvitationPrompt(_ sender: RoundButton) {
+        super.dismissInvitationPrompt(sender)
         UIView.animate(withDuration: 0.35,
                        animations: {
                         if let button = self.selectedAvatarButton {
@@ -224,13 +206,6 @@ class MapViewController: ConnectivityViewController {
                 }
             }
         }
-    }
-    
-    func setUpPromptViews() {
-        self.invitationView.center = self.view.center
-        self.avatarFrameView.frame.size = CGSize(width: 70, height: 70)
-        self.avatarFrameView.circle = true
-        self.avatarFrameView.center = CGPoint(x: self.view.frame.width / 2, y: self.invitationView.frame.origin.y)
     }
     
     private func checkButtonColision(_ button: AvatarPlanetButton) -> Bool {

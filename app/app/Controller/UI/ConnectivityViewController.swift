@@ -13,6 +13,15 @@ import SCLAlertView
 
 class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
+    var transparencyView: UIView!
+    var invitationView: RoundView!
+    var avatarFrameView: RoundView!
+    var usernameLabel: UILabel!
+    var messageLabel: UILabel!
+    var gameButton: RoundButton!
+    var chatButton: RoundButton!
+    var cancelButton: RoundButton!
+    
     var isGame = true
     var people: [UserProfile] = []
     
@@ -23,8 +32,25 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                                      showCloseButton: false,
                                                      showCircularIcon: true)
     
+    var isPromptVisible: Bool = false {
+        didSet {
+            UIView.animate(withDuration: 0.35) {
+                if (self.isPromptVisible) {
+                    self.transparencyView.alpha = 0.7
+                    self.invitationView.alpha = 1
+                    self.avatarFrameView.alpha = 1
+                } else {
+                    self.transparencyView.alpha = 0
+                    self.invitationView.alpha = 0
+                    self.avatarFrameView.alpha = 0
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setUpPromptViews()
         ServiceManager.instance.chatService.delegate = self
         self.setDiscoveryInfo(from: ServiceManager.instance.userProfile)
         self.updateVisibility()
@@ -48,6 +74,94 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         }
     }
     
+    func setUpPromptViews() {
+        let margin: CGFloat = 16
+        
+        self.transparencyView = UIView(frame: self.view.frame)
+        self.transparencyView.backgroundColor = UIColor.black
+        self.transparencyView.alpha = 0
+        self.view.addSubview(self.transparencyView)
+        
+        self.invitationView = RoundView()
+        self.invitationView.frame.size = CGSize(width: 308, height: 300)
+        self.invitationView.center = self.view.center
+        self.invitationView.backgroundColor = UIColor.white
+        self.invitationView.alpha = 0
+        self.invitationView.cornerRadius = 5
+        self.invitationView.maskToBounds = true
+        self.view.addSubview(self.invitationView)
+        
+        self.avatarFrameView = RoundView()
+        self.avatarFrameView.frame.size = CGSize(width: 70, height: 70)
+        self.avatarFrameView.center = CGPoint(x: self.view.frame.width / 2, y: self.invitationView.frame.origin.y)
+        self.avatarFrameView.backgroundColor = UIColor.white
+        self.avatarFrameView.alpha = 0
+        self.avatarFrameView.circle = true
+        self.view.addSubview(self.avatarFrameView)
+        
+        self.usernameLabel = UILabel(frame: CGRect(x: 16, y: 32, width: 276, height: 32))
+        self.usernameLabel.font = UIFont(name: "Futura-Medium", size: 24)
+        self.usernameLabel.textAlignment = NSTextAlignment.center
+        self.usernameLabel.textColor = UIColor.black
+        self.usernameLabel.text = "USER_NAME"
+        
+        self.messageLabel = UILabel(frame: CGRect(x: self.usernameLabel.frame.origin.x,
+                                                  y: self.usernameLabel.frame.origin.y + self.usernameLabel.frame.height + margin,
+                                                  width: self.usernameLabel.frame.size.width,
+                                                  height: self.usernameLabel.frame.size.height))
+        self.messageLabel.font = UIFont(name: "Futura-Medium", size: 17)
+        self.messageLabel.textColor = UIColor.black
+        self.messageLabel.textAlignment = NSTextAlignment.center
+        self.messageLabel.text = NSLocalizedString("send_invitation", comment: "")
+        
+        self.gameButton = RoundButton(frame: CGRect(x: 16, y: 129, width: 276, height: 38))
+        self.gameButton.cornerRadius = 5
+        self.gameButton.topLeftCorner = true
+        self.gameButton.topRightCorner = true
+        self.gameButton.bottomLeftCorner = true
+        self.gameButton.bottomRightCorner = true
+        self.gameButton.maskToBounds = true
+        self.gameButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        self.gameButton.setTitle(NSLocalizedString("game", comment: ""), for: UIControlState.normal)
+        self.gameButton.titleLabel?.font = UIFont(name: "Futura-Medium", size: 20)
+        
+        self.chatButton = RoundButton(frame: CGRect(x: self.gameButton.frame.origin.x,
+                                                    y: self.gameButton.frame.origin.y + self.gameButton.frame.height + margin,
+                                                    width: self.gameButton.frame.size.width,
+                                                    height: self.gameButton.frame.size.height))
+        self.chatButton.cornerRadius = 5
+        self.chatButton.topLeftCorner = true
+        self.chatButton.topRightCorner = true
+        self.chatButton.bottomLeftCorner = true
+        self.chatButton.bottomRightCorner = true
+        self.chatButton.maskToBounds = true
+        self.chatButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        self.chatButton.setTitle(NSLocalizedString("chat", comment: ""), for: UIControlState.normal)
+        self.chatButton.titleLabel?.font = UIFont(name: "Futura-Medium", size: 20)
+        
+        self.cancelButton = RoundButton(frame: CGRect(x: self.gameButton.frame.origin.x,
+                                                      y: self.gameButton.frame.origin.y + (self.gameButton.frame.height + margin) * 2,
+                                                      width: self.gameButton.frame.size.width,
+                                                      height: self.gameButton.frame.size.height))
+        self.cancelButton.cornerRadius = 5
+        self.cancelButton.topLeftCorner = true
+        self.cancelButton.topRightCorner = true
+        self.cancelButton.bottomLeftCorner = true
+        self.cancelButton.bottomRightCorner = true
+        self.cancelButton.maskToBounds = true
+        self.cancelButton.bgColor = UIColor.red
+        self.cancelButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        self.cancelButton.setTitle(NSLocalizedString("cancel", comment: ""), for: UIControlState.normal)
+        self.cancelButton.titleLabel?.font = UIFont(name: "Futura-Medium", size: 20)
+        self.cancelButton.addTarget(self, action: #selector(dismissInvitationPrompt(_:)), for: UIControlEvents.touchUpInside)
+        
+        self.invitationView.addSubview(self.usernameLabel)
+        self.invitationView.addSubview(self.messageLabel)
+        self.invitationView.addSubview(self.gameButton)
+        self.invitationView.addSubview(self.chatButton)
+        self.invitationView.addSubview(self.cancelButton)
+    }
+    
     func updateVisibility() {
         if (ServiceManager.instance.userProfile.status != Status.ghost) {
             ServiceManager.instance.chatService.serviceAdvertiser.startAdvertisingPeer()
@@ -69,6 +183,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                     "moodThree": userProfile.moods[2].enumToString,
                     "status":  userProfile.status.enumToString]
         ServiceManager.instance.chatService.discoveryInfo = info
+    }
+    
+    @IBAction func dismissInvitationPrompt(_ sender: RoundButton) {
+        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
     }
     
     func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {}

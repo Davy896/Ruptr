@@ -51,18 +51,18 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBOutlet weak var userNameValidationLabel: RoundLabel!
-    @IBOutlet weak var moodOneButton: UIButton!
-    @IBOutlet weak var moodTwoButton: UIButton!
-    @IBOutlet weak var moodThreeButton: UIButton!
+    @IBOutlet weak var moodOneButton: RoundButton!
+    @IBOutlet weak var moodTwoButton: RoundButton!
+    @IBOutlet weak var moodThreeButton: RoundButton!
     
     
-    @IBOutlet weak var finishButton: UIButton!
+    @IBOutlet  var finishButton: RoundButton!
     
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
         UIViewController.setViewBackground(for: self)
         self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
         self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
@@ -77,6 +77,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             button.topLeftCorner = true
             button.topRightCorner = true
             button.maskToBounds = true
+            button.backgroundColor = UIColor.lightGray
             button.addTarget(self, action: #selector(self.chooseMoodForProfile), for: .touchUpInside)
 
             if (key == self.moodOne || key == self.moodTwo || key == self.moodThree) {
@@ -339,6 +340,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         })
         
         self.finishButton.isEnabled = validated.isValid
-        self.finishButton.backgroundColor = validated.isValid ? UIColor.white : Colours.saveProfileButtonInvalidBackground
+        self.finishButton.bgColor = validated.isValid ? UIColor.white : Colours.saveProfileButtonInvalidBackground
     }
 }

@@ -60,4 +60,16 @@ extension UIImage {
         
         return gradientImage!
     }
+    
+    static func setUpColor(_ colour: CGColor, framedIn frame: CGRect) -> UIImage {
+        let colourLayer = CALayer()
+        colourLayer.frame = frame
+        colourLayer.backgroundColor = colour
+        UIGraphicsBeginImageContext(colourLayer.frame.size)
+        colourLayer.render(in: UIGraphicsGetCurrentContext()!)
+        let colourImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return colourImage!
+    }
 }

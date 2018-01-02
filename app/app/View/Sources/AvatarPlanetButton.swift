@@ -49,7 +49,7 @@ class AvatarPlanetButton: RoundButton {
         
         self.circle = true
         self.maskToBounds = true
-        self.borderColor = UIColor.white
+        self.bgColor = UIColor.clear
         self.alpha = 0
     }
     

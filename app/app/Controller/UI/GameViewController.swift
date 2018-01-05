@@ -47,7 +47,6 @@ class GameViewController: UIViewController, ISEmojiViewDelegate {
         self.firstEmojiField.inputView = self.emojiKeyboard
         self.firstEmojiField.isEnabled = false
         
-        self.title = NSLocalizedString("game", comment: "")
         self.emojiKeyboard = ISEmojiView()
         self.emojiKeyboard.delegate = self
         self.emojiKeyboard.collectionView.backgroundColor = Colours.backgroundSecondary
@@ -78,12 +77,9 @@ class GameViewController: UIViewController, ISEmojiViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.isHidden = false
+        if let tabBarController = self.tabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -137,7 +133,7 @@ class GameViewController: UIViewController, ISEmojiViewDelegate {
                 }
                 
                 if (self.currentTag == 5) {
-                   self.waitingLabel.isHidden = true
+                    self.waitingLabel.isHidden = true
                     UIView.animate(withDuration: 2, animations: {
                         self.chatButton.alpha = 1
                     })

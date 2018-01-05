@@ -10,37 +10,74 @@ import UIKit
 
 class CircleView: UIView {
     
-    private var radius: Double = 0
-    private var numberOfCircles: Int = 0
-    var path: UIBezierPath!
-    var points: [(x: Double, y: Double)] = []
-    
-    func drawCircles(numberOf numberOfCircles: Int ,onRectangle rect: CGRect, withRadius radius: Double) {
-        self.radius = radius
-        self.numberOfCircles = numberOfCircles
-        self.draw(rect)
+    var radius: Double = 0 {
+        didSet {
+            draw(self.frame)
+            self.setNeedsDisplay()
+        }
+    }
+    var numberOfCircles: Int = 0 {
+        didSet {
+            self.draw(self.frame)
+            self.setNeedsDisplay()
+        }
     }
     
+    var points: [CGPoint] = []
+    var translation: CGPoint = CGPoint.zero
+    var circleFirstIndex: [Int] = []
+    var delegate: CircleViewDelegate?
+    
     override func draw(_ rect: CGRect) {
-        let path = UIBezierPath()
-        let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
-        for i in 1 ... self.numberOfCircles {
-            path.move(to: CGPoint(x: center.x + CGFloat(self.radius * Double(i)), y: center.y))
-            for j in stride(from: 0, to: 361.0, by: 1) {
-                let radians = j * Double.pi / 180
-                let x = Double(center.x) + self.radius * Double(i) * cos(radians)
-                let y = Double(center.y) + self.radius * Double(i) * sin(radians)
-                self.points.append((x,y))
-                path.addLine(to: CGPoint(x: x , y: y))
+        self.layer.sublayers = nil
+        self.points.removeAll()
+        self.circleFirstIndex.removeAll()
+        if self.numberOfCircles > 0 {            
+            let center = CGPoint(x: (rect.width  / 2) - rect.minX, y: (rect.height / 2) - rect.minY)
+            var layers: [CAShapeLayer] = []
+            for i in 1 ... self.numberOfCircles {
+                let shapeLayer = CAShapeLayer()
+                shapeLayer.lineWidth = 4
+                shapeLayer.strokeColor = UIColor.white.cgColor
+                shapeLayer.fillColor = UIColor.clear.cgColor
+                let path = UIBezierPath()
+                path.move(to: CGPoint(x: center.x + CGFloat(self.radius * Double(i)), y: center.y))
+                for j in 0 ... 362 {
+                    let angle = Double (j) * Double.pi / 180
+                    let x = CGFloat(Double(center.x) + self.radius * Double(i) * cos(angle))
+                    let y = CGFloat(Double(center.y) + self.radius * Double(i) * sin(angle))
+                    let point = CGPoint(x: x, y: y)
+                    self.points.append(point)
+                    path.addLine(to: point)
+                }
+                
+                self.circleFirstIndex.append(i - 1)
+                path.close()
+                shapeLayer.path = path.cgPath
+                
+                let animation = CABasicAnimation(keyPath: "strokeColor")
+                animation.fromValue = UIColor.clear.cgColor
+                animation.toValue = UIColor.white.cgColor
+                animation.duration = 0.5
+                animation.delegate = self
+                shapeLayer.add(animation, forKey: "StrokeAnimations")
+                layers.append(shapeLayer)
+            }
+            
+            for layer in layers {
+                self.layer.addSublayer(layer)
             }
         }
         
-        UIColor.white.setStroke()
-        path.lineWidth = 1
-        path.stroke()
         self.backgroundColor = UIColor.clear
-        self.path = path
     }
 }
 
+extension CircleView: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if (flag) {
+            delegate?.handleDrawingCompletion()
+        }
+    }
+}
 

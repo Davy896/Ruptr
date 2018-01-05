@@ -12,7 +12,7 @@ class ListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var hairImageView: RoundImgView!
     @IBOutlet weak var faceImageView: RoundImgView!
-    @IBOutlet weak var listTitleView: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var mood1: RoundImgView!
     @IBOutlet weak var mood2: RoundImgView!
     @IBOutlet weak var mood3: RoundImgView!
@@ -30,7 +30,7 @@ class ListTableViewCell: UITableViewCell {
         }
         
         self.backgroundColor = UIColor.clear
-        self.listTitleView.text = person.username
+        self.userNameLabel.text = person.username
         self.hairImageView.image = person.avatarHair
         self.hairImageView.backgroundColor = UIColor.clear
         self.faceImageView.image = person.avatarFace

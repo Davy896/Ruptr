@@ -31,7 +31,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(receivedMessage), name: NSNotification.Name(rawValue: "received_message"), object: nil)
-        
+
         chatCollectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
         chatCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         UIViewController.setCollectionViewViewBackground(for: self)

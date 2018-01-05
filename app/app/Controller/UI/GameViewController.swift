@@ -47,7 +47,6 @@ class GameViewController: UIViewController, ISEmojiViewDelegate {
         self.firstEmojiField.inputView = self.emojiKeyboard
         self.firstEmojiField.isEnabled = false
         
-        self.title = NSLocalizedString("game", comment: "")
         self.emojiKeyboard = ISEmojiView()
         self.emojiKeyboard.delegate = self
         self.emojiKeyboard.collectionView.backgroundColor = Colours.backgroundSecondary

@@ -20,14 +20,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let navBarProxy = UINavigationBar.appearance()
             navBarProxy.titleTextAttributes = [NSAttributedStringKey.font: defaultFont, NSAttributedStringKey.foregroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)]
             navBarProxy.barTintColor = Colours.backgroundSecondary
-            
+            navBarProxy.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            navBarProxy.setBackgroundImage(UIImage.setUpGradient(withColours: [Colours.backgroundSecondary.cgColor,
+                                                                               Colours.background.cgColor],
+                                                                 framedIn: CGRect(x: 0,
+                                                                                  y: 0,
+                                                                                  width: UIScreen.main.bounds.size.height * 2,
+                                                                                  height: 64)), for: .default)
+
             let tabBarProxy = UITabBar.appearance()
             tabBarProxy.barTintColor  = Colours.backgroundSecondary
             tabBarProxy.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            tabBarProxy.backgroundImage = UIImage.setUpGradient(withColours: [Colours.background.cgColor,
+                                                                              Colours.backgroundSecondary.cgColor],
+                                                                framedIn: CGRect(x: 0,
+                                                                                 y: 0,
+                                                                                 width: UIScreen.main.bounds.size.height * 2,
+                                                                                 height: 49))
+            
             let barButtonItemProy = UIBarButtonItem.appearance()
             barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.normal)
             barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont,], for: UIControlState.selected)
             barButtonItemProy.setTitleTextAttributes([NSAttributedStringKey.font: defaultFont], for: UIControlState.highlighted)
+            
             UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         }
         
@@ -56,3 +71,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 }
+
+
+

@@ -20,7 +20,7 @@ class Colours {
     static func getColour(named name: String, index: Int?) -> UIColor{
         switch name {
         case "background":
-        return background
+            return background
         case "errorBackground":
             return errorBackground
         case "skinTones":
@@ -44,5 +44,35 @@ extension UIColor {
         var a:CGFloat = 0
         self.getRed(&r, green: &g, blue: &b, alpha: &a)
         return (UInt)(r*255)<<16 | (UInt)(g*255)<<8 | (UInt)(b*255)<<0
+    }
+}
+
+extension UIImage {
+    
+    static func setUpGradient(withColours colours: [CGColor], framedIn frame: CGRect) -> UIImage {
+        let gradient = CAGradientLayer()
+        gradient.frame = frame
+        gradient.colors = colours
+        UIGraphicsBeginImageContext(gradient.frame.size)
+        gradient.render(in: UIGraphicsGetCurrentContext()!)
+        let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return gradientImage!
+    }
+    
+    static func setUpColor(_ colour: CGColor, framedIn frame: CGRect) -> UIImage {
+        let colourLayer = CALayer()
+        colourLayer.frame = frame
+        colourLayer.backgroundColor = colour
+        UIGraphicsBeginImageContext(colourLayer.frame.size)
+        if let context = UIGraphicsGetCurrentContext() {
+            colourLayer.render(in: context)
+        }
+        let colourImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        
+        return colourImage ?? UIImage()
     }
 }

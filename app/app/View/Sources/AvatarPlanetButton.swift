@@ -11,33 +11,63 @@ import MultipeerConnectivity
 
 class AvatarPlanetButton: RoundButton {
     
-    var hairImageView: RoundImgView!
-    var faceImageView: RoundImgView!
-    var userNameLabel: RoundLabel!
-    var id: String!
+    var hairImageView: RoundImgView
+    var faceImageView: RoundImgView
+    var userNameLabel: RoundLabel
+    var userProfile: UserProfile?
+    
+    override var frame: CGRect {
+        didSet {
+            self.circle = true
+            self.hairImageView.frame.size = self.frame.size
+            self.hairImageView.circle = true
+            self.faceImageView.frame.size = self.frame.size
+            self.faceImageView.circle = true
+        }
+    }
+    
+    override var bounds: CGRect {
+        didSet {
+            self.circle = true
+            self.hairImageView.frame.size = self.frame.size
+            self.hairImageView.circle = true
+            self.faceImageView.frame.size = self.frame.size
+            self.faceImageView.circle = true
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
+        self.hairImageView = RoundImgView()
+        self.faceImageView = RoundImgView()
+        self.userNameLabel = RoundLabel(frame: CGRect(x: 0, y: 72, width: 110, height: 21))
         super.init(coder: aDecoder)
         self.setupSubviews()
     }
     
-    private override init(frame: CGRect) {
+    
+    override init(frame: CGRect) {
+        self.hairImageView = RoundImgView()
+        self.faceImageView = RoundImgView()
+        self.userNameLabel = RoundLabel(frame: CGRect(x: 0, y: 72, width: 110, height: 21))
         super.init(frame: frame)
         self.setupSubviews()
     }
     
+     convenience init() {
+        self.init(frame: CGRect.zero)
+        self.setupSubviews()
+    }
+        
+    
     private func setupSubviews() {
-        self.hairImageView = RoundImgView()
         self.hairImageView.frame.size = self.frame.size
         self.hairImageView.circle = true
         self.hairImageView.maskToBounds = true
         
-        self.faceImageView = RoundImgView()
         self.faceImageView.frame.size = self.frame.size
         self.faceImageView.circle = true
         self.faceImageView.maskToBounds = true
         
-        self.userNameLabel = RoundLabel(frame: CGRect(x: 0, y: 72, width: 110, height: 21))
         self.userNameLabel.cornerRadius = 5
         self.userNameLabel.maskToBounds = true
         
@@ -49,17 +79,25 @@ class AvatarPlanetButton: RoundButton {
         
         self.circle = true
         self.maskToBounds = true
-        self.borderWidth = 5
+        self.bgColor = UIColor.clear
         self.alpha = 0
+    }
+    
+    public func cloneAttributesFrom(listTableViewCell cell: ListTableViewCell) {
+        self.userProfile = cell.userProfile
+        self.hairImageView.image = cell.hairImageView.image
+        self.faceImageView.image = cell.faceImageView.image
+        self.faceImageView.backgroundColor = cell.faceImageView.backgroundColor
+        self.userNameLabel.text = cell.userNameLabel.text
     }
     
     public static func createAvatarButton(from profile: UserProfile, size: CGSize) -> AvatarPlanetButton {
         let button = AvatarPlanetButton(frame: CGRect(origin: CGPoint.zero, size: size))
+        button.userProfile = profile
         button.hairImageView.image = profile.avatarHair
         button.faceImageView.image = profile.avatarFace
         button.faceImageView.backgroundColor = profile.avatarSkin
         button.userNameLabel.text = profile.username
-        button.id = profile.id
         return button
     }
     

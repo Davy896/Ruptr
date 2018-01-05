@@ -130,6 +130,12 @@ import UIKit
 
 @IBDesignable class RoundButton: UIButton {
     
+//    override var isHighlighted: Bool {
+//        didSet {
+//            self.alpha = isHighlighted ? 0.8 : 1
+//        }
+//    }
+    
     @IBInspectable var topRightCorner: Bool = false {
         didSet {
             drawCorners()
@@ -173,8 +179,8 @@ import UIKit
     }
     
     @IBInspectable var bgColor: UIColor = UIColor.clear {
-        didSet {
-            self.layer.backgroundColor = bgColor.cgColor
+        didSet {           
+            self.setBackgroundImage(UIImage.setUpColor(self.bgColor.cgColor, framedIn: self.frame), for: UIControlState.normal)
         }
     }
     

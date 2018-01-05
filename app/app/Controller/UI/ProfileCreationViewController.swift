@@ -51,24 +51,22 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBOutlet weak var userNameValidationLabel: RoundLabel!
-    @IBOutlet weak var moodOneButton: UIButton!
-    @IBOutlet weak var moodTwoButton: UIButton!
-    @IBOutlet weak var moodThreeButton: UIButton!
+    @IBOutlet weak var moodOneButton: RoundButton!
+    @IBOutlet weak var moodTwoButton: RoundButton!
+    @IBOutlet weak var moodThreeButton: RoundButton!
     
     
-    @IBOutlet weak var finishButton: UIButton!
+    @IBOutlet  var finishButton: RoundButton!
+    
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         UIViewController.setViewBackground(for: self)
         self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
         self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
         self.avatarFaceImageView.image = UIImage(named: "expression_\(self.currentFace)")
-        let navBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
-        let title = UINavigationItem(title: NSLocalizedString("profile_creation", comment: ""));
-        navBar.setItems([title], animated: true);
-        self.view.addSubview(navBar);
-        
         for (key, button) in moodAlertButtons {
             
             button.frame.size = CGSize(width: self.moodOneButton.frame.size.width * 0.8,
@@ -79,6 +77,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             button.topLeftCorner = true
             button.topRightCorner = true
             button.maskToBounds = true
+            button.backgroundColor = UIColor.lightGray
             button.addTarget(self, action: #selector(self.chooseMoodForProfile), for: .touchUpInside)
 
             if (key == self.moodOne || key == self.moodTwo || key == self.moodThree) {
@@ -113,8 +112,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    
+
     @IBAction func updateAvatar(_ sender: UIButton) {
         switch sender.tag {
         case 0: // Hair Right
@@ -161,7 +159,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
             break
         }
     }
-    
     
     @IBAction func selectMood(_ sender: UIButton) {
         let alert = SCLAlertView(appearance: self.alertAppearence)
@@ -343,6 +340,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         })
         
         self.finishButton.isEnabled = validated.isValid
-        self.finishButton.backgroundColor = validated.isValid ? UIColor.white : Colours.saveProfileButtonInvalidBackground
+        self.finishButton.bgColor = validated.isValid ? UIColor.white : Colours.saveProfileButtonInvalidBackground
     }
 }

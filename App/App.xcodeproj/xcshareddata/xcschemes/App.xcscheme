@@ -90,6 +90,7 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = ""
             value = ""
             isEnabled = "NO">
          </EnvironmentVariable>

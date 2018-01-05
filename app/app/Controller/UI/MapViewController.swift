@@ -102,7 +102,7 @@ class MapViewController: ConnectivityViewController {
         self.chatButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
         self.centerCircles()
     }
-
+    
     override func dismissInvitationPrompt() {
         super.dismissInvitationPrompt()
         UIView.animate(withDuration: 0.35,
@@ -186,7 +186,8 @@ class MapViewController: ConnectivityViewController {
         })
     }
     
-    func reloadData() {
+    override func reloadData() {
+        super.reloadData()
         self.centerCircles()
         if (self.people.count > 0) {
             for view in self.view.subviews {

@@ -82,6 +82,16 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         ServiceManager.instance.chatService.delegate = self
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.updateFoundPeers()
+        self.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.people.removeAll()
+        self.reloadData()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? ChatController {
             vc.stringEmoji = ""
@@ -258,8 +268,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         ServiceManager.instance.chatService.discoveryInfo = info
     }
     
-    func dismissInvitationPrompt(){}
-    
     func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
         if let userBeingInvited = profile as? UserProfile {
             self.userBeingInvited = userBeingInvited
@@ -349,17 +357,19 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func peerFound(withId id: MCPeerID) {
         self.updateFoundPeers()
+        self.reloadData()
     }
     
     func peerLost(withId id: MCPeerID) {
         if (self.people.count > 0) {
             for i in 0 ... self.people.count - 1 {
-                if self.people[0].id == id.displayName.components(separatedBy: "|")[0] {
+                if (self.people[i].id == id.displayName.components(separatedBy: "|")[0]) {
                     self.people.remove(at: i)
                     break
                 }
             }
         }
+        self.reloadData()
     }
     
     func connectedSuccessfully(with id: MCPeerID) {
@@ -400,6 +410,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         }
     }
     
+    func reloadData() {}
+
+    func dismissInvitationPrompt() {}
+
     static func createUserData(for interaction: String) -> Data {
         let userProfile = ServiceManager.instance.userProfile
         let data = "\(userProfile.username)|" +

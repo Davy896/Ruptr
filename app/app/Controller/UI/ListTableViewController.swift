@@ -54,46 +54,26 @@ class ListTableViewController: ConnectivityViewController {
         super.viewDidLoad()
         UIViewController.setTableViewBackground(for: self)
         self.setUpPromptViews()
-
+        
         self.selectedAvatar = AvatarPlanetButton()
         self.selectedAvatar.frame.size = self.avatarFrameView.frame.size - 5
         self.selectedAvatar.center = CGPoint(x: self.avatarFrameView.bounds.midX, y: self.avatarFrameView.bounds.midY)
         self.selectedAvatar.isUserInteractionEnabled = false
         self.selectedAvatar.alpha = 1
         self.avatarFrameView.addSubview(self.selectedAvatar)
-
+        
         self.invitationView.transform = self.invisibleTransform
         self.avatarFrameView.transform = self.invisibleTransform
-
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.updateFoundPeers()
-        self.tableView.reloadData()
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.updateFoundPeers()
-        self.tableView.reloadData()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.people.removeAll()
-        self.tableView.reloadData()
+        self.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    override func peerFound(withId id: MCPeerID) {
-        super.peerFound(withId: id)
-        self.tableView.reloadData()
-    }
-    
-    override func peerLost(withId id: MCPeerID) {
-        super.peerLost(withId: id)
-        self.tableView.reloadData()
     }
     
     override func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
@@ -108,6 +88,15 @@ class ListTableViewController: ConnectivityViewController {
     override func dismissInvitationPrompt() {
         super.dismissInvitationPrompt()
         self.isPromptVisible = false
+    }
+    
+    override func reloadData() {
+        super.reloadData()
+        UIView.transition(with: self.tableView,
+                          duration: 0.35,
+                          options: UIViewAnimationOptions.transitionCrossDissolve,
+                          animations: { self.tableView.reloadData() },
+                          completion:  nil)
     }
 }
 

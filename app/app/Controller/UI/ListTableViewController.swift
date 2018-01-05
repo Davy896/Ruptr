@@ -11,19 +11,64 @@ import ConnectivityServices
 import MultipeerConnectivity
 import SCLAlertView
 
-class ListTableViewController: ConnectivityViewController, UITableViewDelegate, UITableViewDataSource {
+class ListTableViewController: ConnectivityViewController {
     
     @IBOutlet var tableView: UITableView!
-
+    @IBOutlet var selectedAvatar: AvatarPlanetButton!
+    var selectedAvatarPosition: CGPoint?
+    
+    let invisibleTransform = CGAffineTransform(scaleX: 0.00000000000001, y: 0.00000000000001)
+    
+    override var isPromptVisible: Bool {
+        didSet {
+            if let items = self.tabBarController?.tabBar.items {
+                for button in items {
+                    button.isEnabled = !self.isPromptVisible
+                }
+            }
+            
+            self.tableView.isScrollEnabled = !self.isPromptVisible
+            if let avatarPosition = self.selectedAvatarPosition {
+                UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                    if (!self.isPromptVisible) {
+                        self.invitationView.transform = self.invisibleTransform
+                        self.invitationView.center = avatarPosition
+                        
+                        self.avatarFrameView.transform = self.invisibleTransform
+                        self.avatarFrameView.center = avatarPosition
+                    } else {
+                        self.invitationView.transform = CGAffineTransform.identity
+                        self.invitationView.center = self.view.center
+                        
+                        self.avatarFrameView.transform = CGAffineTransform.identity
+                        self.avatarFrameView.center = CGPoint(x: self.view.frame.width / 2, y: self.invitationView.frame.origin.y)
+                    }
+                }, completion: nil)
+            }
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         UIViewController.setTableViewBackground(for: self)
-        
+        self.setUpPromptViews()
+
+        self.selectedAvatar = AvatarPlanetButton()
+        self.selectedAvatar.frame.size = self.avatarFrameView.frame.size - 5
+        self.selectedAvatar.center = CGPoint(x: self.avatarFrameView.bounds.midX, y: self.avatarFrameView.bounds.midY)
+        self.selectedAvatar.isUserInteractionEnabled = false
+        self.selectedAvatar.alpha = 1
+        self.avatarFrameView.addSubview(self.selectedAvatar)
+
+        self.invitationView.transform = self.invisibleTransform
+        self.avatarFrameView.transform = self.invisibleTransform
+
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.updateFoundPeers()
         self.tableView.reloadData()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,91 +97,33 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
     
     override func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
         super.invitePeer(withId: id, profile: profile)
-        if let userBeingInvited = profile as? UserProfile {
-            if let items = self.tabBarController?.tabBar.items {
-                for item in items {
-                    item.isEnabled = false
-                }
-                
-                let alert = SCLAlertView(appearance: self.alertAppearence)
-                let serviceBrowser = ServiceManager.instance.chatService.serviceBrowser
-                alert.addButton(NSLocalizedString("game", comment: "")) {
-                    for item in items {
-                        item.isEnabled = true
-                    }
-                    
-                    self.isGame = true
-                    ServiceManager.instance.selectedPeer = (key: id,
-                                                            name: userBeingInvited.username,
-                                                            hair: userBeingInvited.avatar[AvatarParts.hair]!,
-                                                            face: userBeingInvited.avatar[AvatarParts.face]!,
-                                                            skinTone: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[0],
-                                                            skinToneIndex: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[1])
-                    GameViewController.randomEmoji = GameViewController.randomizeEmoji()
-                    GameViewController.isPlayerOne = true
-                    serviceBrowser.invitePeer(id,
-                                              to: ServiceManager.instance.chatService.session,
-                                              withContext: ConnectivityViewController.createUserData(for: "game"),
-                                              timeout: 20)
-                }
-                
-                alert.addButton(NSLocalizedString("chat", comment: "")) {
-                    for item in items {
-                        item.isEnabled = true
-                    }
-                    
-                    self.isGame = false
-                    ServiceManager.instance.selectedPeer = (key: id,
-                                                            name: userBeingInvited.username,
-                                                            hair: userBeingInvited.avatar[AvatarParts.hair]!,
-                                                            face: userBeingInvited.avatar[AvatarParts.face]!,
-                                                            skinTone: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[0],
-                                                            skinToneIndex: (userBeingInvited.avatar[AvatarParts.skin]!).components(separatedBy: "|")[1])
-                    serviceBrowser.invitePeer(id,
-                                              to: ServiceManager.instance.chatService.session,
-                                              withContext: ConnectivityViewController.createUserData(for: "chat"),
-                                              timeout: 20)
-                }
-                
-                alert.addButton(NSLocalizedString("cancel", comment: ""), backgroundColor: UIColor.red) {
-                    UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.light).impactOccurred()
-                    for item in items {
-                        item.isEnabled = true
-                    }
-                }
-                
-                OperationQueue.main.addOperation {
-                    alert.showInfo(userBeingInvited.username,
-                                   subTitle: NSLocalizedString("send_invitation", comment: ""),
-                                   colorStyle: userBeingInvited.avatarSkin.toHexUInt(),
-                                   circleIconImage: UIImage.imageByCombiningImage(firstImage: userBeingInvited.avatarFace!, withImage: userBeingInvited.avatarHair!))
-                }
+        if profile is UserProfile {
+            OperationQueue.main.addOperation {
+                self.isPromptVisible = true
             }
         }
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        
-        return 2
+    override func dismissInvitationPrompt() {
+        super.dismissInvitationPrompt()
+        self.isPromptVisible = false
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 0) {
-            return 0
-        } else {
-            return people.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath) as! ListTableViewCell
-        cell.userProfile = people[indexPath.row]
-        return cell
-    }
+}
+
+extension ListTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = self.tableView.cellForRow(at: indexPath) as? ListTableViewCell {
             if let profile = cell.userProfile {
+                self.selectedAvatarPosition = cell.faceImageView.center
+                self.selectedAvatar.cloneAttributesFrom(listTableViewCell: cell)
+                self.avatarFrameView.center = self.selectedAvatarPosition!
+                self.invitationView.center = self.selectedAvatarPosition!
+                
+                self.usernameLabel.text = profile.username
+                self.gameButton.bgColor = profile.avatarSkin
+                self.chatButton.bgColor = profile.avatarSkin
+                
                 cell.faceImageView.backgroundColor = cell.faceImageView.backgroundColor
                 var id: MCPeerID? = nil
                 for peer in ServiceManager.instance.chatService.peers {
@@ -154,32 +141,26 @@ class ListTableViewController: ConnectivityViewController, UITableViewDelegate, 
             }
         }
     }
-    
 }
 
-extension UIImage {
+extension ListTableViewController: UITableViewDataSource {
     
-    class func imageByCombiningImage(firstImage: UIImage, withImage secondImage: UIImage) -> UIImage {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
-        let newImageWidth  = max(firstImage.size.width,  secondImage.size.width )
-        let newImageHeight = max(firstImage.size.height, secondImage.size.height)
-        let newImageSize = CGSize(width : newImageWidth, height: newImageHeight)
-        
-        UIGraphicsBeginImageContextWithOptions(newImageSize, false, UIScreen.main.scale)
-        
-        let firstImageDrawX  = round((newImageSize.width  - firstImage.size.width  ) / 2)
-        let firstImageDrawY  = round((newImageSize.height - firstImage.size.height ) / 2)
-        
-        let secondImageDrawX = round((newImageSize.width  - secondImage.size.width ) / 2)
-        let secondImageDrawY = round((newImageSize.height - secondImage.size.height) / 2)
-        
-        firstImage.draw(at: CGPoint(x: firstImageDrawX, y: firstImageDrawY))
-        secondImage.draw(at: CGPoint(x: secondImageDrawX, y: secondImageDrawY))
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        return image!
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (section == 0) {
+            return 0
+        } else {
+            return self.people.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath) as! ListTableViewCell
+        cell.userProfile = self.people[indexPath.row]
+        return cell
     }
 }

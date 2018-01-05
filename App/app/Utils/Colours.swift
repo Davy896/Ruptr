@@ -20,7 +20,7 @@ class Colours {
     static func getColour(named name: String, index: Int?) -> UIColor{
         switch name {
         case "background":
-        return background
+            return background
         case "errorBackground":
             return errorBackground
         case "skinTones":
@@ -66,10 +66,13 @@ extension UIImage {
         colourLayer.frame = frame
         colourLayer.backgroundColor = colour
         UIGraphicsBeginImageContext(colourLayer.frame.size)
-        colourLayer.render(in: UIGraphicsGetCurrentContext()!)
+        if let context = UIGraphicsGetCurrentContext() {
+            colourLayer.render(in: context)
+        }
         let colourImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return colourImage!
+        
+        return colourImage ?? UIImage()
     }
 }

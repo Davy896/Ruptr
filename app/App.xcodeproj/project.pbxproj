@@ -28,6 +28,9 @@
 		41792CAB1FDD60A300B5F83E /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792CAA1FDD60A300B5F83E /* AppUITests.swift */; };
 		41792CE01FDD632800B5F83E /* ConnectivityServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; };
 		41792CE11FDD632800B5F83E /* ConnectivityServices.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4186C00A1FFBBEAA006A7517 /* ImageExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4186C0091FFBBEAA006A7517 /* ImageExtention.swift */; };
+		4186C00E1FFEE806006A7517 /* PromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4186C00D1FFEE806006A7517 /* PromptView.swift */; };
+		4186C0101FFEF5CF006A7517 /* PromptViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4186C00F1FFEF5CF006A7517 /* PromptViewDelegate.swift */; };
 		418CA8931FF7D76F00E83EC9 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418CA8921FF7D76F00E83EC9 /* CGSize.swift */; };
 		418E16961FF80CAA00A0C282 /* CircleViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E16951FF80CAA00A0C282 /* CircleViewDelegate.swift */; };
 		418E16991FF80EB600A0C282 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E16981FF80EB600A0C282 /* CGPoint.swift */; };
@@ -116,6 +119,9 @@
 		41792CAA1FDD60A300B5F83E /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		41792CAC1FDD60A300B5F83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41792CDF1FDD632800B5F83E /* ConnectivityServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConnectivityServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4186C0091FFBBEAA006A7517 /* ImageExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtention.swift; sourceTree = "<group>"; };
+		4186C00D1FFEE806006A7517 /* PromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptView.swift; sourceTree = "<group>"; };
+		4186C00F1FFEF5CF006A7517 /* PromptViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptViewDelegate.swift; sourceTree = "<group>"; };
 		418CA8921FF7D76F00E83EC9 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		418E16951FF80CAA00A0C282 /* CircleViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleViewDelegate.swift; sourceTree = "<group>"; };
 		418E16981FF80EB600A0C282 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
@@ -220,6 +226,8 @@
 				ED27DA421FDFEB6C008830A5 /* CircleView.swift */,
 				5D4FD2FF1FE2B0FD0043AF98 /* SingleChatCell.swift */,
 				41588D371FE8899600876DC0 /* AvatarPlanetButton.swift */,
+				4186C00D1FFEE806006A7517 /* PromptView.swift */,
+				4186C00F1FFEF5CF006A7517 /* PromptViewDelegate.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -323,6 +331,7 @@
 		418E169A1FF81A9200A0C282 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4186C0091FFBBEAA006A7517 /* ImageExtention.swift */,
 				4105BF261FE14829005B2A8C /* StringExtension.swift */,
 				4175189F1FE3C911004972FA /* Colours.swift */,
 				418E16971FF80EA200A0C282 /* OperatorOverloads */,
@@ -667,10 +676,12 @@
 				5D4A46181FE3C762007524C4 /* Messages.swift in Sources */,
 				5DF1F1751FE7B7A200B64229 /* Status.swift in Sources */,
 				F945CB131FE03283004D3B8F /* ListTableViewCell.swift in Sources */,
+				4186C00E1FFEE806006A7517 /* PromptView.swift in Sources */,
 				5D4FD3001FE2B0FD0043AF98 /* SingleChatCell.swift in Sources */,
 				41792C8B1FDD60A200B5F83E /* AppDelegate.swift in Sources */,
 				5DD30BD51FE81D9E009841BE /* Mood.swift in Sources */,
 				417518A01FE3C911004972FA /* Colours.swift in Sources */,
+				4186C0101FFEF5CF006A7517 /* PromptViewDelegate.swift in Sources */,
 				5DD30BDA1FE81E3A009841BE /* AvatarParts.swift in Sources */,
 				F95E9EC31FDEA210008020C3 /* SettingsViewController.swift in Sources */,
 				F95E9EC51FDEA210008020C3 /* MapViewController.swift in Sources */,
@@ -679,6 +690,7 @@
 				418CA8931FF7D76F00E83EC9 /* CGSize.swift in Sources */,
 				ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */,
 				ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */,
+				4186C00A1FFBBEAA006A7517 /* ImageExtention.swift in Sources */,
 				41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */,
 				418E16961FF80CAA00A0C282 /* CircleViewDelegate.swift in Sources */,
 				41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */,

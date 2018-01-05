@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +16,7 @@
             <objects>
                 <viewController storyboardIdentifier="MapViewController" title="Map" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zcj-xO-MSe" customClass="MapViewController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LIN-C8-A7t">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="SKt-S5-e9q"/>
@@ -55,15 +51,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="ListViewController" title="List" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cmd-t6-NiC" customClass="ListTableViewController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="122" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" id="agN-FS-Szy">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PersonCell" rowHeight="122" id="e6P-TZ-iZG" customClass="ListTableViewCell" customModule="App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="122"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="122"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e6P-TZ-iZG" id="jzX-8Y-Ysi" customClass="ListTableViewCell" customModule="App" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="122"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="122"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t8c-Ob-v2M" customClass="RoundImgView" customModule="App" customModuleProvider="target">
@@ -138,10 +134,10 @@
                                 <connections>
                                     <outlet property="faceImageView" destination="KJ3-xy-icA" id="1Cy-zn-Jlu"/>
                                     <outlet property="hairImageView" destination="8Lk-bn-wig" id="6ZA-2O-K3s"/>
-                                    <outlet property="listTitleView" destination="WjP-vp-gAi" id="4Ja-xv-hI6"/>
                                     <outlet property="mood1" destination="t8c-Ob-v2M" id="qoV-zH-wWm"/>
                                     <outlet property="mood2" destination="JcI-vZ-LtJ" id="VSU-cx-bKf"/>
                                     <outlet property="mood3" destination="baD-A3-2xJ" id="na0-BP-5U9"/>
+                                    <outlet property="userNameLabel" destination="WjP-vp-gAi" id="4Ja-xv-hI6"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

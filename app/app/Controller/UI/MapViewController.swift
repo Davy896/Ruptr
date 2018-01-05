@@ -8,6 +8,7 @@
 
 import UIKit
 import MultipeerConnectivity
+import ConnectivityServices
 
 class MapViewController: ConnectivityViewController {
     
@@ -28,7 +29,7 @@ class MapViewController: ConnectivityViewController {
     
     var previousSelectedAvatarButtonCenter: CGPoint? = nil
     
-   override var isPromptVisible: Bool {
+    override var isPromptVisible: Bool {
         didSet {
             if let items = self.tabBarController?.tabBar.items {
                 for button in items {
@@ -63,6 +64,7 @@ class MapViewController: ConnectivityViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setUpPromptViews()
         UIViewController.setViewBackground(for: self)
         self.circleView = CircleView(frame: self.view.frame)
         self.circleView.radius = 60
@@ -84,6 +86,41 @@ class MapViewController: ConnectivityViewController {
         super.peerLost(withId: id)
         self.avatarButtons.removeValue(forKey: id.displayName.components(separatedBy: "|")[0])
         self.reloadData()
+    }
+    
+    override func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
+        super.invitePeer(withId: id, profile: profile)
+        self.isPromptVisible = true
+        UIView.animate(withDuration: 0.35,
+                       delay: 0,
+                       options: UIViewAnimationOptions.curveEaseOut,
+                       animations: self.translateCirclesWith(button: self.selectedAvatarButton),
+                       completion: { completed in self.isGestureEnabled = false })
+        self.view.insertSubview(self.invitationView, belowSubview: self.selectedAvatarButton! )
+        self.usernameLabel.text = self.selectedAvatarButton!.userNameLabel.text
+        self.gameButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
+        self.chatButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
+        self.centerCircles()
+    }
+
+    override func dismissInvitationPrompt() {
+        super.dismissInvitationPrompt()
+        UIView.animate(withDuration: 0.35,
+                       animations: {
+                        if let button = self.selectedAvatarButton {
+                            if let center = self.previousSelectedAvatarButtonCenter {
+                                button.center = center
+                            }
+                        }
+        },
+                       completion: { completed in
+                        if (completed) {
+                            self.selectedAvatarButton = nil
+                            self.isGestureEnabled = true
+                        }
+        })
+        
+        self.isPromptVisible = false
     }
     
     @IBAction func panCircles(_ sender: UIPanGestureRecognizer) {
@@ -118,39 +155,21 @@ class MapViewController: ConnectivityViewController {
     
     @IBAction func showInvitationPrompt(_ sender: AvatarPlanetButton) {
         if (sender.center != self.avatarFrameView.center) {
-            self.selectedAvatarButton = sender
-            self.isPromptVisible = true
-            UIView.animate(withDuration: 0.35,
-                           delay: 0,
-                           options: UIViewAnimationOptions.curveEaseOut,
-                           animations: self.translateCirclesWith(button: sender),
-                           completion: { completed in self.isGestureEnabled = false })
-            self.view.insertSubview(self.invitationView, belowSubview: self.selectedAvatarButton! )
-            self.usernameLabel.text = self.selectedAvatarButton!.userNameLabel.text
-            self.gameButton.bgColor = self.selectedAvatarButton!.faceImageView.backgroundColor!
-            self.chatButton.bgColor = self.selectedAvatarButton!.faceImageView.backgroundColor!
-            self.centerCircles()
+            if let profile = sender.userProfile {
+                var id: MCPeerID? = nil
+                for peer in ServiceManager.instance.chatService.peers {
+                    if (peer.displayName.components(separatedBy: "|")[0] == profile.id) {
+                        id = peer
+                        break
+                    }
+                }
+                
+                if (id != nil) {
+                    self.selectedAvatarButton = sender
+                    self.invitePeer(withId: id!, profile: profile)
+                }
+            }
         }
-    }
-    
-    @IBAction override func dismissInvitationPrompt(_ sender: RoundButton) {
-        super.dismissInvitationPrompt(sender)
-        UIView.animate(withDuration: 0.35,
-                       animations: {
-                        if let button = self.selectedAvatarButton {
-                            if let center = self.previousSelectedAvatarButtonCenter {
-                                button.center = center
-                            }
-                        }
-        },
-                       completion: { completed in
-                        if (completed) {
-                            self.selectedAvatarButton = nil
-                            self.isGestureEnabled = true
-                        }
-        })
-        
-        self.isPromptVisible = false
     }
     
     func centerCircles() {

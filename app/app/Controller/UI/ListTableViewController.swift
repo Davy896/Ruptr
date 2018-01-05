@@ -38,7 +38,8 @@ class ListTableViewController: ConnectivityViewController {
                         self.avatarFrameView.center = avatarPosition
                     } else {
                         self.invitationView.transform = CGAffineTransform.identity
-                        self.invitationView.center = self.view.center
+                        self.invitationView.center = CGPoint(x: self.view.center.x,
+                                                             y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
                         
                         self.avatarFrameView.transform = CGAffineTransform.identity
                         self.avatarFrameView.center = CGPoint(x: self.view.frame.width / 2, y: self.invitationView.frame.origin.y)
@@ -115,7 +116,8 @@ extension ListTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = self.tableView.cellForRow(at: indexPath) as? ListTableViewCell {
             if let profile = cell.userProfile {
-                self.selectedAvatarPosition = cell.faceImageView.center
+                self.selectedAvatarPosition = CGPoint(x: cell.faceImageView.frame.midX,
+                                                      y: cell.faceImageView.frame.midY + cell.frame.height * CGFloat(indexPath.item))
                 self.selectedAvatar.cloneAttributesFrom(listTableViewCell: cell)
                 self.avatarFrameView.center = self.selectedAvatarPosition!
                 self.invitationView.center = self.selectedAvatarPosition!

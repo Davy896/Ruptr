@@ -36,6 +36,7 @@ class MapViewController: ConnectivityViewController {
                     button.isEnabled = !self.isPromptVisible
                 }
             }
+            
             self.isGestureEnabled = false
             UIView.animate(withDuration: 0.35) {
                 if (self.isPromptVisible) {
@@ -106,10 +107,10 @@ class MapViewController: ConnectivityViewController {
                        options: UIViewAnimationOptions.curveEaseOut,
                        animations: self.translateCirclesWith(button: self.selectedAvatarButton),
                        completion: { completed in self.isGestureEnabled = false })
-        self.view.insertSubview(self.invitationView, belowSubview: self.selectedAvatarButton! )
-        self.usernameLabel.text = self.selectedAvatarButton!.userNameLabel.text
-        self.gameButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
-        self.chatButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
+        self.view.insertSubview(self.inviteView.dialogBoxView, belowSubview: self.selectedAvatarButton! )
+        self.inviteView.usernameLabel.text = self.selectedAvatarButton!.userNameLabel.text
+        self.inviteView.gameButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
+        self.inviteView.chatButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
         self.centerCircles()
     }
     
@@ -164,7 +165,7 @@ class MapViewController: ConnectivityViewController {
     }
     
     @IBAction func showInvitationPrompt(_ sender: AvatarPlanetButton) {
-        if (sender.center != self.avatarFrameView.center) {
+        if (sender.center != self.inviteView.avatarFrameView.center) {
             if let profile = sender.userProfile {
                 var id: MCPeerID? = nil
                 for peer in ServiceManager.instance.chatService.peers {
@@ -176,8 +177,7 @@ class MapViewController: ConnectivityViewController {
                 
                 if (id != nil) {
                     self.selectedAvatarButton = sender
-                    self.view.bringSubview(toFront: self.invitationView)
-                    self.view.bringSubview(toFront: self.avatarFrameView)
+                    self.view.bringSubview(toFront: self.inviteView)
                     self.view.bringSubview(toFront: sender)
                     self.invitePeer(withId: id!, profile: profile)
                 }
@@ -223,7 +223,7 @@ class MapViewController: ConnectivityViewController {
             circleIndex = 0
             circlePopulation = 1
             for i in 0 ... self.people.count - 1 {
-                let button = AvatarPlanetButton.createAvatarButton(from: self.people[i], size: self.avatarFrameView.frame.size - 5)
+                let button = AvatarPlanetButton.createAvatarButton(from: self.people[i], size: self.inviteView.avatarFrameView.frame.size - 5)
                 repeat {
                     let center = self.circleView.points[Int(arc4random_uniform(UInt32(361))) + 361 * self.circleView.circleFirstIndex[circleIndex] ]
                     button.center = CGPoint(x: center.x, y: center.y)
@@ -270,7 +270,8 @@ class MapViewController: ConnectivityViewController {
         } else if let sender = button {
             return  {
                 self.isGestureEnabled = false
-                sender.center = self.avatarFrameView.center
+                sender.center = self.inviteView.avatarFrameView.center + CGPoint(x: self.inviteView.dialogBoxView.frame.minX,
+                                                                                 y: self.inviteView.dialogBoxView.frame.minY)
             }
         } else {
             return  {

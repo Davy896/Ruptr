@@ -36,6 +36,7 @@
 		418E16991FF80EB600A0C282 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E16981FF80EB600A0C282 /* CGPoint.swift */; };
 		41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */; };
 		41B2C0AE1FE94F970027EA97 /* MPCMessageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */; };
+		41F482CC20011DB900574643 /* InviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F482CB20011DB900574643 /* InviteView.swift */; };
 		5D4A46181FE3C762007524C4 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A46171FE3C762007524C4 /* Messages.swift */; };
 		5D4FD2FE1FE2B0780043AF98 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4FD2FD1FE2B0780043AF98 /* ChatController.swift */; };
 		5D4FD3001FE2B0FD0043AF98 /* SingleChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4FD2FF1FE2B0FD0043AF98 /* SingleChatCell.swift */; };
@@ -127,6 +128,7 @@
 		418E16981FF80EB600A0C282 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPCMessageTypes.swift; sourceTree = "<group>"; };
+		41F482CB20011DB900574643 /* InviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteView.swift; sourceTree = "<group>"; };
 		5C62C396886CCA7831DDE00C /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CEF8F1CB553C61D0B99B90A /* Pods-AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppUITests/Pods-AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4A46171FE3C762007524C4 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Messages.swift; path = app/Model/Messages.swift; sourceTree = SOURCE_ROOT; };
@@ -220,6 +222,7 @@
 		414512C51FDFCC0A001864BB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				41F482CD20011DD800574643 /* DialogBoxes */,
 				ED27DA3E1FDFD7E5008830A5 /* ViewDesignableSettings.swift */,
 				F945CB121FE03283004D3B8F /* ListTableViewCell.swift */,
 				418E16951FF80CAA00A0C282 /* CircleViewDelegate.swift */,
@@ -348,6 +351,14 @@
 				41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		41F482CD20011DD800574643 /* DialogBoxes */ = {
+			isa = PBXGroup;
+			children = (
+				41F482CB20011DB900574643 /* InviteView.swift */,
+			);
+			path = DialogBoxes;
 			sourceTree = "<group>";
 		};
 		5DD30BD21FE81CFF009841BE /* Recovered References */ = {
@@ -689,6 +700,7 @@
 				4105BF271FE14829005B2A8C /* StringExtension.swift in Sources */,
 				418CA8931FF7D76F00E83EC9 /* CGSize.swift in Sources */,
 				ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */,
+				41F482CC20011DB900574643 /* InviteView.swift in Sources */,
 				ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */,
 				4186C00A1FFBBEAA006A7517 /* ImageExtention.swift in Sources */,
 				41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */,

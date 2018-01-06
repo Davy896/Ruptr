@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                                   y: 0,
                                                                                   width: UIScreen.main.bounds.size.height * 2,
                                                                                   height: 64)), for: .default)
-
+            
             let tabBarProxy = UITabBar.appearance()
             tabBarProxy.barTintColor  = Colours.backgroundSecondary
             tabBarProxy.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -45,6 +45,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         }
+        
+        let defaults = UserDefaults.standard
+        ServiceManager.instance.userProfile = UserProfile(id: String.randomAlphaNumericString(length: UserProfile.idLength),
+                                                          username: defaults.string(forKey: "username") ?? "",
+                                                          avatar: [AvatarParts.hair: defaults.string(forKey: "avatarHair") ?? "hairstyle_0_black",
+                                                                   AvatarParts.face: defaults.string(forKey: "avatarFace") ?? "expression_\0",
+                                                            AvatarParts.skin: defaults.string(forKey: "avatarSkin") ?? "skinTones|0"],
+                                                          moods: [Mood(rawValue: defaults.string(forKey: "moodOne") ?? "Sports") ?? Mood.sports,
+                                                                  Mood(rawValue: defaults.string(forKey: "moodTwo") ?? "Games") ?? Mood.games,
+                                                                  Mood(rawValue: defaults.string(forKey: "moodThree") ?? "Music") ?? Mood.music],
+                                                          status: Status(rawValue: defaults.string(forKey: "status") ?? "Playful") ?? Status.playful)
         
         return true
     }

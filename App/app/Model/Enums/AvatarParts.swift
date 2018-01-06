@@ -6,8 +6,8 @@
 //  Copyright © 2017 Apple Dev Academy. All rights reserved.
 //
 
-public enum AvatarParts {
-    case hair
-    case face
-    case skin
+public enum AvatarParts: String {
+    case hair = "hair"
+    case face = "face"
+    case skin = "skin"
 }

@@ -17,6 +17,8 @@ public class UserProfile: ProfileRequirements {
     private var _avatar: [AvatarParts: String]
     private var _moods: [Mood]
     private var _status: Status
+    
+    public static let idLength = 20
 
     public var id: String {
         get {

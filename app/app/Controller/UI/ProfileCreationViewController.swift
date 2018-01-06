@@ -55,18 +55,49 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var moodTwoButton: RoundButton!
     @IBOutlet weak var moodThreeButton: RoundButton!
     
-    
-    @IBOutlet  var finishButton: RoundButton!
-    
+    @IBOutlet var finishButton: RoundButton!
    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         UIViewController.setViewBackground(for: self)
-        self.avatarHairImageView.image = UIImage(named: "hairstyle_\(self.currentHairStyle)_black")
-        self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentHairColour]
+        let user = ServiceManager.instance.userProfile
+        self.userNameTextField.text = user.username
+        self.finishButton.isEnabled = (user.username != "")
+        self.moodOne = user.moods[0]
+        self.moodTwo = user.moods[1]
+        self.moodThree = user.moods[2]
+        let hairTokens = (user.avatar[AvatarParts.hair] ?? "hairstyle_0_black").components(separatedBy: "_")
+        self.currentHairStyle = Int(hairTokens[1]) ?? 0
+        switch hairTokens[2] {
+        case "black" :
+            self.currentHairColour = 0
+            break
+        case "blonde":
+            self.currentHairColour = 1
+            break
+        case "brown":
+            self.currentHairColour = 2
+            break
+        case "special":
+            self.currentHairColour = 3
+            break
+        default:
+            self.currentHairColour = 0
+            break
+        }
+        
+        self.currentFace = Int(user.avatar[AvatarParts.face]?.components(separatedBy: "_").last ?? "0") ?? 0
+        self.currentSkin = Colours.skinTones.index(of: user.avatarSkin) ?? 0
+
+        self.avatarHairImageView.image = user.avatarHair
+        self.avatarFaceImageView.backgroundColor = Colours.skinTones[self.currentSkin]
         self.avatarFaceImageView.image = UIImage(named: "expression_\(self.currentFace)")
+        
+        self.moodOneButton.setBackgroundImage(user.moods[0].image, for: UIControlState.normal)
+        self.moodTwoButton.setBackgroundImage(user.moods[1].image, for: UIControlState.normal)
+        self.moodThreeButton.setBackgroundImage(user.moods[2].image, for: UIControlState.normal)
+
         for (key, button) in moodAlertButtons {
             
             button.frame.size = CGSize(width: self.moodOneButton.frame.size.width * 0.8,
@@ -229,15 +260,21 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveProfile(_ sender: UIButton) {
-        ServiceManager.instance.userProfile = UserProfile(id: String.randomAlphaNumericString(length: 20),
-                                                          username: self.userNameTextField.text!,
-                                                          avatar: [AvatarParts.hair: self.avatarHairName,
-                                                                   AvatarParts.face: "expression_\(currentFace)",
-                                                                   AvatarParts.skin: "skinTones|\(self.currentSkin)"],
-                                                          moods: [self.moodOne,
-                                                                  self.moodTwo,
-                                                                  self.moodThree],
-                                                          status: Status.playful)
+        ServiceManager.instance.userProfile.username = self.userNameTextField.text!
+        ServiceManager.instance.userProfile.avatar = [AvatarParts.hair: self.avatarHairName,
+                                                      AvatarParts.face: "expression_\(currentFace)",
+                                                      AvatarParts.skin: "skinTones|\(self.currentSkin)"]
+        ServiceManager.instance.userProfile.moods = [self.moodOne, self.moodTwo, self.moodThree]
+        ServiceManager.instance.userProfile.status = Status.playful
+        
+        UserDefaults.standard.set(ServiceManager.instance.userProfile.username, forKey: "username")
+        UserDefaults.standard.set(ServiceManager.instance.userProfile.avatar[AvatarParts.hair]!, forKey: "avatarHair")
+        UserDefaults.standard.set(ServiceManager.instance.userProfile.avatar[AvatarParts.face]!, forKey: "avatarFace")
+        UserDefaults.standard.set(ServiceManager.instance.userProfile.avatar[AvatarParts.skin]!, forKey: "avatarSkin")
+        UserDefaults.standard.set(ServiceManager.instance.userProfile.moods[0].rawValue, forKey: "moodOne")
+        UserDefaults.standard.set(ServiceManager.instance.userProfile.moods[1].rawValue, forKey: "moodTwo")
+        UserDefaults.standard.set(ServiceManager.instance.userProfile.moods[2].rawValue, forKey: "moodThree")
+        UserDefaults.standard.set(ServiceManager.instance.userProfile.status.rawValue, forKey: "status")
     }
     
     @IBAction func switchParts(_ sender: Any) {

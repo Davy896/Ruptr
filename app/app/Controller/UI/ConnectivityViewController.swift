@@ -261,10 +261,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                     "avatarFace": userProfile.avatar[AvatarParts.face]!,
                     "avatarSkinTone": userProfile.avatar[AvatarParts.skin]!,
                     "username": userProfile.username,
-                    "moodOne": userProfile.moods[0].enumToString,
-                    "moodTwo": userProfile.moods[1].enumToString,
-                    "moodThree": userProfile.moods[2].enumToString,
-                    "status":  userProfile.status.enumToString]
+                    "moodOne": userProfile.moods[0].rawValue,
+                    "moodTwo": userProfile.moods[1].rawValue,
+                    "moodThree": userProfile.moods[2].rawValue,
+                    "status":  userProfile.status.rawValue]
         ServiceManager.instance.chatService.discoveryInfo = info
     }
     
@@ -402,10 +402,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                                avatar: [AvatarParts.hair: infos[i][DecodedUserDataKeys.avatarHair.enumToString]!,
                                                         AvatarParts.face: infos[i][DecodedUserDataKeys.avatarFace.enumToString]!,
                                                         AvatarParts.skin: infos[i][DecodedUserDataKeys.avatarSkinTone.enumToString]!],
-                                               moods: [Mood.stringToEnum(from: infos[i][DecodedUserDataKeys.moodOne.enumToString]!),
-                                                       Mood.stringToEnum(from: infos[i][DecodedUserDataKeys.moodTwo.enumToString]!),
-                                                       Mood.stringToEnum(from:infos[i][DecodedUserDataKeys.moodThree.enumToString]!)],
-                                               status: Status.stringToEnum(from: infos[i][DecodedUserDataKeys.status.enumToString]!)))
+                                               moods: [Mood(rawValue: infos[i][DecodedUserDataKeys.moodOne.enumToString]!)!,
+                                                       Mood(rawValue: infos[i][DecodedUserDataKeys.moodTwo.enumToString]!)!,
+                                                       Mood(rawValue:infos[i][DecodedUserDataKeys.moodThree.enumToString]!)!],
+                                               status: Status(rawValue: infos[i][DecodedUserDataKeys.status.enumToString]!)!))
             }
         }
     }
@@ -420,10 +420,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             "\(userProfile.avatar[AvatarParts.hair]!)|" +
             "\(userProfile.avatar[AvatarParts.face]!)|" +
             "\(userProfile.avatar[AvatarParts.skin]!)|" + // skinColour|index
-            "\(userProfile.moods[0].enumToString)|" +
-            "\(userProfile.moods[1].enumToString)|" +
-            "\(userProfile.moods[2].enumToString)|" +
-        "\(userProfile.status.enumToString)|"
+            "\(userProfile.moods[0].rawValue)|" +
+            "\(userProfile.moods[1].rawValue)|" +
+            "\(userProfile.moods[2].rawValue)|" +
+        "\(userProfile.status.rawValue)|"
         return (interaction == "chat" ? data + "chat|\(GameViewController.randomEmoji)" : data + "game|\(GameViewController.randomEmoji)").data(using: String.Encoding.utf8)!  // has 10 components separeted by |
     }
     

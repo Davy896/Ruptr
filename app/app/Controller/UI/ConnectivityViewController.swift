@@ -25,7 +25,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     
     var isGame = true
-    var isBusy = false
+    
     var people: [UserProfile] = []
     var userBeingInvited: UserProfile?
     var idOfUserBeingInvited: MCPeerID?
@@ -49,7 +49,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     var isPromptVisible: Bool = false {
         didSet {
-            UIView.animate(withDuration: 0.35) {
+            UIView.animate(withDuration: 0.35, animations: {
                 if (self.isPromptVisible) {
                     self.transparencyView.alpha = 0.7
                     self.invitationView.alpha = 1
@@ -58,10 +58,15 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                     self.transparencyView.alpha = 0
                     self.invitationView.alpha = 0
                     self.avatarFrameView.alpha = 0
+                    self.activityIndicator.alpha = 0
                 }
-            }
-            
-            self.isBusy = self.isPromptVisible
+            })
+        }
+    }
+    
+    var isBusy = false {
+        didSet {
+            self.activityIndicator.alpha = self.isBusy ? 1 : 0
         }
     }
     
@@ -120,13 +125,11 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                                                               withContext: ConnectivityViewController.createUserData(for: "game"),
                                                                               timeout: 20)
                 self.dismissInvitationPrompt()
-                self.activityIndicator.alpha = 1
+                self.isBusy = true
                 self.view.bringSubview(toFront: self.activityIndicator)
                 self.view.isUserInteractionEnabled = false
             }
         }
-        
-        self.isBusy = false
     }
     
     @IBAction func inviteForChat(_ sender: RoundButton) {
@@ -144,19 +147,16 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                                                               withContext: ConnectivityViewController.createUserData(for: "chat"),
                                                                               timeout: 20)
                 self.dismissInvitationPrompt()
-                self.activityIndicator.alpha = 1
+                self.isBusy = true
                 self.view.bringSubview(toFront: self.activityIndicator)
                 self.view.isUserInteractionEnabled = false
             }
         }
-        
-        self.isBusy = false
     }
     
     @IBAction func refuseInvitation(_ sender: RoundButton) {
         UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         self.dismissInvitationPrompt()
-        self.isBusy = false
     }
     
     func setUpPromptViews() {
@@ -283,7 +283,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             self.userBeingInvited = userBeingInvited
             self.idOfUserBeingInvited = id
         }
-        self.isBusy = true
     }
     
     func handleInvitation(from: MCPeerID, withContext context: Data?) {
@@ -401,10 +400,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func connectionLost() {
         OperationQueue.main.addOperation {
-            UIView.animate(withDuration: 0.2) {
-                self.activityIndicator.alpha = 0
-                self.view.isUserInteractionEnabled = true
-            }
+            self.view.isUserInteractionEnabled = true
+                UIView.animate(withDuration: 0.2) {
+                    self.isBusy = false
+                }
         }
     }
     

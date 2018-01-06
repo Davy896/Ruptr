@@ -166,6 +166,9 @@ class MapViewController: ConnectivityViewController {
                 
                 if (id != nil) {
                     self.selectedAvatarButton = sender
+                    self.view.bringSubview(toFront: self.invitationView)
+                    self.view.bringSubview(toFront: self.avatarFrameView)
+                    self.view.bringSubview(toFront: sender)
                     self.invitePeer(withId: id!, profile: profile)
                 }
             }

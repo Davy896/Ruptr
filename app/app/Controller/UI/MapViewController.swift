@@ -77,6 +77,16 @@ class MapViewController: ConnectivityViewController {
         super.didReceiveMemoryWarning()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        for (_, button) in self.avatarButtons {
+            button.removeFromSuperview()
+        }
+        
+        self.circleView.center = self.view.center
+        self.circleView.translation = CGPoint.zero
+    }
+    
     override func peerFound(withId id: MCPeerID) {
         super.peerFound(withId: id)
         self.reloadData()
@@ -175,9 +185,9 @@ class MapViewController: ConnectivityViewController {
         }
     }
     
-    func centerCircles() {
+    func centerCircles(animated: Bool = true) {
         self.isGestureEnabled = false
-        UIView.animate(withDuration: 0.35,
+        UIView.animate(withDuration: animated ? 0.35 : 0,
                        delay: 0,
                        options: UIViewAnimationOptions.curveEaseOut,
                        animations: self.translateCirclesWith(),
@@ -191,7 +201,6 @@ class MapViewController: ConnectivityViewController {
     
     override func reloadData() {
         super.reloadData()
-        self.centerCircles()
         if (self.people.count > 0) {
             for view in self.view.subviews {
                 if let button = view as? AvatarPlanetButton {

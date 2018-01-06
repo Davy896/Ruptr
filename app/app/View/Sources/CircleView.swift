@@ -16,6 +16,7 @@ class CircleView: UIView {
             self.setNeedsDisplay()
         }
     }
+    
     var numberOfCircles: Int = 0 {
         didSet {
             self.draw(self.frame)

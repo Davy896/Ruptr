@@ -67,6 +67,11 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     var isBusy = false {
         didSet {
             self.activityIndicator.alpha = self.isBusy ? 1 : 0
+            if let items = self.tabBarController?.tabBar.items {
+                for item in items {
+                    item.isEnabled = !self.isBusy
+                }
+            }
         }
     }
     
@@ -94,6 +99,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     override func viewDidAppear(_ animated: Bool) {
         self.updateFoundPeers()
         self.reloadData()
+        self.isBusy = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {

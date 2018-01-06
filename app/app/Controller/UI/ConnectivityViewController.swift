@@ -25,6 +25,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     
     var isGame = true
+    var isBusy = false
     var people: [UserProfile] = []
     var userBeingInvited: UserProfile?
     var idOfUserBeingInvited: MCPeerID?
@@ -59,6 +60,8 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                     self.avatarFrameView.alpha = 0
                 }
             }
+            
+            self.isBusy = self.isPromptVisible
         }
     }
     
@@ -80,6 +83,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         ServiceManager.instance.chatService.delegate = self
+        self.isBusy = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -90,6 +94,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         self.people.removeAll()
         self.reloadData()
+        self.isBusy = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -120,6 +125,8 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 self.view.isUserInteractionEnabled = false
             }
         }
+        
+        self.isBusy = false
     }
     
     @IBAction func inviteForChat(_ sender: RoundButton) {
@@ -142,11 +149,14 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 self.view.isUserInteractionEnabled = false
             }
         }
+        
+        self.isBusy = false
     }
     
     @IBAction func refuseInvitation(_ sender: RoundButton) {
         UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
         self.dismissInvitationPrompt()
+        self.isBusy = false
     }
     
     func setUpPromptViews() {
@@ -273,57 +283,64 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             self.userBeingInvited = userBeingInvited
             self.idOfUserBeingInvited = id
         }
+        self.isBusy = true
     }
     
     func handleInvitation(from: MCPeerID, withContext context: Data?) {
-        if let context = context {
-            if let data = String(data: context, encoding: String.Encoding.utf8) {
-                if let items = self.tabBarController?.tabBar.items {
-                    for item in items {
-                        item.isEnabled = false
-                    }
-                    
-                    let chatService = ServiceManager.instance.chatService
-                    let userData = ConnectivityViewController.decodeUserData(from: data)
-                    let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? NSLocalizedString("chat_invite_message", comment: "") : NSLocalizedString("game_invite_message", comment: "")
-                    let alert = SCLAlertView(appearance: self.alertAppearence)
-                    
-                    alert.addButton(NSLocalizedString("accept", comment: "")) {
-                        self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
+        if (!self.isBusy) {
+            self.isBusy = true
+            if let context = context {
+                if let data = String(data: context, encoding: String.Encoding.utf8) {
+                    if let items = self.tabBarController?.tabBar.items {
                         for item in items {
-                            item.isEnabled = true
+                            item.isEnabled = false
                         }
                         
-                        GameViewController.randomEmoji = userData[DecodedUserDataKeys.emoji]!
-                        GameViewController.isPlayerOne = false
-                        ServiceManager.instance.selectedPeer = (from,
-                                                                userData[DecodedUserDataKeys.username]!,
-                                                                userData[DecodedUserDataKeys.avatarHair]!,
-                                                                userData[DecodedUserDataKeys.avatarFace]!,
-                                                                userData[DecodedUserDataKeys.avatarSkinTone]!,
-                                                                userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
-                        chatService.invitationHandler(true, chatService.session)
-                    }
-                    
-                    alert.addButton(NSLocalizedString("refuse", comment: ""), backgroundColor: UIColor.red) {
-                        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-                        for item in items {
-                            item.isEnabled = true
+                        let chatService = ServiceManager.instance.chatService
+                        let userData = ConnectivityViewController.decodeUserData(from: data)
+                        let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? NSLocalizedString("chat_invite_message", comment: "") : NSLocalizedString("game_invite_message", comment: "")
+                        let alert = SCLAlertView(appearance: self.alertAppearence)
+                        
+                        alert.addButton(NSLocalizedString("accept", comment: "")) {
+                            self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
+                            for item in items {
+                                item.isEnabled = true
+                            }
+                            
+                            GameViewController.randomEmoji = userData[DecodedUserDataKeys.emoji]!
+                            GameViewController.isPlayerOne = false
+                            ServiceManager.instance.selectedPeer = (from,
+                                                                    userData[DecodedUserDataKeys.username]!,
+                                                                    userData[DecodedUserDataKeys.avatarHair]!,
+                                                                    userData[DecodedUserDataKeys.avatarFace]!,
+                                                                    userData[DecodedUserDataKeys.avatarSkinTone]!,
+                                                                    userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
+                            chatService.invitationHandler(true, chatService.session)
+                            self.isBusy = false
                         }
                         
-                        chatService.invitationHandler(false, chatService.session)
-                    }
-                    
-                    OperationQueue.main.addOperation {
-                        alert.showInfo(userData[DecodedUserDataKeys.username]!,
-                                       subTitle: "\(NSLocalizedString("invite_message", comment: "")) \(invitationText)",
-                            colorStyle: Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
-                                                          index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!)).toHexUInt(),
-                            circleIconImage: UIImage.imageByCombiningImage(firstImage: UIImage(named: userData[DecodedUserDataKeys.avatarHair]!)!,
-                                                                           withImage: UIImage(named: userData[DecodedUserDataKeys.avatarFace]!)!))
+                        alert.addButton(NSLocalizedString("refuse", comment: ""), backgroundColor: UIColor.red) {
+                            UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+                            for item in items {
+                                item.isEnabled = true
+                            }
+                            self.isBusy = false
+                            chatService.invitationHandler(false, chatService.session)
+                        }
+                        
+                        OperationQueue.main.addOperation {
+                            alert.showInfo(userData[DecodedUserDataKeys.username]!,
+                                           subTitle: "\(NSLocalizedString("invite_message", comment: "")) \(invitationText)",
+                                colorStyle: Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
+                                                              index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!)).toHexUInt(),
+                                circleIconImage: UIImage.imageByCombiningImage(firstImage: UIImage(named: userData[DecodedUserDataKeys.avatarHair]!)!,
+                                                                               withImage: UIImage(named: userData[DecodedUserDataKeys.avatarFace]!)!))
+                        }
                     }
                 }
             }
+        } else {
+            ServiceManager.instance.chatService.invitationHandler(false, ServiceManager.instance.chatService.session)
         }
     }
     

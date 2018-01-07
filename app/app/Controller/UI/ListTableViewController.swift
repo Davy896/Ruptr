@@ -9,7 +9,6 @@
 import UIKit
 import ConnectivityServices
 import MultipeerConnectivity
-import SCLAlertView
 
 class ListTableViewController: ConnectivityViewController {
     
@@ -29,7 +28,7 @@ class ListTableViewController: ConnectivityViewController {
             
             self.tableView.isScrollEnabled = !self.isPromptVisible
             if let avatarPosition = self.selectedAvatarPosition {
-                UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                     if (!self.isPromptVisible) {
                         self.inviteView.dialogBoxView.transform = self.invisibleTransform
                         self.inviteView.dialogBoxView.center = avatarPosition
@@ -81,7 +80,7 @@ class ListTableViewController: ConnectivityViewController {
     override func reloadData() {
         super.reloadData()
         UIView.transition(with: self.tableView,
-                          duration: 0.35,
+                          duration: 0.2,
                           options: UIViewAnimationOptions.transitionCrossDissolve,
                           animations: { self.tableView.reloadData() })
     }

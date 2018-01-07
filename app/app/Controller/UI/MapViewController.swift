@@ -73,11 +73,12 @@ class MapViewController: ConnectivityViewController {
         self.circleView.translation = CGPoint.zero
         self.circleView.alpha = 0
     }
+
     
     override func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
         super.invitePeer(withId: id, profile: profile)
         self.isPromptVisible = true
-        UIView.animate(withDuration: 0.35, delay: 0,
+        UIView.animate(withDuration: 0.2, delay: 0,
                        options: UIViewAnimationOptions.curveEaseOut,
                        animations: self.translateCirclesWith(button: self.selectedAvatarButton)) {
                         finished in
@@ -93,7 +94,7 @@ class MapViewController: ConnectivityViewController {
     
     override func dismissInvitationPrompt() {
         super.dismissInvitationPrompt()
-        UIView.animate(withDuration: 0.35,
+        UIView.animate(withDuration: 0.2,
                        animations: {
                         if let button = self.selectedAvatarButton {
                             if let center = self.previousSelectedAvatarButtonCenter {
@@ -162,7 +163,7 @@ class MapViewController: ConnectivityViewController {
                 }
             }
             
-            UIView.animate(withDuration: 0.35,
+            UIView.animate(withDuration: 0.2,
                            delay: 0,
                            options: UIViewAnimationOptions.curveEaseOut,
                            animations: {
@@ -237,7 +238,7 @@ class MapViewController: ConnectivityViewController {
                 sender.setTranslation(CGPoint.zero, in: self.view)
                 break
             case UIGestureRecognizerState.ended:
-                UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut,
+                UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseOut,
                                animations: self.translateCirclesWith(velocity: sender.velocity(in: self.view)))
                 break
             default:
@@ -273,7 +274,7 @@ class MapViewController: ConnectivityViewController {
     
     func centerCircles(animated: Bool = true) {
         self.isGestureEnabled = false
-        UIView.animate(withDuration: animated ? 0.35 : 0,
+        UIView.animate(withDuration: animated ? 0.2 : 0,
                        delay: 0,
                        options: UIViewAnimationOptions.curveEaseOut,
                        animations: self.translateCirclesWith()) {

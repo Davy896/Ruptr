@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InviteView: DialogBox {
+class InviteView: UIView {
     
     var dialogBoxView: RoundView
     var avatarFrameView: RoundView

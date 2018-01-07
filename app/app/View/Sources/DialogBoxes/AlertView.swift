@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlertView: DialogBox {
+class AlertView: UIView {
     
     var titleLabel: UILabel
     var messageLabel: UILabel
@@ -16,7 +16,7 @@ class AlertView: DialogBox {
     
     var action: (()->Void)
     
-    private static let margin: CGFloat = 16
+    static let margin: CGFloat = 16
     
     private override init(frame: CGRect) {
         self.titleLabel = UILabel()

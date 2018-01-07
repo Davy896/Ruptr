@@ -33,4 +33,23 @@ public enum Mood: String {
             }
         }
     }
+    
+    public var squaredImage: UIImage? {
+        get {
+            switch self {
+            case Mood.sports:
+                return UIImage(named: "sports_square")
+            case Mood.music:
+                return UIImage(named: "music_square")
+            case Mood.outdoor:
+                return UIImage(named: "outdoors_square")
+            case Mood.games:
+                return UIImage(named: "games_square")
+            case Mood.food:
+                return UIImage(named: "food_square")
+            case Mood.shopping:
+                return UIImage(named: "shopping_square")
+            }
+        }
+    }
 }

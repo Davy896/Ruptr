@@ -9,7 +9,6 @@
 import UIKit
 import ConnectivityServices
 import MultipeerConnectivity
-import SCLAlertView
 
 class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
@@ -32,7 +31,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     var isPromptVisible: Bool = false {
         didSet {
-            UIView.animate(withDuration: 0.35, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 if (self.isPromptVisible) {
                     self.transparencyView.alpha = 0.7
                     self.inviteView.dialogBoxView.alpha = 1
@@ -261,7 +260,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                                                         userData[DecodedUserDataKeys.avatarSkinTone]!,
                                                                         userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
                                 invitationHandler(true, chatService.session)
-                                UIView.animate(withDuration: 0.35, animations: {
+                                UIView.animate(withDuration: 0.2, animations: {
                                     self.invitationView.alpha = 0
                                     self.transparencyView.alpha = 0
                                 }, completion: self.acceptInvitationCompletion)
@@ -275,13 +274,13 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                 
                                 self.isBusy = false
                                 invitationHandler(false, chatService.session)
-                                UIView.animate(withDuration: 0.35, animations: {
+                                UIView.animate(withDuration: 0.2, animations: {
                                     self.invitationView.alpha = 0
                                     self.transparencyView.alpha = 0
                                 }, completion: self.refuseInvitationCompletion)
                             }
                             
-                            UIView.animate(withDuration: 0.35, animations: {
+                            UIView.animate(withDuration: 0.2, animations: {
                                 self.invitationView.alpha = 1
                                 self.transparencyView.alpha = 0.7
                             }, completion: self.displayInvitationCompletion)
@@ -372,7 +371,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 self.isInviting = false
                 self.view.addSubview(self.busyAlert)
                 self.view.bringSubview(toFront: self.busyAlert)
-                UIView.animate(withDuration: 0.35, animations: self.busyAlertDisplayAnimation, completion: self.busyAlertDisplayCompletion)
+                UIView.animate(withDuration: 0.2, animations: self.busyAlertDisplayAnimation, completion: self.busyAlertDisplayCompletion)
             }
         }
     }
@@ -391,7 +390,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     }
     
     func busyAlertAction() {
-            UIView.animate(withDuration: 0.35, animations: self.busyAlertActionAnimation, completion: self.busyAlertActionCompletion)
+            UIView.animate(withDuration: 0.2, animations: self.busyAlertActionAnimation, completion: self.busyAlertActionCompletion)
     }
     
     func busyAlertActionAnimation() {
@@ -412,14 +411,14 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         if peers.count > 0 {
             for i in 0 ... peers.count - 1 {
                 self.people.append(UserProfile(id: peers[i].displayName.components(separatedBy: "|")[0],
-                                               username: infos[i][DecodedUserDataKeys.username.enumToString]!,
-                                               avatar: [AvatarParts.hair: infos[i][DecodedUserDataKeys.avatarHair.enumToString]!,
-                                                        AvatarParts.face: infos[i][DecodedUserDataKeys.avatarFace.enumToString]!,
-                                                        AvatarParts.skin: infos[i][DecodedUserDataKeys.avatarSkinTone.enumToString]!],
-                                               moods: [Mood(rawValue: infos[i][DecodedUserDataKeys.moodOne.enumToString]!)!,
-                                                       Mood(rawValue: infos[i][DecodedUserDataKeys.moodTwo.enumToString]!)!,
-                                                       Mood(rawValue:infos[i][DecodedUserDataKeys.moodThree.enumToString]!)!],
-                                               status: Status(rawValue: infos[i][DecodedUserDataKeys.status.enumToString]!)!))
+                                               username: infos[i][DecodedUserDataKeys.username.rawValue]!,
+                                               avatar: [AvatarParts.hair: infos[i][DecodedUserDataKeys.avatarHair.rawValue]!,
+                                                        AvatarParts.face: infos[i][DecodedUserDataKeys.avatarFace.rawValue]!,
+                                                        AvatarParts.skin: infos[i][DecodedUserDataKeys.avatarSkinTone.rawValue]!],
+                                               moods: [Mood(rawValue: infos[i][DecodedUserDataKeys.moodOne.rawValue]!)!,
+                                                       Mood(rawValue: infos[i][DecodedUserDataKeys.moodTwo.rawValue]!)!,
+                                                       Mood(rawValue:infos[i][DecodedUserDataKeys.moodThree.rawValue]!)!],
+                                               status: Status(rawValue: infos[i][DecodedUserDataKeys.status.rawValue]!)!))
             }
         }
     }

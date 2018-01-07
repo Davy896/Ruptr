@@ -36,6 +36,7 @@
 		418CA8931FF7D76F00E83EC9 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418CA8921FF7D76F00E83EC9 /* CGSize.swift */; };
 		418E16961FF80CAA00A0C282 /* CircleViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E16951FF80CAA00A0C282 /* CircleViewDelegate.swift */; };
 		418E16991FF80EB600A0C282 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E16981FF80EB600A0C282 /* CGPoint.swift */; };
+		4191DD492002699A00C141E9 /* DialogBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4191DD482002699A00C141E9 /* DialogBox.swift */; };
 		41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */; };
 		41B2C0AE1FE94F970027EA97 /* MPCMessageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */; };
 		41F482CC20011DB900574643 /* InviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F482CB20011DB900574643 /* InviteView.swift */; };
@@ -130,6 +131,7 @@
 		418CA8921FF7D76F00E83EC9 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		418E16951FF80CAA00A0C282 /* CircleViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleViewDelegate.swift; sourceTree = "<group>"; };
 		418E16981FF80EB600A0C282 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
+		4191DD482002699A00C141E9 /* DialogBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBox.swift; sourceTree = "<group>"; };
 		41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPCMessageTypes.swift; sourceTree = "<group>"; };
 		41F482CB20011DB900574643 /* InviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteView.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				41F482CB20011DB900574643 /* InviteView.swift */,
 				416728D52001344500AD72B2 /* InvitationView.swift */,
 				416728D72001349700AD72B2 /* AlertView.swift */,
+				4191DD482002699A00C141E9 /* DialogBox.swift */,
 			);
 			path = DialogBoxes;
 			sourceTree = "<group>";
@@ -690,6 +693,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				414E39C11FE7D87E0089D909 /* BackgroundExtension.swift in Sources */,
+				4191DD492002699A00C141E9 /* DialogBox.swift in Sources */,
 				5D4A46181FE3C762007524C4 /* Messages.swift in Sources */,
 				5DF1F1751FE7B7A200B64229 /* Status.swift in Sources */,
 				F945CB131FE03283004D3B8F /* ListTableViewCell.swift in Sources */,

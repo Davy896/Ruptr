@@ -133,6 +133,12 @@ class ListTableViewController: ConnectivityViewController {
                 UIView.animate(withDuration: 0.35, animations: {
                     self.transparencyView.alpha = 0.7
                     alert.alpha = 1
+                }, completion: { finished in
+                    if (finished) {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
+                            alert.dismissButton.sendActions(for: UIControlEvents.touchUpInside)
+                        })
+                    }
                 })
             }
         }

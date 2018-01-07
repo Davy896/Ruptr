@@ -167,6 +167,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func selectMood(_ sender: UIButton) {
         self.moodSelection = sender.tag
+        self.moodSelectionAlert.lastClickedButton = nil
         UIView.animate(withDuration: 0.2, animations: {
             self.moodSelectionAlert.alpha = 1
             self.transparencyView.alpha = 0.7
@@ -204,23 +205,23 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     func finishSelectingMood() {
-        if let sender = self.moodSelectionAlert.lastClickedButton {
-            if let button = self.view.viewWithTag(self.moodSelection) as? RoundButton {
-                UIView.animate(withDuration: 0.2, animations: {
-                    self.moodSelectionAlert.alpha = 0
-                    self.transparencyView.alpha = 0
-                }) {
-                    finished in
-                    if (finished) {
+        if let button = self.view.viewWithTag(self.moodSelection) as? RoundButton {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.moodSelectionAlert.alpha = 0
+                self.transparencyView.alpha = 0
+            }) {
+                finished in
+                if (finished) {
+                    if let sender = self.moodSelectionAlert.lastClickedButton {
                         UIView.transition(with:button, duration: 0.15,
                                           options: UIViewAnimationOptions.transitionCrossDissolve,
                                           animations: { button.setBackgroundImage(sender.backgroundImage(for: UIControlState.normal),
                                                                                   for: UIControlState.normal)
                         })
-                        
-                        for gesture in self.view.gestureRecognizers ?? [] {
-                            gesture.isEnabled = true
-                        }
+                    }
+                    
+                    for gesture in self.view.gestureRecognizers ?? [] {
+                        gesture.isEnabled = true
                     }
                 }
             }

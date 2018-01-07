@@ -27,9 +27,11 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }()
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        notificationView.alpha = 0
         NotificationCenter.default.addObserver(self, selector: #selector(receivedMessage), name: NSNotification.Name(rawValue: "received_message"), object: nil)
 
         chatCollectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
@@ -53,24 +55,53 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         setupKeyboard()
         self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(self.tap)
-        startTimer()
+//        startTimer()
         self.inputTextField.text = self.stringEmoji
         self.send()
         self.inputTextField.text = ""
+        showAndHideNotificatio()
     }
     
-    var timeLabel = UILabel()
-    var timer = Timer()
-    var timeCount: TimeInterval = 300
-    let timeInterval: TimeInterval = 1
+//    var notificationAlpha = 0.0
+
+
+let notificationView = UIView()
+
     
+    func show() {
+//        notificationAlpha = 1.0
+        notificationView.alpha = 1
+    }
+    
+    func hide() {
+        notificationView.alpha = 0
+    }
+
+    func showAndHideNotificatio() {
+
+        UIView.animate(withDuration: 1.0, delay: 1.0, animations: show, completion: {(complete : Bool) -> Void in
+            UIView.animate(withDuration: 1.0, delay: 5.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide)
+        })
+        
+    }
+
+    
+    
+    
+    
+    
+//    var timeLabel = UILabel()
+//    var timer = Timer()
+//    var timeCount: TimeInterval = 300
+//    let timeInterval: TimeInterval = 1
+//
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let tabBarController = tabBarController {
             tabBarController.tabBar.isHidden = true
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let background = self.view.viewWithTag(0451) {
@@ -79,36 +110,36 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             })
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
-    
-    @objc func timeString(time:TimeInterval) -> String {
-        let minutes = Int(time) / 60 % 60
-        let seconds = Int(time) % 60
-        return String(format:"%02i:%02i", minutes, seconds)
-    }
-    
-    @objc func updateTime() {
-        timeLabel.text = "\(timeString(time: timeCount))"
-        if timeCount != 0 {
-            timeCount -= 1
-            
-        }else {
-            endTimer()
-        }
-    }
-    
-    func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-    }
-    
-    
-    func endTimer() {
-        timer.invalidate()
-    }
-    
+//
+//    @objc func timeString(time:TimeInterval) -> String {
+//        let minutes = Int(time) / 60 % 60
+//        let seconds = Int(time) % 60
+//        return String(format:"%02i:%02i", minutes, seconds)
+//    }
+//
+//    @objc func updateTime() {
+//        timeLabel.text = "\(timeString(time: timeCount))"
+//        if timeCount != 0 {
+//            timeCount -= 1
+//
+//        }else {
+//            endTimer()
+//        }
+//    }
+//
+//    func startTimer() {
+//        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+//    }
+//
+//
+//    func endTimer() {
+//        timer.invalidate()
+//    }
+//
     func setupKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
@@ -248,7 +279,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         
         
-        let notificationView = UIView()
+//        let notificationView = UIView()
         notificationView.translatesAutoresizingMaskIntoConstraints = false
         notificationView.backgroundColor = UIColor.white
         notificationView.layer.cornerRadius = 20
@@ -258,6 +289,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         notificationView.widthAnchor.constraint(equalToConstant: 359).isActive = true                      //
         notificationView.heightAnchor.constraint(equalToConstant: 112).isActive = true     //
         
+//        notificationView.alpha = CGFloat(notificationAlpha)
         
         
         let containerView = UIView()                                    //creation of the writing container view
@@ -320,7 +352,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         separatorLineView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true           //
         separatorLineView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true       //
         separatorLineView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true                    //
-        timeLabel.text = "time: \(timeString(time: timeCount))"
+//        timeLabel.text = "time: \(timeString(time: timeCount))"
     }
     
     @objc func send() {

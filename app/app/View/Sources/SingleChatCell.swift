@@ -24,6 +24,8 @@ class SingleChatCell: UICollectionViewCell {
         }
     }
     
+    
+    
   
     let nameLabel: UILabel = {
         let label = UILabel()

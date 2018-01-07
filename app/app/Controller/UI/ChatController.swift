@@ -224,7 +224,7 @@ var notificationText = UITextView()
             cell.bringSubview(toFront: cell.profileImageHair)
             cell.tail.image = UIImage(named: "tailRight")
             
-            cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18 , y: cell.cloud.frame.height - 33 + 10 , width: 15, height: 15)
+            cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18  , y: cell.cloud.frame.height - 33 + 10 , width: 15, height: 15)
             UIView.animate(withDuration: 1.0, animations: {
                 cell.cloud.alpha = 1
                 cell.messageLabel.alpha = 1
@@ -274,13 +274,13 @@ var notificationText = UITextView()
         let item = messages.count - 1
         let inserctionIndexPath = NSIndexPath(item: item, section: 0)
         
-        collectionView.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: true)
+        collectionView.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: false)
         
         
         return cell
     }
     
-    
+  
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -294,7 +294,7 @@ var notificationText = UITextView()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 50)
+        return CGSize(width: view.frame.width, height:300)
     }
     
     

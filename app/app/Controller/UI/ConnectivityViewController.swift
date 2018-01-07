@@ -9,7 +9,6 @@
 import UIKit
 import ConnectivityServices
 import MultipeerConnectivity
-import SCLAlertView
 
 class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     

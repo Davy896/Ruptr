@@ -16,7 +16,7 @@ class AlertView: UIView {
     
     var action: (()->Void)
     
-    private static let margin: CGFloat = 16
+    static let margin: CGFloat = 16
     
     private override init(frame: CGRect) {
         self.titleLabel = UILabel()

@@ -31,6 +31,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        collectionView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height - 50 )
         notificationView.alpha = 0
         NotificationCenter.default.addObserver(self, selector: #selector(receivedMessage), name: NSNotification.Name(rawValue: "received_message"), object: nil)
 
@@ -68,6 +69,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
 
 let notificationView = UIView()
 var notificationText = UITextView()
+var emojiCustomView = UIView()
+    
+    
     
     func show() {
 
@@ -274,8 +278,13 @@ var notificationText = UITextView()
         let item = messages.count - 1
         let inserctionIndexPath = NSIndexPath(item: item, section: 0)
         
-        collectionView.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: false)
-        
+//        collectionView.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: false)
+        if collectionView.contentSize.height + 258 + 50 > collectionView.frame.size.height
+        {
+            let offset = CGPoint(x: 0, y: collectionView.contentSize.height - collectionView.frame.size.height - (containerViewBottomAnchor?.constant)! )
+            
+            collectionView.setContentOffset(offset , animated: true)
+        }
         
         return cell
     }
@@ -292,11 +301,11 @@ var notificationText = UITextView()
         return CGSize(width: width , height: height)
         
     }
-    
+//
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height:300)
+        return CGSize(width: view.frame.width, height: 50)
     }
-    
+
     
     
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -308,7 +317,6 @@ var notificationText = UITextView()
     
     
     func setupInputComponents() {
-        
         
         
 
@@ -330,6 +338,19 @@ var notificationText = UITextView()
         notificationText.font = UIFont.systemFont(ofSize: 18)
         notificationText.text = "Remember you can chat only for 5 minutes!!!"
         
+        
+        
+        self.view.addSubview(emojiCustomView)
+        emojiCustomView.translatesAutoresizingMaskIntoConstraints = false
+        
+        emojiCustomView.frame = CGRect(x: 0, y: 667, width: view.frame.size.width, height: 0)
+//
+//        emojiCustomView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+//        emojiCustomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
+//        emojiCustomView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
+//        emojiCustomView.heightAnchor.constraint(equalToConstant: 0).isActive = true          //
+//
+        emojiCustomView.backgroundColor = UIColor.white
         
         let containerView = UIView()                                    //creation of the writing container view
         containerView.translatesAutoresizingMaskIntoConstraints = false //(cercare a cosa serve)
@@ -364,14 +385,36 @@ var notificationText = UITextView()
         
         containerView.addSubview(inputTextField)            //add the textField to the containerView
         
-        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 15).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
+        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 15 + 45).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
         inputTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true     //
         inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -10).isActive = true          //we are using this constaraint to extend the textField right anchor untill left anchor send button
         inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true    //
         
+        
+        let plusButton = UIButton(type: .system)
+        containerView.addSubview(plusButton)
+//        plusButton.titleLabel?.text =  "+"
+        plusButton.setTitle("+", for: .normal)
+        plusButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        plusButton.layer.cornerRadius = 20
+        plusButton.layer.borderColor = UIColor.gray.cgColor
+        plusButton.layer.borderWidth = 0.5
+        plusButton.backgroundColor = UIColor.white
+        
+        
+        plusButton.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
+        plusButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
+        plusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        plusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+//        plusButton.titleLabel?.textColor = UIColor.blue
+        
+        plusButton.addTarget(self, action: #selector(plus), for: .touchUpInside)
+        
         borderInput.translatesAutoresizingMaskIntoConstraints = false
         
-        borderInput.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
+        borderInput.leftAnchor.constraint(equalTo: plusButton.rightAnchor, constant: 5).isActive = true
         borderInput.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
         borderInput.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -5).isActive = true
         borderInput.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true
@@ -401,6 +444,18 @@ var notificationText = UITextView()
             inputTextField.text = ""
         }
     }
+    
+    @objc func plus() {
+        UIView.animate(withDuration: 1, animations: {
+            
+            self.emojiCustomView.frame.origin.y = 409
+            self.emojiCustomView.frame.size.height = 258
+            self.containerViewBottomAnchor?.constant = -258
+            })
+       
+    }
+    
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {          // this function allow you to send messages using enter
         self.send()

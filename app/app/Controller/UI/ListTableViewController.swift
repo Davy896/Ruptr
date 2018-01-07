@@ -38,11 +38,12 @@ class ListTableViewController: ConnectivityViewController {
                         self.inviteView.dialogBoxView.center = CGPoint(x: self.view.center.x,
                                                                        y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
                     }
-                }, completion: { finished in
+                }) {
+                    finished in
                     if (finished && !self.isPromptVisible) {
                         self.inviteView.alpha = 0
                     }
-                })
+                }
             }
         }
     }
@@ -82,8 +83,7 @@ class ListTableViewController: ConnectivityViewController {
         UIView.transition(with: self.tableView,
                           duration: 0.35,
                           options: UIViewAnimationOptions.transitionCrossDissolve,
-                          animations: { self.tableView.reloadData() },
-                          completion:  nil)
+                          animations: { self.tableView.reloadData() })
     }
     
     override func setUpPromptViews() {

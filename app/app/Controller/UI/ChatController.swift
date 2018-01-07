@@ -214,7 +214,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         collectionView.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: true)
         
-        
         return cell
     }
     

@@ -19,6 +19,8 @@
 		41588D361FE886D000876DC0 /* DecodedUserDataKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */; };
 		41588D381FE8899600876DC0 /* AvatarPlanetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41588D371FE8899600876DC0 /* AvatarPlanetButton.swift */; };
 		41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A1D1FDD8201004A0E99 /* UserProfile.swift */; };
+		416728D62001344500AD72B2 /* InvitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416728D52001344500AD72B2 /* InvitationView.swift */; };
+		416728D82001349700AD72B2 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416728D72001349700AD72B2 /* AlertView.swift */; };
 		417518A01FE3C911004972FA /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4175189F1FE3C911004972FA /* Colours.swift */; };
 		41792C8B1FDD60A200B5F83E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792C8A1FDD60A200B5F83E /* AppDelegate.swift */; };
 		41792C901FDD60A200B5F83E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41792C8E1FDD60A200B5F83E /* Main.storyboard */; };
@@ -106,6 +108,8 @@
 		41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedUserDataKeys.swift; sourceTree = "<group>"; };
 		41588D371FE8899600876DC0 /* AvatarPlanetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPlanetButton.swift; sourceTree = "<group>"; };
 		41667A1D1FDD8201004A0E99 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		416728D52001344500AD72B2 /* InvitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationView.swift; sourceTree = "<group>"; };
+		416728D72001349700AD72B2 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		4175189F1FE3C911004972FA /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		41792C871FDD60A200B5F83E /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41792C8A1FDD60A200B5F83E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -357,6 +361,8 @@
 			isa = PBXGroup;
 			children = (
 				41F482CB20011DB900574643 /* InviteView.swift */,
+				416728D52001344500AD72B2 /* InvitationView.swift */,
+				416728D72001349700AD72B2 /* AlertView.swift */,
 			);
 			path = DialogBoxes;
 			sourceTree = "<group>";
@@ -697,7 +703,9 @@
 				F95E9EC31FDEA210008020C3 /* SettingsViewController.swift in Sources */,
 				F95E9EC51FDEA210008020C3 /* MapViewController.swift in Sources */,
 				41588D381FE8899600876DC0 /* AvatarPlanetButton.swift in Sources */,
+				416728D82001349700AD72B2 /* AlertView.swift in Sources */,
 				4105BF271FE14829005B2A8C /* StringExtension.swift in Sources */,
+				416728D62001344500AD72B2 /* InvitationView.swift in Sources */,
 				418CA8931FF7D76F00E83EC9 /* CGSize.swift in Sources */,
 				ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */,
 				41F482CC20011DB900574643 /* InviteView.swift in Sources */,

@@ -21,7 +21,6 @@ class ListTableViewController: ConnectivityViewController {
     
     override var isPromptVisible: Bool {
         didSet {
-            print(self.inviteView.dialogBoxView)
             if let items = self.tabBarController?.tabBar.items {
                 for button in items {
                     button.isEnabled = !self.isPromptVisible
@@ -96,10 +95,47 @@ class ListTableViewController: ConnectivityViewController {
         self.selectedAvatar.center = CGPoint(x: self.inviteView.avatarFrameView.bounds.midX, y: self.inviteView.avatarFrameView.bounds.midY)
         self.selectedAvatar.isUserInteractionEnabled = false
         self.selectedAvatar.alpha = 1
-        self.inviteView.avatarFrameView.addSubview(self.selectedAvatar)
-        print(self.inviteView.dialogBoxView)
         
+        self.inviteView.avatarFrameView.addSubview(self.selectedAvatar)
         self.inviteView.dialogBoxView.transform = self.invisibleTransform
+    }
+    
+    override func connectionLost() {
+        OperationQueue.main.addOperation {
+            self.view.isUserInteractionEnabled = true
+            UIView.animate(withDuration: 0.2) {
+                self.isBusy = false
+            }
+            
+            if (self.isInviting) {
+                self.isInviting = false
+                let alert = AlertView.createAlert(title: "Busy", message: "Invited peer appears to be busy", action: {
+                    for view in self.view.subviews {
+                        if let alert = view as? AlertView {
+                            UIView.animate(withDuration: 0.35, animations: {
+                                self.transparencyView.alpha = 0
+                                alert.alpha = 0
+                            }, completion: { finished in
+                                if (finished) {
+                                    alert.removeFromSuperview()
+                                }
+                            })
+                            
+                            break
+                        }
+                    }
+                })
+                
+                alert.center = CGPoint(x: UIScreen.main.bounds.midX,
+                                       y: UIScreen.main.bounds.midY - (self.tabBarController?.tabBar.frame.height ?? 0))
+                alert.alpha = 0
+                self.view.addSubview(alert)
+                UIView.animate(withDuration: 0.35, animations: {
+                    self.transparencyView.alpha = 0.7
+                    alert.alpha = 1
+                })
+            }
+        }
     }
 }
 
@@ -118,7 +154,8 @@ extension ListTableViewController: UITableViewDelegate {
                 self.inviteView.usernameLabel.text = profile.username
                 self.inviteView.gameButton.bgColor = profile.avatarSkin
                 self.inviteView.chatButton.bgColor = profile.avatarSkin
-
+                self.view.bringSubview(toFront: self.inviteView)
+                
                 cell.faceImageView.backgroundColor = cell.faceImageView.backgroundColor
                 var id: MCPeerID? = nil
                 for peer in ServiceManager.instance.chatService.peers {

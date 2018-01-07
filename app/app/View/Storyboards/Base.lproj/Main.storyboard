@@ -35,7 +35,7 @@
                                         </connections>
                                     </pageControl>
                                     <button contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbr-f5-TWk" customClass="RoundButton" customModule="App" customModuleProvider="target">
-                                        <rect key="frame" x="86" y="83" width="203" height="49"/>
+                                        <rect key="frame" x="87" y="82" width="200" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                         <state key="normal" title="Finish"/>

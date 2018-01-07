@@ -62,14 +62,14 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         showAndHideNotificatio()
     }
     
-//    var notificationAlpha = 0.0
+
 
 
 let notificationView = UIView()
-
+var notificationText = UITextView()
     
     func show() {
-//        notificationAlpha = 1.0
+
         notificationView.alpha = 1
     }
     
@@ -80,11 +80,21 @@ let notificationView = UIView()
     func showAndHideNotificatio() {
 
         UIView.animate(withDuration: 1.0, delay: 1.0, animations: show, completion: {(complete : Bool) -> Void in
-            UIView.animate(withDuration: 1.0, delay: 5.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide)
-        })
+            UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide, completion: {(complete : Bool) -> Void in
+                
+                self.notificationText.text = "You have only 1 minute left ,hurry up to send the last messagges to say goodbye or to talk face to face!!!"
+                UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
+                    UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide, completion: {(complete : Bool) -> Void in
+                        
+                        self.notificationText.text = "Your time is over ,the chat will be closed!"
+                        UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
+                            UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide)})
+                        })
+                })
+            })
         
+    })
     }
-
     
     
     
@@ -185,12 +195,13 @@ let notificationView = UIView()
     }
     
     
+    
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
         cell.message = messages[indexPath.item]
         let messageText = messages[indexPath.item].text
-        
         
         
         if messages[indexPath.item].id == ServiceManager.instance.userProfile.id {
@@ -213,6 +224,9 @@ let notificationView = UIView()
             cell.tail.image = UIImage(named: "tailRight")
             
             cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18, y: cell.cloud.frame.height - 33, width: 20, height: 25)
+            
+            
+            
             
         }else {
             
@@ -237,6 +251,8 @@ let notificationView = UIView()
             
             cell.tail.image = UIImage(named: "tailLeft")
             cell.tail.frame = CGRect(x:  50 + 12 - 19, y: cell.cloud.frame.height - 33, width: 20, height: 25)
+            
+            
             
         }
         
@@ -279,7 +295,7 @@ let notificationView = UIView()
         
         
         
-//        let notificationView = UIView()
+
         notificationView.translatesAutoresizingMaskIntoConstraints = false
         notificationView.backgroundColor = UIColor.white
         notificationView.layer.cornerRadius = 20
@@ -289,7 +305,14 @@ let notificationView = UIView()
         notificationView.widthAnchor.constraint(equalToConstant: 359).isActive = true                      //
         notificationView.heightAnchor.constraint(equalToConstant: 112).isActive = true     //
         
-//        notificationView.alpha = CGFloat(notificationAlpha)
+        notificationView.addSubview(notificationText)
+        notificationText.translatesAutoresizingMaskIntoConstraints = false
+        notificationText.leftAnchor.constraint(equalTo: notificationView.leftAnchor,constant: 8).isActive = true       //constrain  Button Send
+        notificationText.topAnchor.constraint(equalTo: notificationView.topAnchor,constant: 6).isActive = true   //
+        notificationText.widthAnchor.constraint(equalToConstant: 300).isActive = true                      //
+        notificationText.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
+        notificationText.font = UIFont.systemFont(ofSize: 18)
+        notificationText.text = "Remember you can chat only for 5 minutes!!!"
         
         
         let containerView = UIView()                                    //creation of the writing container view

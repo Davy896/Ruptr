@@ -236,10 +236,10 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
-        return CGSize(width: view.frame.width, height: 80)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        
+//        return CGSize(width: view.frame.width, height: 80)
+//    }
     
     var containerViewBottomAnchor: NSLayoutConstraint?
     

@@ -237,7 +237,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        
+//
 //        return CGSize(width: view.frame.width, height: 80)
 //    }
     
@@ -245,6 +245,20 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     
     func setupInputComponents() {
+        
+        
+        
+        let notificationView = UIView()
+        notificationView.translatesAutoresizingMaskIntoConstraints = false
+        notificationView.backgroundColor = UIColor.white
+        notificationView.layer.cornerRadius = 20
+        self.view.addSubview(notificationView)
+        notificationView.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 8).isActive = true       //constrain  Button Send
+        notificationView.topAnchor.constraint(equalTo: view.topAnchor,constant: 75).isActive = true   //
+        notificationView.widthAnchor.constraint(equalToConstant: 359).isActive = true                      //
+        notificationView.heightAnchor.constraint(equalToConstant: 112).isActive = true     //
+        
+        
         
         let containerView = UIView()                                    //creation of the writing container view
         containerView.translatesAutoresizingMaskIntoConstraints = false //(cercare a cosa serve)

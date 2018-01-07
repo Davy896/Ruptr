@@ -21,7 +21,7 @@ extension ChatService { // MCNearbyServiceAdvertiserDelegate
     
     public override func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         super.advertiser(advertiser, didReceiveInvitationFromPeer: peerID, withContext: context, invitationHandler: invitationHandler)
-        delegate?.handleInvitation(from: peerID, withContext: context)
+        delegate?.handleInvitation(from: peerID, withContext: context, invitationHandler: invitationHandler)
     }
 }
 

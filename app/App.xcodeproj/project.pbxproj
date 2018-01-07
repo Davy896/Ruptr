@@ -19,6 +19,8 @@
 		41588D361FE886D000876DC0 /* DecodedUserDataKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */; };
 		41588D381FE8899600876DC0 /* AvatarPlanetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41588D371FE8899600876DC0 /* AvatarPlanetButton.swift */; };
 		41667A1E1FDD8201004A0E99 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41667A1D1FDD8201004A0E99 /* UserProfile.swift */; };
+		416728D62001344500AD72B2 /* InvitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416728D52001344500AD72B2 /* InvitationView.swift */; };
+		416728D82001349700AD72B2 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416728D72001349700AD72B2 /* AlertView.swift */; };
 		417518A01FE3C911004972FA /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4175189F1FE3C911004972FA /* Colours.swift */; };
 		41792C8B1FDD60A200B5F83E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41792C8A1FDD60A200B5F83E /* AppDelegate.swift */; };
 		41792C901FDD60A200B5F83E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41792C8E1FDD60A200B5F83E /* Main.storyboard */; };
@@ -34,8 +36,10 @@
 		418CA8931FF7D76F00E83EC9 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418CA8921FF7D76F00E83EC9 /* CGSize.swift */; };
 		418E16961FF80CAA00A0C282 /* CircleViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E16951FF80CAA00A0C282 /* CircleViewDelegate.swift */; };
 		418E16991FF80EB600A0C282 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E16981FF80EB600A0C282 /* CGPoint.swift */; };
+		4191DD492002699A00C141E9 /* DialogBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4191DD482002699A00C141E9 /* DialogBox.swift */; };
 		41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */; };
 		41B2C0AE1FE94F970027EA97 /* MPCMessageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */; };
+		41F482CC20011DB900574643 /* InviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F482CB20011DB900574643 /* InviteView.swift */; };
 		5D4A46181FE3C762007524C4 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A46171FE3C762007524C4 /* Messages.swift */; };
 		5D4FD2FE1FE2B0780043AF98 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4FD2FD1FE2B0780043AF98 /* ChatController.swift */; };
 		5D4FD3001FE2B0FD0043AF98 /* SingleChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4FD2FF1FE2B0FD0043AF98 /* SingleChatCell.swift */; };
@@ -105,6 +109,8 @@
 		41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedUserDataKeys.swift; sourceTree = "<group>"; };
 		41588D371FE8899600876DC0 /* AvatarPlanetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPlanetButton.swift; sourceTree = "<group>"; };
 		41667A1D1FDD8201004A0E99 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		416728D52001344500AD72B2 /* InvitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationView.swift; sourceTree = "<group>"; };
+		416728D72001349700AD72B2 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		4175189F1FE3C911004972FA /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		41792C871FDD60A200B5F83E /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41792C8A1FDD60A200B5F83E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,8 +131,10 @@
 		418CA8921FF7D76F00E83EC9 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		418E16951FF80CAA00A0C282 /* CircleViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleViewDelegate.swift; sourceTree = "<group>"; };
 		418E16981FF80EB600A0C282 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
+		4191DD482002699A00C141E9 /* DialogBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBox.swift; sourceTree = "<group>"; };
 		41AB5D311FE18DFA00A17A0B /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		41B2C0AD1FE94F970027EA97 /* MPCMessageTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPCMessageTypes.swift; sourceTree = "<group>"; };
+		41F482CB20011DB900574643 /* InviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteView.swift; sourceTree = "<group>"; };
 		5C62C396886CCA7831DDE00C /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CEF8F1CB553C61D0B99B90A /* Pods-AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppUITests/Pods-AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4A46171FE3C762007524C4 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Messages.swift; path = app/Model/Messages.swift; sourceTree = SOURCE_ROOT; };
@@ -220,6 +228,7 @@
 		414512C51FDFCC0A001864BB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				41F482CD20011DD800574643 /* DialogBoxes */,
 				ED27DA3E1FDFD7E5008830A5 /* ViewDesignableSettings.swift */,
 				F945CB121FE03283004D3B8F /* ListTableViewCell.swift */,
 				418E16951FF80CAA00A0C282 /* CircleViewDelegate.swift */,
@@ -348,6 +357,17 @@
 				41588D351FE886D000876DC0 /* DecodedUserDataKeys.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		41F482CD20011DD800574643 /* DialogBoxes */ = {
+			isa = PBXGroup;
+			children = (
+				41F482CB20011DB900574643 /* InviteView.swift */,
+				416728D52001344500AD72B2 /* InvitationView.swift */,
+				416728D72001349700AD72B2 /* AlertView.swift */,
+				4191DD482002699A00C141E9 /* DialogBox.swift */,
+			);
+			path = DialogBoxes;
 			sourceTree = "<group>";
 		};
 		5DD30BD21FE81CFF009841BE /* Recovered References */ = {
@@ -673,6 +693,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				414E39C11FE7D87E0089D909 /* BackgroundExtension.swift in Sources */,
+				4191DD492002699A00C141E9 /* DialogBox.swift in Sources */,
 				5D4A46181FE3C762007524C4 /* Messages.swift in Sources */,
 				5DF1F1751FE7B7A200B64229 /* Status.swift in Sources */,
 				F945CB131FE03283004D3B8F /* ListTableViewCell.swift in Sources */,
@@ -686,9 +707,12 @@
 				F95E9EC31FDEA210008020C3 /* SettingsViewController.swift in Sources */,
 				F95E9EC51FDEA210008020C3 /* MapViewController.swift in Sources */,
 				41588D381FE8899600876DC0 /* AvatarPlanetButton.swift in Sources */,
+				416728D82001349700AD72B2 /* AlertView.swift in Sources */,
 				4105BF271FE14829005B2A8C /* StringExtension.swift in Sources */,
+				416728D62001344500AD72B2 /* InvitationView.swift in Sources */,
 				418CA8931FF7D76F00E83EC9 /* CGSize.swift in Sources */,
 				ED27DA431FDFEB6C008830A5 /* CircleView.swift in Sources */,
+				41F482CC20011DB900574643 /* InviteView.swift in Sources */,
 				ED27DA3F1FDFD7E5008830A5 /* ViewDesignableSettings.swift in Sources */,
 				4186C00A1FFBBEAA006A7517 /* ImageExtention.swift in Sources */,
 				41AB5D321FE18DFA00A17A0B /* ListTableViewController.swift in Sources */,

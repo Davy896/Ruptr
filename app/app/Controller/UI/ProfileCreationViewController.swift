@@ -67,7 +67,8 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         self.moodOne = user.moods[0]
         self.moodTwo = user.moods[1]
         self.moodThree = user.moods[2]
-        let hairTokens = (user.avatar[AvatarParts.hair] ?? "hairstyle_0_black").components(separatedBy: "_")
+        self.avatarHairName = (user.avatar[AvatarParts.hair] ?? "hairstyle_0_black")
+        let hairTokens = self.avatarHairName.components(separatedBy: "_")
         self.currentHairStyle = Int(hairTokens[1]) ?? 0
         switch hairTokens[2] {
         case "black" :
@@ -266,7 +267,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                                                       AvatarParts.skin: "skinTones|\(self.currentSkin)"]
         ServiceManager.instance.userProfile.moods = [self.moodOne, self.moodTwo, self.moodThree]
         ServiceManager.instance.userProfile.status = Status.playful
-        
         UserDefaults.standard.set(ServiceManager.instance.userProfile.username, forKey: "username")
         UserDefaults.standard.set(ServiceManager.instance.userProfile.avatar[AvatarParts.hair]!, forKey: "avatarHair")
         UserDefaults.standard.set(ServiceManager.instance.userProfile.avatar[AvatarParts.face]!, forKey: "avatarFace")

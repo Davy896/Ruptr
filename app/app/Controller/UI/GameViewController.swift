@@ -53,7 +53,6 @@ class GameViewController: UIViewController, ISEmojiViewDelegate {
         
         self.waitingLabel.isHidden = GameViewController.isPlayerOne
         
-        
         for field in self.emojiTextFields {
             field.inputView = self.emojiKeyboard
             if (field.tag == 10 && GameViewController.isPlayerOne) {
@@ -109,7 +108,11 @@ class GameViewController: UIViewController, ISEmojiViewDelegate {
             OperationQueue.main.addOperation {
                 self.waitingLabel.isHidden = false
                 if let textField = self.view.viewWithTag(self.currentTag) as? RoundTextField {
-                    textField.insertText(emoji)
+                    UIView.transition(with: textField,
+                                      duration: 0.35,
+                                      options: UIViewAnimationOptions.transitionCrossDissolve,
+                                      animations: { textField.text = emoji },
+                                      completion: nil)
                     if let nextField = self.view.viewWithTag(textField.tag + 1) as? RoundTextField {
                         self.currentTag = nextField.tag
                         self.isPlayerOneTurn = !self.isPlayerOneTurn

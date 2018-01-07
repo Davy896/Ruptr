@@ -23,7 +23,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     var isGame = true
     var isInviting = false
     
-    var dialogBox: DialogBox? = nil
+    var busyAlert: AlertView!
     
     var people: [UserProfile] = []
     var userBeingInvited: UserProfile?
@@ -44,12 +44,17 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         }
     }
     
-    var isBusy = false {
-        didSet {
-            self.activityIndicator.alpha = self.isBusy ? 1 : 0
+    var isBusy: Bool {
+        get {
+            return ServiceManager.instance.isBusy
+        }
+        
+        set(isBusy) {
+            ServiceManager.instance.isBusy = isBusy
+            self.activityIndicator.alpha = ServiceManager.instance.isBusy ? 1 : 0
             if let items = self.tabBarController?.tabBar.items {
                 for item in items {
-                    item.isEnabled = !self.isBusy
+                    item.isEnabled = !ServiceManager.instance.isBusy
                 }
             }
         }
@@ -81,6 +86,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         self.people.removeAll()
         self.reloadData()
         self.isBusy = true
+        self.isInviting = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -88,6 +94,8 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
             vc.stringEmoji = ""
         }
     }
+    
+    
     
     func inviteForGame() {
         if let user = self.userBeingInvited {
@@ -141,6 +149,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     }
     
     func setUpPromptViews() {
+        self.busyAlert = AlertView.createAlert(title: "Busy", message: "Invited peer appears to be busy", action: self.busyAlertAction)
+        self.busyAlert.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+        self.busyAlert.alpha = 0
+        
         self.activityIndicator.frame = self.view.frame
         self.activityIndicator.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         self.activityIndicator.startAnimating()
@@ -160,6 +172,11 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         
         self.invitationView = InvitationView(frame: self.view.frame)
         self.view.addSubview(self.invitationView)
+        
+        self.view.bringSubview(toFront: self.activityIndicator)
+        self.view.insertSubview(self.transparencyView, aboveSubview: self.activityIndicator)
+        self.view.insertSubview(self.invitationView, aboveSubview: self.transparencyView)
+        self.view.insertSubview(self.inviteView, aboveSubview: self.transparencyView)
     }
     
     func updateVisibility() {
@@ -195,6 +212,11 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     }
     
     func handleInvitation(from: MCPeerID, withContext context: Data?, invitationHandler: @escaping ((Bool, MCSession?) -> Void)) {
+        if (self.isInviting) {
+            invitationHandler(false, ServiceManager.instance.chatService.session)
+            return
+        }
+        
         if (!self.isBusy) {
             self.isBusy = true
             if let context = context {
@@ -232,12 +254,11 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                                                         userData[DecodedUserDataKeys.avatarFace]!,
                                                                         userData[DecodedUserDataKeys.avatarSkinTone]!,
                                                                         userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
-                                self.isBusy = false
                                 invitationHandler(true, chatService.session)
                                 UIView.animate(withDuration: 0.35, animations: {
                                     self.invitationView.alpha = 0
                                     self.transparencyView.alpha = 0
-                                })
+                                }, completion: self.acceptInvitationCompletion)
                             }
                             
                             self.invitationView.refuseButtonAction = {
@@ -251,28 +272,35 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                                 UIView.animate(withDuration: 0.35, animations: {
                                     self.invitationView.alpha = 0
                                     self.transparencyView.alpha = 0
-                                })
+                                }, completion: self.refuseInvitationCompletion)
                             }
                             
                             UIView.animate(withDuration: 0.35, animations: {
                                 self.invitationView.alpha = 1
                                 self.transparencyView.alpha = 0.7
-                            }, completion: { finished in
-                                if (finished) {
-                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.invitationTimeout, execute: {
-                                        self.invitationView.refuseButton.sendActions(for: UIControlEvents.touchUpInside)
-                                    })
-                                }
-                            })
+                            }, completion: self.displayInvitationCompletion)
                         }
                     }
                 }
             }
         } else {
+            self.isBusy = false
             invitationHandler(false, ServiceManager.instance.chatService.session)
         }
     }
     
+    func displayInvitationCompletion(finished: Bool) {
+        if (finished) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.invitationTimeout, execute: {
+                self.invitationView.refuseButton.sendActions(for: UIControlEvents.touchUpInside)
+            })
+        }
+    }
+    
+    func acceptInvitationCompletion(finished: Bool) {}
+    
+    func refuseInvitationCompletion(finished: Bool) {}
+
     func handleMessage(from: MCPeerID, message: String) {
         let (key, value) = (message.components(separatedBy: "|")[0], message.components(separatedBy: "|")[1])
         switch key {
@@ -329,37 +357,31 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func connectionLost() {
         OperationQueue.main.addOperation {
+            self.view.isUserInteractionEnabled = true
             UIView.animate(withDuration: 0.2) {
                 self.isBusy = false
             }
             
             if (self.isInviting) {
                 self.isInviting = false
-                self.dialogBox = AlertView.createAlert(title: "Busy", message: "Invited peer appears to be busy", action: self.busyAlertAction)
-                
-                self.dialogBox!.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
-                self.dialogBox!.alpha = 0
-                self.view.addSubview(self.dialogBox!)
+                self.view.addSubview(self.busyAlert)
+                self.view.bringSubview(toFront: self.busyAlert)
                 UIView.animate(withDuration: 0.35, animations: self.busyAlertDisplayAnimation, completion: self.busyAlertDisplayCompletion)
             }
         }
     }
     
     func busyAlertDisplayAnimation() {
-        if let alert = self.dialogBox as? AlertView {
             self.transparencyView.alpha = 0.7
-            alert.alpha = 1
-        }
+            self.busyAlert.alpha = 1
     }
     
     func busyAlertDisplayCompletion(finished: Bool) {
-        if let alert = self.dialogBox as? AlertView {
             if (finished) {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
-                    alert.dismissButton.sendActions(for: UIControlEvents.touchUpInside)
+                    self.busyAlert.dismissButton.sendActions(for: UIControlEvents.touchUpInside)
                 })
             }
-        }
     }
     
     func busyAlertAction() {
@@ -367,18 +389,13 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     }
     
     func busyAlertActionAnimation() {
-        if let alert = self.dialogBox as? AlertView {
             self.transparencyView.alpha = 0
-            alert.alpha = 0
-        }
+            self.busyAlert.alpha = 0
     }
     
     func busyAlertActionCompletion(finished: Bool) {
         if (finished) {
-            self.view.isUserInteractionEnabled = true
-            if let alert = self.dialogBox as? AlertView {
-                alert.removeFromSuperview()
-            }
+            self.busyAlert.removeFromSuperview()
         }
     }
     
@@ -403,7 +420,11 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func reloadData() {}
     
-    func dismissInvitationPrompt() {}
+    func dismissInvitationPrompt() {
+        self.isBusy = false
+        self.isInviting = false
+        self.isPromptVisible = false
+    }
     
     static func createUserData(for interaction: String) -> Data {
         let userProfile = ServiceManager.instance.userProfile

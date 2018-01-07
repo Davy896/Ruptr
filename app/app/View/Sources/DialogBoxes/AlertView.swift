@@ -14,7 +14,7 @@ class AlertView: DialogBox {
     var messageLabel: UILabel
     var dismissButton: RoundButton
     
-    private var action: (()->Void)
+    var action: (()->Void)
     
     private static let margin: CGFloat = 16
     

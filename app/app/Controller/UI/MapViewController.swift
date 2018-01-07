@@ -38,21 +38,6 @@ class MapViewController: ConnectivityViewController {
             }
             
             self.isGestureEnabled = false
-            UIView.animate(withDuration: 0.35) {
-                if (self.isPromptVisible) {
-                    self.circleView.alpha = 0
-                    for (_ , button) in self.avatarButtons {
-                        if (button != self.selectedAvatarButton) {
-                            button.alpha = 0
-                        }
-                    }
-                } else {
-                    self.circleView.alpha = 1
-                    for (_ , button) in self.avatarButtons {
-                        button.alpha = 1
-                    }
-                }
-            }
         }
     }
     
@@ -71,6 +56,7 @@ class MapViewController: ConnectivityViewController {
         self.circleView.radius = 60
         self.circleView.delegate = self
         self.view.addSubview(self.circleView)
+        self.view.insertSubview(self.circleView, belowSubview: self.activityIndicator)
         self.reloadData()
     }
     
@@ -121,19 +107,16 @@ class MapViewController: ConnectivityViewController {
                         if let button = self.selectedAvatarButton {
                             if let center = self.previousSelectedAvatarButtonCenter {
                                 button.center = center
-                                self.view.insertSubview(button, aboveSubview: self.circleView)
                             }
                         }
         },
-                       completion: { completed in
-                        if (completed) {
+                       completion: { finished in
+                        if (finished) {
+                            self.view.insertSubview(self.selectedAvatarButton!, aboveSubview: self.circleView)
                             self.selectedAvatarButton = nil
                             self.isGestureEnabled = true
                         }
         })
-        
-        self.isPromptVisible = false
-        self.isBusy = false
     }
     
     override func reloadData() {
@@ -178,107 +161,50 @@ class MapViewController: ConnectivityViewController {
         }
     }
     
-    override func busyAlertDisplayAnimation() {
-        super.busyAlertDisplayAnimation()
-        self.circleView.alpha = 0
-        for (_, button) in self.avatarButtons {
-            button.alpha = 0
+    override func connectionLost() {
+        super.connectionLost()
+        if (self.isInviting) {
+            self.isGestureEnabled = false
         }
     }
     
-    override func busyAlertActionAnimation() {
-        super.busyAlertActionAnimation()
-        self.circleView.alpha = 1
-        for (_, button) in self.avatarButtons {
-            button.alpha = 1
+    override func busyAlertDisplayCompletion(finished: Bool) {
+        super.busyAlertDisplayCompletion(finished: finished)
+        self.isGestureEnabled = false
+    }
+    
+    override func busyAlertActionCompletion(finished: Bool) {
+        super.busyAlertActionCompletion(finished: finished)
+        if (finished) {
+            self.isGestureEnabled = true
         }
     }
     
     override func handleInvitation(from: MCPeerID, withContext context: Data?, invitationHandler: @escaping ((Bool, MCSession?) -> Void)) {
+        super.handleInvitation(from: from, withContext: context, invitationHandler: invitationHandler)
         if (!self.isBusy) {
-            self.isBusy = true
             self.isGestureEnabled = false
-            if let context = context {
-                if let data = String(data: context, encoding: String.Encoding.utf8) {
-                    if let items = self.tabBarController?.tabBar.items {
-                        for item in items {
-                            item.isEnabled = false
-                        }
-                        
-                        let chatService = ServiceManager.instance.chatService
-                        let userData = ConnectivityViewController.decodeUserData(from: data)
-                        let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? NSLocalizedString("chat_invite_message", comment: "") : NSLocalizedString("game_invite_message", comment: "")
-                        OperationQueue.main.addOperation {
-                            self.view.bringSubview(toFront: self.invitationView)
-                            self.invitationView.avatarInviting.hairImageView.image = UIImage(named: userData[DecodedUserDataKeys.avatarHair]!)
-                            self.invitationView.avatarInviting.faceImageView.image = UIImage(named: userData[DecodedUserDataKeys.avatarFace]!)
-                            self.invitationView.avatarInviting.faceImageView.backgroundColor = Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
-                                                                                                                 index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!))
-                            
-                            self.invitationView.usernameLabel.text = userData[DecodedUserDataKeys.username]!
-                            self.invitationView.messageLabel.text = "\(NSLocalizedString("invite_message", comment: "")) \(invitationText)"
-                            self.invitationView.acceptButton.bgColor = Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
-                                                                                         index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!))
-                            self.invitationView.acceptButtonAction = {
-                                self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
-                                for item in items {
-                                    item.isEnabled = true
-                                }
-                                
-                                GameViewController.randomEmoji = userData[DecodedUserDataKeys.emoji]!
-                                GameViewController.isPlayerOne = false
-                                ServiceManager.instance.selectedPeer = (from,
-                                                                        userData[DecodedUserDataKeys.username]!,
-                                                                        userData[DecodedUserDataKeys.avatarHair]!,
-                                                                        userData[DecodedUserDataKeys.avatarFace]!,
-                                                                        userData[DecodedUserDataKeys.avatarSkinTone]!,
-                                                                        userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
-                                self.isBusy = false
-                                invitationHandler(true, chatService.session)
-                                UIView.animate(withDuration: 0.35, animations: {
-                                    self.invitationView.alpha = 0
-                                    self.transparencyView.alpha = 0
-                                }) { finished in
-                                    if (finished) {
-                                        self.isGestureEnabled = true
-                                    }
-                                }
-                            }
-                            
-                            self.invitationView.refuseButtonAction = {
-                                UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-                                for item in items {
-                                    item.isEnabled = true
-                                }
-                                
-                                self.isBusy = false
-                                invitationHandler(false, chatService.session)
-                                UIView.animate(withDuration: 0.35, animations: {
-                                    self.invitationView.alpha = 0
-                                    self.transparencyView.alpha = 0
-                                }) { finished in
-                                    if (finished) {
-                                        self.isGestureEnabled = true
-                                    }
-                                }
-                            }
-                            
-                            UIView.animate(withDuration: 0.35, animations: {
-                                self.invitationView.alpha = 1
-                                self.transparencyView.alpha = 0.7
-                            }, completion: { finished in
-                                if (finished) {
-                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.invitationTimeout, execute: {
-                                        self.invitationView.refuseButton.sendActions(for: UIControlEvents.touchUpInside)
-                                    })
-                                }
-                            })
-                        }
-                    }
-                }
-            }
-        } else {
-            invitationHandler(false, ServiceManager.instance.chatService.session)
+        }
+    }
+    
+    override func displayInvitationCompletion(finished: Bool) {
+        super.displayInvitationCompletion(finished: finished)
+        if (finished) {
+            self.isGestureEnabled = false
+        }
+    }
+    
+    override func acceptInvitationCompletion(finished: Bool) {
+        super.acceptInvitationCompletion(finished: finished)
+        if (finished) {
+            self.isGestureEnabled = true
+        }
+    }
+    
+    override func refuseInvitationCompletion(finished: Bool) {
+        super.refuseInvitationCompletion(finished: finished)
+        if (finished) {
+            self.isGestureEnabled = true
         }
     }
     
@@ -326,7 +252,7 @@ class MapViewController: ConnectivityViewController {
                 if (id != nil) {
                     self.selectedAvatarButton = sender
                     self.view.bringSubview(toFront: self.inviteView)
-                    self.view.bringSubview(toFront: sender)
+                    self.view.insertSubview(sender, aboveSubview: self.inviteView)
                     self.invitePeer(withId: id!, profile: profile)
                 }
             }

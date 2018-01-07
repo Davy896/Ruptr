@@ -75,7 +75,6 @@ class ListTableViewController: ConnectivityViewController {
     
     override func dismissInvitationPrompt() {
         super.dismissInvitationPrompt()
-        self.isPromptVisible = false
     }
     
     override func reloadData() {
@@ -96,52 +95,15 @@ class ListTableViewController: ConnectivityViewController {
         self.selectedAvatar.isUserInteractionEnabled = false
         self.selectedAvatar.alpha = 1
         
+        self.busyAlert.center = CGPoint(x: self.view.center.x,
+                                        y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
+        self.inviteView.dialogBoxView.center = CGPoint(x: self.view.center.x,
+                                                       y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
+        self.invitationView.center = CGPoint(x: self.view.center.x,
+                                        y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
+        
         self.inviteView.avatarFrameView.addSubview(self.selectedAvatar)
         self.inviteView.dialogBoxView.transform = self.invisibleTransform
-    }
-    
-    override func connectionLost() {
-        OperationQueue.main.addOperation {
-            self.view.isUserInteractionEnabled = true
-            UIView.animate(withDuration: 0.2) {
-                self.isBusy = false
-            }
-            
-            if (self.isInviting) {
-                self.isInviting = false
-                let alert = AlertView.createAlert(title: "Busy", message: "Invited peer appears to be busy", action: {
-                    for view in self.view.subviews {
-                        if let alert = view as? AlertView {
-                            UIView.animate(withDuration: 0.35, animations: {
-                                self.transparencyView.alpha = 0
-                                alert.alpha = 0
-                            }, completion: { finished in
-                                if (finished) {
-                                    alert.removeFromSuperview()
-                                }
-                            })
-                            
-                            break
-                        }
-                    }
-                })
-                
-                alert.center = CGPoint(x: UIScreen.main.bounds.midX,
-                                       y: UIScreen.main.bounds.midY - (self.tabBarController?.tabBar.frame.height ?? 0))
-                alert.alpha = 0
-                self.view.addSubview(alert)
-                UIView.animate(withDuration: 0.35, animations: {
-                    self.transparencyView.alpha = 0.7
-                    alert.alpha = 1
-                }, completion: { finished in
-                    if (finished) {
-                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
-                            alert.dismissButton.sendActions(for: UIControlEvents.touchUpInside)
-                        })
-                    }
-                })
-            }
-        }
     }
 }
 

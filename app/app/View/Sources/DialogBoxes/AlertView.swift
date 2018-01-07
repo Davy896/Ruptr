@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlertView: DialogBox {
+class AlertView: UIView {
     
     var titleLabel: UILabel
     var messageLabel: UILabel

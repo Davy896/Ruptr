@@ -1,5 +1,5 @@
 //
-//  DialogBox.swift
+//  MoodSelectionView.swift
 //  App
 //
 //  Created by Lucas Assis Rodrigues on 07/01/2018.
@@ -8,4 +8,6 @@
 
 import UIKit
 
-class DialogBox: UIView {}
+class MoodSelectionView: UIView {
+    
+}

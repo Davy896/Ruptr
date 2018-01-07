@@ -412,14 +412,14 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         if peers.count > 0 {
             for i in 0 ... peers.count - 1 {
                 self.people.append(UserProfile(id: peers[i].displayName.components(separatedBy: "|")[0],
-                                               username: infos[i][DecodedUserDataKeys.username.enumToString]!,
-                                               avatar: [AvatarParts.hair: infos[i][DecodedUserDataKeys.avatarHair.enumToString]!,
-                                                        AvatarParts.face: infos[i][DecodedUserDataKeys.avatarFace.enumToString]!,
-                                                        AvatarParts.skin: infos[i][DecodedUserDataKeys.avatarSkinTone.enumToString]!],
-                                               moods: [Mood(rawValue: infos[i][DecodedUserDataKeys.moodOne.enumToString]!)!,
-                                                       Mood(rawValue: infos[i][DecodedUserDataKeys.moodTwo.enumToString]!)!,
-                                                       Mood(rawValue:infos[i][DecodedUserDataKeys.moodThree.enumToString]!)!],
-                                               status: Status(rawValue: infos[i][DecodedUserDataKeys.status.enumToString]!)!))
+                                               username: infos[i][DecodedUserDataKeys.username.rawValue]!,
+                                               avatar: [AvatarParts.hair: infos[i][DecodedUserDataKeys.avatarHair.rawValue]!,
+                                                        AvatarParts.face: infos[i][DecodedUserDataKeys.avatarFace.rawValue]!,
+                                                        AvatarParts.skin: infos[i][DecodedUserDataKeys.avatarSkinTone.rawValue]!],
+                                               moods: [Mood(rawValue: infos[i][DecodedUserDataKeys.moodOne.rawValue]!)!,
+                                                       Mood(rawValue: infos[i][DecodedUserDataKeys.moodTwo.rawValue]!)!,
+                                                       Mood(rawValue:infos[i][DecodedUserDataKeys.moodThree.rawValue]!)!],
+                                               status: Status(rawValue: infos[i][DecodedUserDataKeys.status.rawValue]!)!))
             }
         }
     }

@@ -59,6 +59,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         self.inputTextField.text = self.stringEmoji
         self.send()
         self.inputTextField.text = ""
+        
         showAndHideNotificatio()
     }
     
@@ -224,7 +225,14 @@ var notificationText = UITextView()
             cell.tail.image = UIImage(named: "tailRight")
             
             cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18, y: cell.cloud.frame.height - 33, width: 20, height: 25)
-            
+            UIView.animate(withDuration: 1.0, animations: {
+                cell.cloud.alpha = 1
+                cell.messageLabel.alpha = 1
+                cell.profileImageHair.alpha = 1
+                cell.profileImageSkinColor.alpha = 1
+                cell.profileImageEyes.alpha = 1
+                cell.tail.alpha = 1
+            })
             
             
             
@@ -252,7 +260,14 @@ var notificationText = UITextView()
             cell.tail.image = UIImage(named: "tailLeft")
             cell.tail.frame = CGRect(x:  50 + 12 - 19, y: cell.cloud.frame.height - 33, width: 20, height: 25)
             
-            
+            UIView.animate(withDuration: 1.0, animations: {
+                cell.cloud.alpha = 1
+                cell.messageLabel.alpha = 1
+                cell.profileImageHair.alpha = 1
+                cell.profileImageSkinColor.alpha = 1
+                cell.profileImageEyes.alpha = 1
+                cell.tail.alpha = 1
+            })
             
         }
         
@@ -273,6 +288,7 @@ var notificationText = UITextView()
         let messageText = messages[indexPath.item].text
         height = estimateFrameForText(messageText).height + 30
         let width = UIScreen.main.bounds.width
+        
         return CGSize(width: width , height: height)
         
     }

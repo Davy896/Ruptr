@@ -22,6 +22,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     var isGame = true
     var isInviting = false
+    var isFirstTime = true
     
     var busyAlert: AlertView!
     
@@ -78,7 +79,12 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         self.updateFoundPeers()
-        self.reloadData()
+        if (!self.isFirstTime) {
+            self.reloadData()
+        } else {
+            self.isFirstTime = false
+        }
+        
         self.isBusy = false
     }
     

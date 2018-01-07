@@ -54,10 +54,9 @@ class MapViewController: ConnectivityViewController {
         UIViewController.setViewBackground(for: self)
         self.circleView = CircleView(frame: self.view.frame)
         self.circleView.radius = 60
-        self.circleView.delegate = self
+        self.circleView.alpha = 0
         self.view.addSubview(self.circleView)
         self.view.insertSubview(self.circleView, belowSubview: self.activityIndicator)
-        self.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -72,27 +71,19 @@ class MapViewController: ConnectivityViewController {
         
         self.circleView.center = self.view.center
         self.circleView.translation = CGPoint.zero
-    }
-    
-    override func peerFound(withId id: MCPeerID) {
-        super.peerFound(withId: id)
-        self.reloadData()
-    }
-    
-    override func peerLost(withId id: MCPeerID) {
-        super.peerLost(withId: id)
-        self.avatarButtons.removeValue(forKey: id.displayName.components(separatedBy: "|")[0])
-        self.reloadData()
+        self.circleView.alpha = 0
     }
     
     override func invitePeer(withId id: MCPeerID, profile: ProfileRequirements) {
         super.invitePeer(withId: id, profile: profile)
         self.isPromptVisible = true
-        UIView.animate(withDuration: 0.35,
-                       delay: 0,
+        UIView.animate(withDuration: 0.35, delay: 0,
                        options: UIViewAnimationOptions.curveEaseOut,
-                       animations: self.translateCirclesWith(button: self.selectedAvatarButton),
-                       completion: { completed in self.isGestureEnabled = false })
+                       animations: self.translateCirclesWith(button: self.selectedAvatarButton)) {
+                        finished in
+                        self.isGestureEnabled = false
+        }
+        
         self.view.insertSubview(self.inviteView.dialogBoxView, belowSubview: self.selectedAvatarButton! )
         self.inviteView.usernameLabel.text = self.selectedAvatarButton!.userNameLabel.text
         self.inviteView.gameButton.backgroundColor = self.selectedAvatarButton!.faceImageView.backgroundColor
@@ -109,28 +100,36 @@ class MapViewController: ConnectivityViewController {
                                 button.center = center
                             }
                         }
-        },
-                       completion: { finished in
-                        if (finished) {
-                            self.view.insertSubview(self.selectedAvatarButton!, aboveSubview: self.circleView)
-                            self.selectedAvatarButton = nil
-                            self.isGestureEnabled = true
-                        }
-        })
+        }) { finished in
+            if (finished) {
+                self.view.insertSubview(self.selectedAvatarButton!, aboveSubview: self.circleView)
+                self.selectedAvatarButton = nil
+                self.isGestureEnabled = true
+            }
+        }
     }
     
     override func reloadData() {
         super.reloadData()
-        if (self.people.count > 0) {
-            for view in self.view.subviews {
-                if let button = view as? AvatarPlanetButton {
+        for (_, button) in self.avatarButtons {
+            UIView.animate(withDuration: 0.2, animations: { button.alpha = 0 }) {
+                finished in
+                if (finished) {
                     button.removeFromSuperview()
                 }
             }
-            
-            self.avatarButtons.removeAll()
+        }
+        
+        self.avatarButtons.removeAll()
+        UIView.animate(withDuration: 0.2, animations: { self.circleView.alpha = 0 }) {
+            finished in
             self.circleView.center = self.view.center
             self.circleView.translation = CGPoint.zero
+        }
+        
+        self.view.layoutSubviews()
+        
+        if (self.people.count > 0) {
             
             var peersMissing = self.people.count
             var circlePopulation = 1
@@ -162,6 +161,16 @@ class MapViewController: ConnectivityViewController {
                     circlePopulation += i + 1
                 }
             }
+            
+            UIView.animate(withDuration: 0.35,
+                           delay: 0,
+                           options: UIViewAnimationOptions.curveEaseOut,
+                           animations: {
+                            self.circleView.alpha = 1
+                            for (_, button) in self.avatarButtons {
+                                button.alpha = 1
+                            }
+            })
         }
     }
     
@@ -229,8 +238,7 @@ class MapViewController: ConnectivityViewController {
                 break
             case UIGestureRecognizerState.ended:
                 UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut,
-                               animations: self.translateCirclesWith(velocity: sender.velocity(in: self.view)),
-                               completion: nil)
+                               animations: self.translateCirclesWith(velocity: sender.velocity(in: self.view)))
                 break
             default:
                 break
@@ -268,13 +276,13 @@ class MapViewController: ConnectivityViewController {
         UIView.animate(withDuration: animated ? 0.35 : 0,
                        delay: 0,
                        options: UIViewAnimationOptions.curveEaseOut,
-                       animations: self.translateCirclesWith(),
-                       completion: { completed in
+                       animations: self.translateCirclesWith()) {
+                        completed in
                         if (completed) {
                             self.circleView.translation = CGPoint.zero
                             self.isGestureEnabled = true
                         }
-        })
+        }
     }
     
     private func checkButtonColision(_ button: AvatarPlanetButton) -> Bool {
@@ -322,16 +330,3 @@ class MapViewController: ConnectivityViewController {
         }
     }
 }
-
-extension MapViewController: CircleViewDelegate  {
-    func handleDrawingCompletion() {
-        for (_, button) in self.avatarButtons {
-            UIView.animate(withDuration: 0.35,
-                           delay: 0,
-                           options: UIViewAnimationOptions.curveEaseIn,
-                           animations: { button.alpha = 1 },
-                           completion: nil)
-        }
-    }
-}
-

@@ -128,6 +128,10 @@ class MapViewController: ConnectivityViewController {
                 }
             }
             
+            self.avatarButtons.removeAll()
+            self.circleView.center = self.view.center
+            self.circleView.translation = CGPoint.zero
+            
             var peersMissing = self.people.count
             var circlePopulation = 1
             var circleIndex = 0

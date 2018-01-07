@@ -224,7 +224,7 @@ var notificationText = UITextView()
             cell.bringSubview(toFront: cell.profileImageHair)
             cell.tail.image = UIImage(named: "tailRight")
             
-            cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18, y: cell.cloud.frame.height - 33, width: 20, height: 25)
+            cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18 , y: cell.cloud.frame.height - 33 + 10 , width: 15, height: 15)
             UIView.animate(withDuration: 1.0, animations: {
                 cell.cloud.alpha = 1
                 cell.messageLabel.alpha = 1
@@ -258,7 +258,7 @@ var notificationText = UITextView()
             
             
             cell.tail.image = UIImage(named: "tailLeft")
-            cell.tail.frame = CGRect(x:  50 + 12 - 19, y: cell.cloud.frame.height - 33, width: 20, height: 25)
+            cell.tail.frame = CGRect(x:  50 + 17 - 19, y: cell.cloud.frame.height - 33 + 10, width: 15, height: 15)
             
             UIView.animate(withDuration: 1.0, animations: {
                 cell.cloud.alpha = 1

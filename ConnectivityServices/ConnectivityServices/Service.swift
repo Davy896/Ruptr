@@ -87,7 +87,9 @@ public class Service: NSObject {
             self.serviceAdvertiser.stopAdvertisingPeer()
             self.serviceBrowser.stopBrowsingForPeers()
             self._discoveryInfo = discoveryInfo
-            self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId, discoveryInfo: discoveryInfo, serviceType: self._serviceType)
+            self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId,
+                                                                discoveryInfo: discoveryInfo,
+                                                                serviceType: self._serviceType)
             self._serviceAdvertiser.delegate = self
             if (self.isActive) {
                 self.serviceAdvertiser.startAdvertisingPeer()

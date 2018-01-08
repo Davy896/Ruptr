@@ -106,6 +106,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         if let user = self.userBeingInvited {
             if let id = self.idOfUserBeingInvited {
                 self.isGame = true
+                self.isInviting = true
                 ServiceManager.instance.selectedPeer = (key: id,
                                                         name: user.username,
                                                         hair: user.avatar[AvatarParts.hair]!,
@@ -129,6 +130,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     func inviteForChat() {
         if let user = self.userBeingInvited {
             if let id = self.idOfUserBeingInvited {
+                self.isInviting = true
                 self.isGame = false
                 ServiceManager.instance.selectedPeer = (key: id,
                                                         name: user.username,
@@ -150,6 +152,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func cancelInvite() {
         UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        self.isInviting = false
         self.dismissInvitationPrompt()
     }
     
@@ -363,15 +366,15 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     func connectionLost() {
         OperationQueue.main.addOperation {
             self.view.isUserInteractionEnabled = true
-            UIView.animate(withDuration: 0.2) {
-                self.isBusy = false
-            }
-            
             if (self.isInviting) {
                 self.isInviting = false
                 self.view.addSubview(self.busyAlert)
                 self.view.bringSubview(toFront: self.busyAlert)
                 UIView.animate(withDuration: 0.2, animations: self.busyAlertDisplayAnimation, completion: self.busyAlertDisplayCompletion)
+            } else {
+                UIView.animate(withDuration: 0.2) {
+                    self.isBusy = false
+                }
             }
         }
     }
@@ -383,7 +386,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func busyAlertDisplayCompletion(finished: Bool) {
             if (finished) {
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5, execute: {
                     self.busyAlert.dismissButton.sendActions(for: UIControlEvents.touchUpInside)
                 })
             }
@@ -400,6 +403,7 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func busyAlertActionCompletion(finished: Bool) {
         if (finished) {
+            self.isBusy = false
             self.busyAlert.removeFromSuperview()
         }
     }
@@ -427,7 +431,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func dismissInvitationPrompt() {
         self.isBusy = false
-        self.isInviting = false
         self.isPromptVisible = false
     }
     

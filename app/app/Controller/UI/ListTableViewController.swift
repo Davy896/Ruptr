@@ -9,7 +9,6 @@
 import UIKit
 import ConnectivityServices
 import MultipeerConnectivity
-import SCLAlertView
 
 class ListTableViewController: ConnectivityViewController {
     
@@ -29,22 +28,21 @@ class ListTableViewController: ConnectivityViewController {
             
             self.tableView.isScrollEnabled = !self.isPromptVisible
             if let avatarPosition = self.selectedAvatarPosition {
-                UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                     if (!self.isPromptVisible) {
-                        self.invitationView.transform = self.invisibleTransform
-                        self.invitationView.center = avatarPosition
-                        
-                        self.avatarFrameView.transform = self.invisibleTransform
-                        self.avatarFrameView.center = avatarPosition
+                        self.inviteView.dialogBoxView.transform = self.invisibleTransform
+                        self.inviteView.dialogBoxView.center = avatarPosition
                     } else {
-                        self.invitationView.transform = CGAffineTransform.identity
-                        self.invitationView.center = CGPoint(x: self.view.center.x,
-                                                             y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
-                        
-                        self.avatarFrameView.transform = CGAffineTransform.identity
-                        self.avatarFrameView.center = CGPoint(x: self.view.frame.width / 2, y: self.invitationView.frame.origin.y)
+                        self.inviteView.dialogBoxView.transform = CGAffineTransform.identity
+                        self.inviteView.dialogBoxView.center = CGPoint(x: self.view.center.x,
+                                                                       y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
                     }
-                }, completion: nil)
+                }) {
+                    finished in
+                    if (finished && !self.isPromptVisible) {
+                        self.inviteView.alpha = 0
+                    }
+                }
             }
         }
     }
@@ -54,16 +52,6 @@ class ListTableViewController: ConnectivityViewController {
         super.viewDidLoad()
         UIViewController.setTableViewBackground(for: self)
         self.setUpPromptViews()
-        
-        self.selectedAvatar = AvatarPlanetButton()
-        self.selectedAvatar.frame.size = self.avatarFrameView.frame.size - 5
-        self.selectedAvatar.center = CGPoint(x: self.avatarFrameView.bounds.midX, y: self.avatarFrameView.bounds.midY)
-        self.selectedAvatar.isUserInteractionEnabled = false
-        self.selectedAvatar.alpha = 1
-        self.avatarFrameView.addSubview(self.selectedAvatar)
-        
-        self.invitationView.transform = self.invisibleTransform
-        self.avatarFrameView.transform = self.invisibleTransform
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -87,16 +75,34 @@ class ListTableViewController: ConnectivityViewController {
     
     override func dismissInvitationPrompt() {
         super.dismissInvitationPrompt()
-        self.isPromptVisible = false
     }
     
     override func reloadData() {
         super.reloadData()
         UIView.transition(with: self.tableView,
-                          duration: 0.35,
+                          duration: 0.2,
                           options: UIViewAnimationOptions.transitionCrossDissolve,
-                          animations: { self.tableView.reloadData() },
-                          completion:  nil)
+                          animations: { self.tableView.reloadData() })
+    }
+    
+    override func setUpPromptViews() {
+        super.setUpPromptViews()
+        
+        self.selectedAvatar = AvatarPlanetButton()
+        self.selectedAvatar.frame.size = self.inviteView.avatarFrameView.frame.size - 5
+        self.selectedAvatar.center = CGPoint(x: self.inviteView.avatarFrameView.bounds.midX, y: self.inviteView.avatarFrameView.bounds.midY)
+        self.selectedAvatar.isUserInteractionEnabled = false
+        self.selectedAvatar.alpha = 1
+        
+        self.busyAlert.center = CGPoint(x: self.view.center.x,
+                                        y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
+        self.inviteView.dialogBoxView.center = CGPoint(x: self.view.center.x,
+                                                       y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
+        self.invitationView.center = CGPoint(x: self.view.center.x,
+                                        y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
+        
+        self.inviteView.avatarFrameView.addSubview(self.selectedAvatar)
+        self.inviteView.dialogBoxView.transform = self.invisibleTransform
     }
 }
 
@@ -108,12 +114,14 @@ extension ListTableViewController: UITableViewDelegate {
                 self.selectedAvatarPosition = CGPoint(x: cell.faceImageView.frame.midX,
                                                       y: cell.faceImageView.frame.midY + cell.frame.height * CGFloat(indexPath.item))
                 self.selectedAvatar.cloneAttributesFrom(listTableViewCell: cell)
-                self.avatarFrameView.center = self.selectedAvatarPosition!
-                self.invitationView.center = self.selectedAvatarPosition!
                 
-                self.usernameLabel.text = profile.username
-                self.gameButton.bgColor = profile.avatarSkin
-                self.chatButton.bgColor = profile.avatarSkin
+                self.inviteView.alpha = 1
+                
+                self.inviteView.dialogBoxView.center = self.selectedAvatarPosition!
+                self.inviteView.usernameLabel.text = profile.username
+                self.inviteView.gameButton.bgColor = profile.avatarSkin
+                self.inviteView.chatButton.bgColor = profile.avatarSkin
+                self.view.bringSubview(toFront: self.inviteView)
                 
                 cell.faceImageView.backgroundColor = cell.faceImageView.backgroundColor
                 var id: MCPeerID? = nil

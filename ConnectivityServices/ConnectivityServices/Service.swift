@@ -18,7 +18,6 @@ public class Service: NSObject {
     internal var _peers: [MCPeerID]
     internal var _peersDiscoveryInfos: [[String:String]]
     internal var _discoveryInfo: [String : String]
-    internal var _invitationHandler: ((Bool, MCSession?)->Void)!
     internal var _session: MCSession
     
     public var serviceType: String {
@@ -88,7 +87,9 @@ public class Service: NSObject {
             self.serviceAdvertiser.stopAdvertisingPeer()
             self.serviceBrowser.stopBrowsingForPeers()
             self._discoveryInfo = discoveryInfo
-            self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId, discoveryInfo: discoveryInfo, serviceType: self._serviceType)
+            self._serviceAdvertiser = MCNearbyServiceAdvertiser(peer: _peerId,
+                                                                discoveryInfo: discoveryInfo,
+                                                                serviceType: self._serviceType)
             self._serviceAdvertiser.delegate = self
             if (self.isActive) {
                 self.serviceAdvertiser.startAdvertisingPeer()
@@ -113,12 +114,6 @@ public class Service: NSObject {
                 self.serviceAdvertiser.stopAdvertisingPeer()
                 self.serviceBrowser.stopBrowsingForPeers()
             }
-        }
-    }
-    
-    public var invitationHandler: ((Bool, MCSession?)->Void)! {
-        get {
-            return _invitationHandler
         }
     }
     
@@ -157,8 +152,6 @@ extension Service: MCNearbyServiceAdvertiserDelegate {
         if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType) {
             return
         }
-        
-        _invitationHandler = invitationHandler
     }
 }
 

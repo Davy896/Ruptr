@@ -9,54 +9,52 @@
 import UIKit
 import ConnectivityServices
 import MultipeerConnectivity
-import SCLAlertView
 
 class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     @IBOutlet var transparencyView: UIView!
-    @IBOutlet var invitationView: RoundView!
-    @IBOutlet var avatarFrameView: RoundView!
-    @IBOutlet var usernameLabel: UILabel!
-    @IBOutlet var messageLabel: UILabel!
-    @IBOutlet var gameButton: RoundButton!
-    @IBOutlet var chatButton: RoundButton!
-    @IBOutlet var cancelButton: RoundButton!
+    @IBOutlet var inviteView: InviteView!
+    @IBOutlet var invitationView: InvitationView!
     
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+    let invitationTimeout: TimeInterval = 20
     
     var isGame = true
+    var isInviting = false
+    var isFirstTime = true
+    
+    var busyAlert: AlertView!
+    
     var people: [UserProfile] = []
     var userBeingInvited: UserProfile?
     var idOfUserBeingInvited: MCPeerID?
     
-    let margin: CGFloat = 16
-    
-    var invitationViewSize: CGSize {
-        return CGSize(width: 308, height: 300)
-    }
-    
-    var avatarFrameViewSize: CGSize {
-        return CGSize(width: 70, height: 70)
-    }
-    
-    let alertAppearence = SCLAlertView.SCLAppearance(kCircleIconHeight: -56,
-                                                     kTitleFont: UIFont(name: "Futura-Bold", size: 17)!,
-                                                     kTextFont: UIFont(name: "Futura-Medium", size: 14)!,
-                                                     kButtonFont: UIFont(name: "Futura-Medium", size: 17)!,
-                                                     showCloseButton: false,
-                                                     showCircularIcon: true)
-    
     var isPromptVisible: Bool = false {
         didSet {
-            UIView.animate(withDuration: 0.35) {
+            UIView.animate(withDuration: 0.2, animations: {
                 if (self.isPromptVisible) {
                     self.transparencyView.alpha = 0.7
-                    self.invitationView.alpha = 1
-                    self.avatarFrameView.alpha = 1
+                    self.inviteView.dialogBoxView.alpha = 1
                 } else {
                     self.transparencyView.alpha = 0
-                    self.invitationView.alpha = 0
-                    self.avatarFrameView.alpha = 0
+                    self.inviteView.dialogBoxView.alpha = 0
+                    self.activityIndicator.alpha = 0
+                }
+            })
+        }
+    }
+    
+    var isBusy: Bool {
+        get {
+            return ServiceManager.instance.isBusy
+        }
+        
+        set(isBusy) {
+            ServiceManager.instance.isBusy = isBusy
+            self.activityIndicator.alpha = ServiceManager.instance.isBusy ? 1 : 0
+            if let items = self.tabBarController?.tabBar.items {
+                for item in items {
+                    item.isEnabled = !ServiceManager.instance.isBusy
                 }
             }
         }
@@ -64,11 +62,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.activityIndicator.frame = self.view.frame
-        self.activityIndicator.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        self.activityIndicator.startAnimating()
-        self.activityIndicator.alpha = 0
-        self.view.addSubview(activityIndicator)
         ServiceManager.instance.chatService.delegate = self
         self.setDiscoveryInfo(from: ServiceManager.instance.userProfile)
         self.updateVisibility()
@@ -80,16 +73,25 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         ServiceManager.instance.chatService.delegate = self
+        self.isBusy = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.updateFoundPeers()
-        self.reloadData()
+        if (!self.isFirstTime) {
+            self.reloadData()
+        } else {
+            self.isFirstTime = false
+        }
+        
+        self.isBusy = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.people.removeAll()
         self.reloadData()
+        self.isBusy = true
+        self.isInviting = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -98,10 +100,13 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         }
     }
     
-    @IBAction func inviteForGame(_ sender: RoundButton) {
+    
+    
+    func inviteForGame() {
         if let user = self.userBeingInvited {
             if let id = self.idOfUserBeingInvited {
                 self.isGame = true
+                self.isInviting = true
                 ServiceManager.instance.selectedPeer = (key: id,
                                                         name: user.username,
                                                         hair: user.avatar[AvatarParts.hair]!,
@@ -113,18 +118,19 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 ServiceManager.instance.chatService.serviceBrowser.invitePeer(id,
                                                                               to: ServiceManager.instance.chatService.session,
                                                                               withContext: ConnectivityViewController.createUserData(for: "game"),
-                                                                              timeout: 20)
+                                                                              timeout: self.invitationTimeout)
                 self.dismissInvitationPrompt()
-                self.activityIndicator.alpha = 1
+                self.isBusy = true
                 self.view.bringSubview(toFront: self.activityIndicator)
                 self.view.isUserInteractionEnabled = false
             }
         }
     }
     
-    @IBAction func inviteForChat(_ sender: RoundButton) {
+    func inviteForChat() {
         if let user = self.userBeingInvited {
             if let id = self.idOfUserBeingInvited {
+                self.isInviting = true
                 self.isGame = false
                 ServiceManager.instance.selectedPeer = (key: id,
                                                         name: user.username,
@@ -135,114 +141,50 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                 ServiceManager.instance.chatService.serviceBrowser.invitePeer(id,
                                                                               to: ServiceManager.instance.chatService.session,
                                                                               withContext: ConnectivityViewController.createUserData(for: "chat"),
-                                                                              timeout: 20)
+                                                                              timeout: self.invitationTimeout)
                 self.dismissInvitationPrompt()
-                self.activityIndicator.alpha = 1
+                self.isBusy = true
                 self.view.bringSubview(toFront: self.activityIndicator)
                 self.view.isUserInteractionEnabled = false
             }
         }
     }
     
-    @IBAction func refuseInvitation(_ sender: RoundButton) {
+    func cancelInvite() {
         UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+        self.isInviting = false
         self.dismissInvitationPrompt()
     }
     
     func setUpPromptViews() {
+        self.busyAlert = AlertView.createAlert(title: "Busy", message: "Invited peer appears to be busy", action: self.busyAlertAction)
+        self.busyAlert.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+        self.busyAlert.alpha = 0
+        
+        self.activityIndicator.frame = self.view.frame
+        self.activityIndicator.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.alpha = 0
+        self.view.addSubview(activityIndicator)
+        
         self.transparencyView = UIView(frame: self.view.frame)
         self.transparencyView.backgroundColor = UIColor.black
         self.transparencyView.alpha = 0
         self.view.addSubview(self.transparencyView)
         
-        self.invitationView = RoundView()
-        self.invitationView.frame.size = self.invitationViewSize
-        self.invitationView.center = self.view.center
-        self.invitationView.backgroundColor = UIColor.white
-        self.invitationView.alpha = 0
-        self.invitationView.cornerRadius = 5
-        self.invitationView.maskToBounds = true
-        self.invitationView.autoresizesSubviews = true
+        self.inviteView = InviteView(frame: self.view.frame)
+        self.view.addSubview(self.inviteView)
+        self.inviteView.gameButtonAction = self.inviteForGame
+        self.inviteView.chatButtonAction = self.inviteForChat
+        self.inviteView.cancelButtonAction = self.cancelInvite
+        
+        self.invitationView = InvitationView(frame: self.view.frame)
         self.view.addSubview(self.invitationView)
         
-        self.avatarFrameView = RoundView()
-        self.avatarFrameView.frame.size = self.avatarFrameViewSize
-        self.avatarFrameView.center = CGPoint(x: self.view.frame.width / 2, y: self.invitationView.frame.origin.y)
-        self.avatarFrameView.backgroundColor = UIColor.white
-        self.avatarFrameView.alpha = 0
-        self.avatarFrameView.circle = true
-        self.view.addSubview(self.avatarFrameView)
-        
-        self.usernameLabel = UILabel(frame: CGRect(x: 16, y: 32, width: 276, height: 32))
-        self.usernameLabel.font = UIFont(name: "Futura-Medium", size: 24)
-        self.usernameLabel.adjustsFontSizeToFitWidth = true
-        self.usernameLabel.textAlignment = NSTextAlignment.center
-        self.usernameLabel.textColor = UIColor.black
-        self.usernameLabel.text = "USER_NAME"
-        
-        self.messageLabel = UILabel(frame: CGRect(x: self.usernameLabel.frame.origin.x,
-                                                  y: self.usernameLabel.frame.origin.y + self.usernameLabel.frame.height + self.margin,
-                                                  width: self.usernameLabel.frame.size.width,
-                                                  height: self.usernameLabel.frame.size.height))
-        self.messageLabel.font = UIFont(name: "Futura-Medium", size: 17)
-        self.messageLabel.adjustsFontSizeToFitWidth = true
-        self.messageLabel.textColor = UIColor.black
-        self.messageLabel.textAlignment = NSTextAlignment.center
-        self.messageLabel.text = NSLocalizedString("send_invitation", comment: "")
-        
-        self.gameButton = RoundButton(frame: CGRect(x: 16, y: 129, width: 276, height: 38))
-        self.gameButton.cornerRadius = 5
-        self.gameButton.topLeftCorner = true
-        self.gameButton.topRightCorner = true
-        self.gameButton.bottomLeftCorner = true
-        self.gameButton.bottomRightCorner = true
-        self.gameButton.maskToBounds = true
-        self.gameButton.setTitleColor(UIColor.white, for: UIControlState.normal)
-        self.gameButton.setTitle(NSLocalizedString("game", comment: ""), for: UIControlState.normal)
-        self.gameButton.titleLabel?.font = UIFont(name: "Futura-Medium", size: 20)
-        self.gameButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        self.gameButton.addTarget(self, action: #selector(self.inviteForGame(_:)), for: UIControlEvents.touchUpInside)
-        
-        
-        self.chatButton = RoundButton(frame: CGRect(x: self.gameButton.frame.origin.x,
-                                                    y: self.gameButton.frame.origin.y + self.gameButton.frame.height + self.margin,
-                                                    width: self.gameButton.frame.size.width,
-                                                    height: self.gameButton.frame.size.height))
-        self.chatButton.cornerRadius = 5
-        self.chatButton.topLeftCorner = true
-        self.chatButton.topRightCorner = true
-        self.chatButton.bottomLeftCorner = true
-        self.chatButton.bottomRightCorner = true
-        self.chatButton.maskToBounds = true
-        self.chatButton.setTitleColor(UIColor.white, for: UIControlState.normal)
-        self.chatButton.setTitle(NSLocalizedString("chat", comment: ""), for: UIControlState.normal)
-        self.chatButton.titleLabel?.font = UIFont(name: "Futura-Medium", size: 20)
-        self.chatButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        self.chatButton.addTarget(self, action: #selector(self.inviteForChat(_:)), for: UIControlEvents.touchUpInside)
-        
-        
-        self.cancelButton = RoundButton(frame: CGRect(x: self.gameButton.frame.origin.x,
-                                                      y: self.gameButton.frame.origin.y + (self.gameButton.frame.height + self.margin) * 2,
-                                                      width: self.gameButton.frame.size.width,
-                                                      height: self.gameButton.frame.size.height))
-        self.cancelButton.cornerRadius = 5
-        self.cancelButton.topLeftCorner = true
-        self.cancelButton.topRightCorner = true
-        self.cancelButton.bottomLeftCorner = true
-        self.cancelButton.bottomRightCorner = true
-        self.cancelButton.maskToBounds = true
-        self.cancelButton.bgColor = UIColor.red
-        self.cancelButton.setTitleColor(UIColor.white, for: UIControlState.normal)
-        self.cancelButton.setTitle(NSLocalizedString("cancel", comment: ""), for: UIControlState.normal)
-        self.cancelButton.titleLabel?.font = UIFont(name: "Futura-Medium", size: 20)
-        self.cancelButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        self.cancelButton.addTarget(self, action: #selector(self.refuseInvitation(_:)), for: UIControlEvents.touchUpInside)
-        
-        self.invitationView.addSubview(self.usernameLabel)
-        self.invitationView.addSubview(self.messageLabel)
-        self.invitationView.addSubview(self.gameButton)
-        self.invitationView.addSubview(self.chatButton)
-        self.invitationView.addSubview(self.cancelButton)
+        self.view.bringSubview(toFront: self.activityIndicator)
+        self.view.insertSubview(self.transparencyView, aboveSubview: self.activityIndicator)
+        self.view.insertSubview(self.invitationView, aboveSubview: self.transparencyView)
+        self.view.insertSubview(self.inviteView, aboveSubview: self.transparencyView)
     }
     
     func updateVisibility() {
@@ -261,10 +203,10 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
                     "avatarFace": userProfile.avatar[AvatarParts.face]!,
                     "avatarSkinTone": userProfile.avatar[AvatarParts.skin]!,
                     "username": userProfile.username,
-                    "moodOne": userProfile.moods[0].enumToString,
-                    "moodTwo": userProfile.moods[1].enumToString,
-                    "moodThree": userProfile.moods[2].enumToString,
-                    "status":  userProfile.status.enumToString]
+                    "moodOne": userProfile.moods[0].rawValue,
+                    "moodTwo": userProfile.moods[1].rawValue,
+                    "moodThree": userProfile.moods[2].rawValue,
+                    "status":  userProfile.status.rawValue]
         ServiceManager.instance.chatService.discoveryInfo = info
     }
     
@@ -272,61 +214,101 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         if let userBeingInvited = profile as? UserProfile {
             self.userBeingInvited = userBeingInvited
             self.idOfUserBeingInvited = id
+            self.isBusy = true
+            self.isInviting = true
         }
     }
     
-    func handleInvitation(from: MCPeerID, withContext context: Data?) {
-        if let context = context {
-            if let data = String(data: context, encoding: String.Encoding.utf8) {
-                if let items = self.tabBarController?.tabBar.items {
-                    for item in items {
-                        item.isEnabled = false
-                    }
-                    
-                    let chatService = ServiceManager.instance.chatService
-                    let userData = ConnectivityViewController.decodeUserData(from: data)
-                    let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? NSLocalizedString("chat_invite_message", comment: "") : NSLocalizedString("game_invite_message", comment: "")
-                    let alert = SCLAlertView(appearance: self.alertAppearence)
-                    
-                    alert.addButton(NSLocalizedString("accept", comment: "")) {
-                        self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
+    func handleInvitation(from: MCPeerID, withContext context: Data?, invitationHandler: @escaping ((Bool, MCSession?) -> Void)) {
+        if (self.isInviting) {
+            invitationHandler(false, ServiceManager.instance.chatService.session)
+            return
+        }
+        
+        if (!self.isBusy) {
+            self.isBusy = true
+            if let context = context {
+                if let data = String(data: context, encoding: String.Encoding.utf8) {
+                    if let items = self.tabBarController?.tabBar.items {
                         for item in items {
-                            item.isEnabled = true
+                            item.isEnabled = false
                         }
                         
-                        GameViewController.randomEmoji = userData[DecodedUserDataKeys.emoji]!
-                        GameViewController.isPlayerOne = false
-                        ServiceManager.instance.selectedPeer = (from,
-                                                                userData[DecodedUserDataKeys.username]!,
-                                                                userData[DecodedUserDataKeys.avatarHair]!,
-                                                                userData[DecodedUserDataKeys.avatarFace]!,
-                                                                userData[DecodedUserDataKeys.avatarSkinTone]!,
-                                                                userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
-                        chatService.invitationHandler(true, chatService.session)
-                    }
-                    
-                    alert.addButton(NSLocalizedString("refuse", comment: ""), backgroundColor: UIColor.red) {
-                        UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
-                        for item in items {
-                            item.isEnabled = true
+                        let chatService = ServiceManager.instance.chatService
+                        let userData = ConnectivityViewController.decodeUserData(from: data)
+                        let invitationText = userData[DecodedUserDataKeys.interactionType] == "chat" ? NSLocalizedString("chat_invite_message", comment: "") : NSLocalizedString("game_invite_message", comment: "")
+                        OperationQueue.main.addOperation {
+                            self.view.bringSubview(toFront: self.invitationView)
+                            self.invitationView.avatarInviting.hairImageView.image = UIImage(named: userData[DecodedUserDataKeys.avatarHair]!)
+                            self.invitationView.avatarInviting.faceImageView.image = UIImage(named: userData[DecodedUserDataKeys.avatarFace]!)
+                            self.invitationView.avatarInviting.faceImageView.backgroundColor = Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
+                                                                                                                 index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!))
+                            self.invitationView.usernameLabel.text = userData[DecodedUserDataKeys.username]!
+                            self.invitationView.messageLabel.text = "\(NSLocalizedString("invite_message", comment: "")) \(invitationText)"
+                            self.invitationView.acceptButton.bgColor = Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
+                                                                                         index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!))
+                            
+                            self.invitationView.acceptButtonAction = {
+                                self.isGame = userData[DecodedUserDataKeys.interactionType]! == "game"
+                                for item in items {
+                                    item.isEnabled = true
+                                }
+                                
+                                GameViewController.randomEmoji = userData[DecodedUserDataKeys.emoji]!
+                                GameViewController.isPlayerOne = false
+                                ServiceManager.instance.selectedPeer = (from,
+                                                                        userData[DecodedUserDataKeys.username]!,
+                                                                        userData[DecodedUserDataKeys.avatarHair]!,
+                                                                        userData[DecodedUserDataKeys.avatarFace]!,
+                                                                        userData[DecodedUserDataKeys.avatarSkinTone]!,
+                                                                        userData[DecodedUserDataKeys.avatarSkinToneIndex]!)
+                                invitationHandler(true, chatService.session)
+                                UIView.animate(withDuration: 0.2, animations: {
+                                    self.invitationView.alpha = 0
+                                    self.transparencyView.alpha = 0
+                                }, completion: self.acceptInvitationCompletion)
+                            }
+                            
+                            self.invitationView.refuseButtonAction = {
+                                UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.heavy).impactOccurred()
+                                for item in items {
+                                    item.isEnabled = true
+                                }
+                                
+                                self.isBusy = false
+                                invitationHandler(false, chatService.session)
+                                UIView.animate(withDuration: 0.2, animations: {
+                                    self.invitationView.alpha = 0
+                                    self.transparencyView.alpha = 0
+                                }, completion: self.refuseInvitationCompletion)
+                            }
+                            
+                            UIView.animate(withDuration: 0.2, animations: {
+                                self.invitationView.alpha = 1
+                                self.transparencyView.alpha = 0.7
+                            }, completion: self.displayInvitationCompletion)
                         }
-                        
-                        chatService.invitationHandler(false, chatService.session)
-                    }
-                    
-                    OperationQueue.main.addOperation {
-                        alert.showInfo(userData[DecodedUserDataKeys.username]!,
-                                       subTitle: "\(NSLocalizedString("invite_message", comment: "")) \(invitationText)",
-                            colorStyle: Colours.getColour(named: userData[DecodedUserDataKeys.avatarSkinTone]!,
-                                                          index: Int(userData[DecodedUserDataKeys.avatarSkinToneIndex]!)).toHexUInt(),
-                            circleIconImage: UIImage.imageByCombiningImage(firstImage: UIImage(named: userData[DecodedUserDataKeys.avatarHair]!)!,
-                                                                           withImage: UIImage(named: userData[DecodedUserDataKeys.avatarFace]!)!))
                     }
                 }
             }
+        } else {
+            self.isBusy = false
+            invitationHandler(false, ServiceManager.instance.chatService.session)
         }
     }
     
+    func displayInvitationCompletion(finished: Bool) {
+        if (finished) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.invitationTimeout, execute: {
+                self.invitationView.refuseButton.sendActions(for: UIControlEvents.touchUpInside)
+            })
+        }
+    }
+    
+    func acceptInvitationCompletion(finished: Bool) {}
+    
+    func refuseInvitationCompletion(finished: Bool) {}
+
     func handleMessage(from: MCPeerID, message: String) {
         let (key, value) = (message.components(separatedBy: "|")[0], message.components(separatedBy: "|")[1])
         switch key {
@@ -352,7 +334,6 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         default:
             break
         }
-        
     }
     
     func peerFound(withId id: MCPeerID) {
@@ -384,10 +365,46 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
     
     func connectionLost() {
         OperationQueue.main.addOperation {
-            UIView.animate(withDuration: 0.2) {
-                self.activityIndicator.alpha = 0
-                self.view.isUserInteractionEnabled = true
+            self.view.isUserInteractionEnabled = true
+            if (self.isInviting) {
+                self.isInviting = false
+                self.view.addSubview(self.busyAlert)
+                self.view.bringSubview(toFront: self.busyAlert)
+                UIView.animate(withDuration: 0.2, animations: self.busyAlertDisplayAnimation, completion: self.busyAlertDisplayCompletion)
+            } else {
+                UIView.animate(withDuration: 0.2) {
+                    self.isBusy = false
+                }
             }
+        }
+    }
+    
+    func busyAlertDisplayAnimation() {
+            self.transparencyView.alpha = 0.7
+            self.busyAlert.alpha = 1
+    }
+    
+    func busyAlertDisplayCompletion(finished: Bool) {
+            if (finished) {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5, execute: {
+                    self.busyAlert.dismissButton.sendActions(for: UIControlEvents.touchUpInside)
+                })
+            }
+    }
+    
+    func busyAlertAction() {
+            UIView.animate(withDuration: 0.2, animations: self.busyAlertActionAnimation, completion: self.busyAlertActionCompletion)
+    }
+    
+    func busyAlertActionAnimation() {
+            self.transparencyView.alpha = 0
+            self.busyAlert.alpha = 0
+    }
+    
+    func busyAlertActionCompletion(finished: Bool) {
+        if (finished) {
+            self.isBusy = false
+            self.busyAlert.removeFromSuperview()
         }
     }
     
@@ -398,32 +415,35 @@ class ConnectivityViewController: UIViewController, ChatServiceDelegate {
         if peers.count > 0 {
             for i in 0 ... peers.count - 1 {
                 self.people.append(UserProfile(id: peers[i].displayName.components(separatedBy: "|")[0],
-                                               username: infos[i][DecodedUserDataKeys.username.enumToString]!,
-                                               avatar: [AvatarParts.hair: infos[i][DecodedUserDataKeys.avatarHair.enumToString]!,
-                                                        AvatarParts.face: infos[i][DecodedUserDataKeys.avatarFace.enumToString]!,
-                                                        AvatarParts.skin: infos[i][DecodedUserDataKeys.avatarSkinTone.enumToString]!],
-                                               moods: [Mood.stringToEnum(from: infos[i][DecodedUserDataKeys.moodOne.enumToString]!),
-                                                       Mood.stringToEnum(from: infos[i][DecodedUserDataKeys.moodTwo.enumToString]!),
-                                                       Mood.stringToEnum(from:infos[i][DecodedUserDataKeys.moodThree.enumToString]!)],
-                                               status: Status.stringToEnum(from: infos[i][DecodedUserDataKeys.status.enumToString]!)))
+                                               username: infos[i][DecodedUserDataKeys.username.rawValue]!,
+                                               avatar: [AvatarParts.hair: infos[i][DecodedUserDataKeys.avatarHair.rawValue]!,
+                                                        AvatarParts.face: infos[i][DecodedUserDataKeys.avatarFace.rawValue]!,
+                                                        AvatarParts.skin: infos[i][DecodedUserDataKeys.avatarSkinTone.rawValue]!],
+                                               moods: [Mood(rawValue: infos[i][DecodedUserDataKeys.moodOne.rawValue]!)!,
+                                                       Mood(rawValue: infos[i][DecodedUserDataKeys.moodTwo.rawValue]!)!,
+                                                       Mood(rawValue:infos[i][DecodedUserDataKeys.moodThree.rawValue]!)!],
+                                               status: Status(rawValue: infos[i][DecodedUserDataKeys.status.rawValue]!)!))
             }
         }
     }
     
     func reloadData() {}
-
-    func dismissInvitationPrompt() {}
-
+    
+    func dismissInvitationPrompt() {
+        self.isBusy = false
+        self.isPromptVisible = false
+    }
+    
     static func createUserData(for interaction: String) -> Data {
         let userProfile = ServiceManager.instance.userProfile
         let data = "\(userProfile.username)|" +
             "\(userProfile.avatar[AvatarParts.hair]!)|" +
             "\(userProfile.avatar[AvatarParts.face]!)|" +
             "\(userProfile.avatar[AvatarParts.skin]!)|" + // skinColour|index
-            "\(userProfile.moods[0].enumToString)|" +
-            "\(userProfile.moods[1].enumToString)|" +
-            "\(userProfile.moods[2].enumToString)|" +
-        "\(userProfile.status.enumToString)|"
+            "\(userProfile.moods[0].rawValue)|" +
+            "\(userProfile.moods[1].rawValue)|" +
+            "\(userProfile.moods[2].rawValue)|" +
+        "\(userProfile.status.rawValue)|"
         return (interaction == "chat" ? data + "chat|\(GameViewController.randomEmoji)" : data + "game|\(GameViewController.randomEmoji)").data(using: String.Encoding.utf8)!  // has 10 components separeted by |
     }
     

@@ -52,7 +52,7 @@ class SettingsViewController: UIViewController {
         self.setupColours(forButton: 3)
         for i in 0 ... self.moodButtons.count - 1 {
             self.moodButtons[i].backgroundColor = UIColor.blue
-            self.moodButtons[i].setTitle(ServiceManager.instance.userProfile.moods[i].enumToString, for: UIControlState.normal)
+            self.moodButtons[i].setTitle(ServiceManager.instance.userProfile.moods[i].rawValue, for: UIControlState.normal)
         }
     }
     

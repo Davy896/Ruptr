@@ -16,6 +16,7 @@ class CircleView: UIView {
             self.setNeedsDisplay()
         }
     }
+    
     var numberOfCircles: Int = 0 {
         didSet {
             self.draw(self.frame)
@@ -26,7 +27,6 @@ class CircleView: UIView {
     var points: [CGPoint] = []
     var translation: CGPoint = CGPoint.zero
     var circleFirstIndex: [Int] = []
-    var delegate: CircleViewDelegate?
     
     override func draw(_ rect: CGRect) {
         self.layer.sublayers = nil
@@ -59,7 +59,6 @@ class CircleView: UIView {
                 animation.fromValue = UIColor.clear.cgColor
                 animation.toValue = UIColor.white.cgColor
                 animation.duration = 0.5
-                animation.delegate = self
                 shapeLayer.add(animation, forKey: "StrokeAnimations")
                 layers.append(shapeLayer)
             }
@@ -72,12 +71,3 @@ class CircleView: UIView {
         self.backgroundColor = UIColor.clear
     }
 }
-
-extension CircleView: CAAnimationDelegate {
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if (flag) {
-            delegate?.handleDrawingCompletion()
-        }
-    }
-}
-

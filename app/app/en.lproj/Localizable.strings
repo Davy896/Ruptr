@@ -25,8 +25,8 @@
 "chat_invite_message" = "chat.";
 "game_invite_message" = "to play a game.";
 "refuse" = "Refuse";
-"select_mood_alert" = "Select a mood";
+"select_mood_alert" = "What are you in the mood for today?";
 "long_username_alert" = "Your Username is too long.";
 "alphanumeric_username_alert" = "Only numbers and letters allowed.";
 "empty_username_alert" = "This field cannot be empty.";
-
+"done" = "Done";

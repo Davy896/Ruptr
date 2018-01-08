@@ -8,45 +8,16 @@
 
 import Foundation
 
-enum DecodedUserDataKeys {
-    case username
-    case avatarHair
-    case avatarFace
-    case avatarSkinTone
-    case avatarSkinToneIndex
-    case moodOne
-    case moodTwo
-    case moodThree
-    case status
-    case interactionType
-    case emoji
-    
-    var enumToString: String {
-        get {
-            switch self {
-            case DecodedUserDataKeys.username:
-                return "username"
-            case DecodedUserDataKeys.avatarHair:
-                return "avatarHair"
-            case DecodedUserDataKeys.avatarFace:
-                return "avatarFace"
-            case DecodedUserDataKeys.avatarSkinTone:
-                return "avatarSkinTone"
-            case DecodedUserDataKeys.avatarSkinToneIndex:
-                return "avatarSkinToneIndex"
-            case DecodedUserDataKeys.moodOne:
-                return "moodOne"
-            case DecodedUserDataKeys.moodTwo:
-                return "moodTwo"
-            case DecodedUserDataKeys.moodThree:
-                return "moodThree"
-            case DecodedUserDataKeys.status:
-                return "status"
-            case DecodedUserDataKeys.interactionType:
-                return "interactionType"
-            case DecodedUserDataKeys.emoji:
-                return "emoji"
-            }
-        }
-    }
+enum DecodedUserDataKeys: String {
+    case username = "username"
+    case avatarHair = "avatarHair"
+    case avatarFace = "avatarFace"
+    case avatarSkinTone = "avatarSkinTone"
+    case avatarSkinToneIndex = "avatarSkinToneIndex"
+    case moodOne = "moodOne"
+    case moodTwo = "moodTwo"
+    case moodThree = "moodThree"
+    case status = "status"
+    case interactionType = "interactionType"
+    case emoji = "emoji"
 }

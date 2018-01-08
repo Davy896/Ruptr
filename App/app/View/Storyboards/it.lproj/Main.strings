@@ -12,13 +12,16 @@
 "8VD-v0-z08.text" = "Nome Utente";
 
 /* Class = "UILabel"; text = "Face"; ObjectID = "9Wg-FB-vQd"; */
-"9Wg-FB-vQd.text" = "Volto";
+"9Wg-FB-vQd.text" = "Viso";
 
 /* Class = "UIButton"; normalTitle = ">"; ObjectID = "AOE-vM-l0Q"; */
 "AOE-vM-l0Q.normalTitle" = ">";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "FRe-ZO-asZ"; */
 "FRe-ZO-asZ.title" = "Oggetto";
+
+/* Class = "UINavigationItem"; title = "Profile"; ObjectID = "IVj-mL-ptE"; */
+"IVj-mL-ptE.title" = "Profilo";
 
 /* Class = "UIButton"; normalTitle = ">"; ObjectID = "Kti-WV-0qK"; */
 "Kti-WV-0qK.normalTitle" = ">";
@@ -39,7 +42,7 @@
 "hAD-fa-EbW.normalTitle" = ">";
 
 /* Class = "UIButton"; normalTitle = "Finish"; ObjectID = "hbr-f5-TWk"; */
-"hbr-f5-TWk.normalTitle" = "Finito";
+"hbr-f5-TWk.normalTitle" = "Fatto";
 
 /* Class = "UITabBarItem"; title = "Map"; ObjectID = "iGr-7h-ihK"; */
 "iGr-7h-ihK.title" = "Mappa";

@@ -7,15 +7,34 @@
 //
 import UIKit
 
-public enum Mood {
-    case sports
-    case music
-    case outdoor
-    case games
-    case food
-    case shopping
+public enum Mood: String {
+    case sports = "Sports"
+    case music = "Music"
+    case outdoor = "Outdoor"
+    case games = "Games"
+    case food = "Food"
+    case shopping = "Shopping"
     
     public var image: UIImage? {
+        get {
+            switch self {
+            case Mood.sports:
+                return UIImage(named: "sports")
+            case Mood.music:
+                return UIImage(named: "music")
+            case Mood.outdoor:
+                return UIImage(named: "outdoors")
+            case Mood.games:
+                return UIImage(named: "games")
+            case Mood.food:
+                return UIImage(named: "food")
+            case Mood.shopping:
+                return UIImage(named: "shopping")
+            }
+        }
+    }
+    
+    public var squaredImage: UIImage? {
         get {
             switch self {
             case Mood.sports:
@@ -31,44 +50,6 @@ public enum Mood {
             case Mood.shopping:
                 return UIImage(named: "shopping_square")
             }
-        }
-    }
-    
-    public var enumToString: String {
-        get {
-            switch self {
-            case Mood.sports:
-                return "Sports"
-            case Mood.music:
-                return "Music"
-            case Mood.outdoor:
-                return "Outdoor"
-            case Mood.games:
-                return "Games"
-            case Mood.food:
-                return "Food"
-            case Mood.shopping:
-                return "Shopping"
-            }
-        }
-    }
-    
-    public static func stringToEnum(from string: String) -> Mood {
-        switch string {
-        case "Sports":
-            return Mood.sports
-        case "Music":
-            return Mood.music
-        case "Outdoor":
-            return Mood.outdoor
-        case "Games":
-            return Mood.games
-        case "Food":
-            return Mood.food
-        case "Shopping":
-            return Mood.shopping
-        default:
-            return Mood.sports
         }
     }
 }

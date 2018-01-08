@@ -263,15 +263,18 @@ var emojiCustomView = UIView()
             
             cell.tail.image = UIImage(named: "tailLeft")
             cell.tail.frame = CGRect(x:  50 + 17 - 19, y: cell.cloud.frame.height - 33 + 10, width: 15, height: 15)
+
             
-            UIView.animate(withDuration: 1.0, animations: {
-                cell.cloud.alpha = 1
-                cell.messageLabel.alpha = 1
-                cell.profileImageHair.alpha = 1
-                cell.profileImageSkinColor.alpha = 1
-                cell.profileImageEyes.alpha = 1
-                cell.tail.alpha = 1
-            })
+        
+        
+//            UIView.animate(withDuration: 1.0, animations: {
+//                cell.cloud.alpha = 1
+//                cell.messageLabel.alpha = 1
+//                cell.profileImageHair.alpha = 1
+//                cell.profileImageSkinColor.alpha = 1
+//                cell.profileImageEyes.alpha = 1
+//                cell.tail.alpha = 1
+//            })
             
         }
         
@@ -279,12 +282,24 @@ var emojiCustomView = UIView()
         let inserctionIndexPath = NSIndexPath(item: item, section: 0)
         
 //        collectionView.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: false)
-        if collectionView.contentSize.height + 258 + 50 > collectionView.frame.size.height
+        if collectionView.contentSize.height - (containerViewBottomAnchor?.constant)! + 50 > collectionView.frame.size.height
         {
             let offset = CGPoint(x: 0, y: collectionView.contentSize.height - collectionView.frame.size.height - (containerViewBottomAnchor?.constant)! )
             
             collectionView.setContentOffset(offset , animated: true)
+            
+            
         }
+        
+        UIView.animate(withDuration: 0.5, animations: {
+                            cell.cloud.alpha = 1
+                            cell.messageLabel.alpha = 1
+                            cell.profileImageHair.alpha = 1
+                            cell.profileImageSkinColor.alpha = 1
+                            cell.profileImageEyes.alpha = 1
+                            cell.tail.alpha = 1
+                        })
+        
         
         return cell
     }
@@ -385,40 +400,48 @@ var emojiCustomView = UIView()
         
         containerView.addSubview(inputTextField)            //add the textField to the containerView
         
-        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 15 + 45).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
+        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 15 ).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
         inputTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true     //
         inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -10).isActive = true          //we are using this constaraint to extend the textField right anchor untill left anchor send button
         inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true    //
         
-        
-        let plusButton = UIButton(type: .system)
-        containerView.addSubview(plusButton)
-//        plusButton.titleLabel?.text =  "+"
-        plusButton.setTitle("+", for: .normal)
-        plusButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        plusButton.layer.cornerRadius = 20
-        plusButton.layer.borderColor = UIColor.gray.cgColor
-        plusButton.layer.borderWidth = 0.5
-        plusButton.backgroundColor = UIColor.white
-        
-        
-        plusButton.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
-        plusButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
-        plusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        plusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
-//        plusButton.titleLabel?.textColor = UIColor.blue
-        
-        plusButton.addTarget(self, action: #selector(plus), for: .touchUpInside)
-        
+//
+//        let plusButton = UIButton(type: .system)
+//        containerView.addSubview(plusButton)
+////        plusButton.titleLabel?.text =  "+"
+//        plusButton.setTitle("+", for: .normal)
+//        plusButton.translatesAutoresizingMaskIntoConstraints = false
+//
+//        plusButton.layer.cornerRadius = 20
+//        plusButton.layer.borderColor = UIColor.gray.cgColor
+//        plusButton.layer.borderWidth = 0.5
+//        plusButton.backgroundColor = UIColor.white
+//
+//
+//        plusButton.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
+//        plusButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
+//        plusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+//        plusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//        plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+////        plusButton.titleLabel?.textColor = UIColor.blue
+//
+//        plusButton.addTarget(self, action: #selector(plus), for: .touchUpInside)
+//
         borderInput.translatesAutoresizingMaskIntoConstraints = false
         
-        borderInput.leftAnchor.constraint(equalTo: plusButton.rightAnchor, constant: 5).isActive = true
+        
+        borderInput.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
         borderInput.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
         borderInput.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -5).isActive = true
         borderInput.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true
         
+        
+        
+//        borderInput.leftAnchor.constraint(equalTo: plusButton.rightAnchor, constant: 5).isActive = true
+//        borderInput.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
+//        borderInput.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -5).isActive = true
+//        borderInput.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true
+//
         borderInput.layer.cornerRadius = 20
         borderInput.backgroundColor = UIColor.white
         borderInput.layer.borderColor = UIColor.gray.cgColor

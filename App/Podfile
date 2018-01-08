@@ -7,7 +7,6 @@ target 'App' do
 
   # Pods for App
   pod 'ISEmojiView', :inhibit_warnings => true
-  pod 'SCLAlertView', :inhibit_warnings => true
 
   target 'AppTests' do
     inherit! :search_paths

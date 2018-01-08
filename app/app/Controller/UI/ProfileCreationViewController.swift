@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SCLAlertView
 
 class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
@@ -20,18 +19,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     private var currentFace = 0
     private var currentSkin = 0
     private var moodSelection = 1
-    private let alertAppearence = SCLAlertView.SCLAppearance(kWindowWidth: 343,
-                                                             kWindowHeight: 400,
-                                                             kTitleFont: UIFont(name: "Futura-Bold", size: 17)!,
-                                                             kTextFont: UIFont(name: "Futura-Medium", size: 14)!,
-                                                             kButtonFont: UIFont(name: "Futura-Medium", size: 17)!,
-                                                             showCircularIcon: false)
-    private let moodAlertButtons = [Mood.food: RoundButton(),
-                                    Mood.games: RoundButton(),
-                                    Mood.music: RoundButton(),
-                                    Mood.outdoor: RoundButton(),
-                                    Mood.shopping: RoundButton(),
-                                    Mood.sports: RoundButton()]
     
     private let displayedPositionX: CGFloat = 16
     private let firstPartHiddenPositionX: CGFloat = -400
@@ -57,6 +44,9 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var finishButton: RoundButton!
    
+    var moodSelectionAlert: MoodSelectionView!
+    var transparencyView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -67,7 +57,8 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         self.moodOne = user.moods[0]
         self.moodTwo = user.moods[1]
         self.moodThree = user.moods[2]
-        let hairTokens = (user.avatar[AvatarParts.hair] ?? "hairstyle_0_black").components(separatedBy: "_")
+        self.avatarHairName = (user.avatar[AvatarParts.hair] ?? "hairstyle_0_black")
+        let hairTokens = self.avatarHairName.components(separatedBy: "_")
         self.currentHairStyle = Int(hairTokens[1]) ?? 0
         switch hairTokens[2] {
         case "black" :
@@ -97,46 +88,29 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         self.moodOneButton.setBackgroundImage(user.moods[0].image, for: UIControlState.normal)
         self.moodTwoButton.setBackgroundImage(user.moods[1].image, for: UIControlState.normal)
         self.moodThreeButton.setBackgroundImage(user.moods[2].image, for: UIControlState.normal)
+        
+        self.moodOneButton.tag = 11
+        self.moodTwoButton.tag = 12
+        self.moodThreeButton.tag = 13
 
-        for (key, button) in moodAlertButtons {
-            
-            button.frame.size = CGSize(width: self.moodOneButton.frame.size.width * 0.8,
-                                       height: self.moodOneButton.frame.size.height * 0.8)
-            button.cornerRadius = 5
-            button.bottomLeftCorner = true
-            button.bottomRightCorner = true
-            button.topLeftCorner = true
-            button.topRightCorner = true
-            button.maskToBounds = true
-            button.backgroundColor = UIColor.lightGray
-            button.addTarget(self, action: #selector(self.chooseMoodForProfile), for: .touchUpInside)
-
+        self.transparencyView = UIView(frame: self.view.frame)
+        self.transparencyView.backgroundColor = UIColor.black
+        self.transparencyView.alpha = 0
+        self.view.addSubview(self.transparencyView)
+        
+        self.moodSelectionAlert = MoodSelectionView.createMoodSelectionView(buttonSize: self.moodOneButton.bounds.size * 0.8)
+        self.moodSelectionAlert.center = self.view.center
+        self.moodSelectionAlert.alpha = 0
+        self.moodSelectionAlert.moodAlertButtonsAction = self.chooseMoodForProfile
+        self.moodSelectionAlert.finishButtonAction = self.finishSelectingMood
+        self.view.addSubview(self.moodSelectionAlert)
+        
+        for (key, button) in self.moodSelectionAlert.moodAlertButtons {
             if (key == self.moodOne || key == self.moodTwo || key == self.moodThree) {
                 button.isEnabled = false
             }
-            
-            switch key {
-            case Mood.food:
-                button.setBackgroundImage(UIImage(named: "food"), for: UIControlState.normal)
-                break
-            case Mood.games:
-                button.setBackgroundImage(UIImage(named: "games"), for: UIControlState.normal)
-                break
-            case Mood.music:
-                button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
-                break
-            case Mood.outdoor:
-                button.setBackgroundImage(UIImage(named: "outdoors"), for: UIControlState.normal)
-                break
-            case Mood.shopping:
-                button.setBackgroundImage(UIImage(named: "shopping"), for: UIControlState.normal)
-                break
-            case Mood.sports:
-                button.setBackgroundImage(UIImage(named: "sports"), for: UIControlState.normal)
-                break
-            }
         }
-        
+    
         NotificationCenter.default.addObserver(self, selector: #selector(profileWasEdited(_:)), name: Notification.Name.UITextFieldTextDidChange, object: nil)
     }
     
@@ -192,69 +166,64 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func selectMood(_ sender: UIButton) {
-        let alert = SCLAlertView(appearance: self.alertAppearence)
-        let subview = UIView(frame: CGRect(x: 20, y: 15, width: 343, height: 200))
-        let y = self.moodOneButton.frame.size.height + 15
-        var x = self.moodOneButton.frame.origin.x
-        var iterationIndex = 0
+        self.moodSelection = sender.tag
+        self.moodSelectionAlert.lastClickedButton = nil
+        UIView.animate(withDuration: 0.2, animations: {
+            self.moodSelectionAlert.alpha = 1
+            self.transparencyView.alpha = 0.7
+        })
         
-        for (_, button) in self.moodAlertButtons {
-            if (iterationIndex == 3) {
-                x = self.moodOneButton.frame.origin.x
-            }
-            
-            if (iterationIndex > 2) {
-                button.frame.origin.y = y
-            }
-            
-            button.frame.origin.x = x
-            subview.addSubview(button)
-            x += button.frame.width + 10
-            iterationIndex += 1
-        }
-        
-        alert.customSubview = subview
-        switch sender {
-        case self.moodOneButton:
-            self.moodSelection = 1
-            alert.showInfo(NSLocalizedString("select_mood_alert", comment: ""), subTitle: "")
-            break
-        case self.moodTwoButton:
-            self.moodSelection = 2
-            alert.showInfo(NSLocalizedString("select_mood_alert", comment: ""), subTitle: "")
-            break
-        case self.moodThreeButton:
-            self.moodSelection = 3
-            alert.showInfo(NSLocalizedString("select_mood_alert", comment: ""), subTitle: "")
-            break
-        default:
-            break
+        for gesture in self.view.gestureRecognizers ?? [] {
+            gesture.isEnabled = false
         }
     }
     
-    @IBAction func chooseMoodForProfile(_ sender: UIButton) {
-        switch  moodSelection {
-        case 1:
-            moodOneButton.setBackgroundImage(sender.backgroundImage(for: UIControlState.normal), for: UIControlState.normal)
-            moodOne = Array(moodAlertButtons.filter( { (key,value) -> Bool in value == sender } ).keys)[0]
-            break
-        case 2:
-            moodTwoButton.setBackgroundImage(sender.backgroundImage(for: UIControlState.normal), for: UIControlState.normal)
-            moodTwo = Array(moodAlertButtons.filter( { (key,value) -> Bool in value == sender } ).keys)[0]
-            break
-        case 3:
-            moodThreeButton.setBackgroundImage(sender.backgroundImage(for: UIControlState.normal), for: UIControlState.normal)
-            moodThree = Array(moodAlertButtons.filter( { (key,value) -> Bool in value == sender } ).keys)[0]
-            break
-        default:
-            break
+    func chooseMoodForProfile() {
+        if let sender = self.moodSelectionAlert.lastClickedButton {
+            switch self.moodSelection {
+            case 11:
+                self.moodOne = self.moodSelectionAlert.moodAlertButtons.filter( { (key,value) -> Bool in value == sender } )[0].mood
+                break
+            case 12:
+                self.moodTwo = self.moodSelectionAlert.moodAlertButtons.filter( { (key,value) -> Bool in value == sender } )[0].mood
+                break
+            case 13:
+                self.moodThree = self.moodSelectionAlert.moodAlertButtons.filter( { (key,value) -> Bool in value == sender } )[0].mood
+                break
+            default:
+                break
+            }
+            
+            for (key, button) in self.moodSelectionAlert.moodAlertButtons {
+                if (key == self.moodOne || key == self.moodTwo || key == self.moodThree) {
+                    button.isEnabled = false
+                } else {
+                    button.isEnabled = true
+                }
+            }
         }
-        
-        for (key, button) in moodAlertButtons {
-            if (key == self.moodOne || key == self.moodTwo || key == self.moodThree) {
-                button.isEnabled = false
-            } else {
-                button.isEnabled = true
+    }
+    
+    func finishSelectingMood() {
+        if let button = self.view.viewWithTag(self.moodSelection) as? RoundButton {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.moodSelectionAlert.alpha = 0
+                self.transparencyView.alpha = 0
+            }) {
+                finished in
+                if (finished) {
+                    if let sender = self.moodSelectionAlert.lastClickedButton {
+                        UIView.transition(with:button, duration: 0.15,
+                                          options: UIViewAnimationOptions.transitionCrossDissolve,
+                                          animations: { button.setBackgroundImage(sender.backgroundImage(for: UIControlState.normal),
+                                                                                  for: UIControlState.normal)
+                        })
+                    }
+                    
+                    for gesture in self.view.gestureRecognizers ?? [] {
+                        gesture.isEnabled = true
+                    }
+                }
             }
         }
     }
@@ -266,7 +235,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                                                       AvatarParts.skin: "skinTones|\(self.currentSkin)"]
         ServiceManager.instance.userProfile.moods = [self.moodOne, self.moodTwo, self.moodThree]
         ServiceManager.instance.userProfile.status = Status.playful
-        
         UserDefaults.standard.set(ServiceManager.instance.userProfile.username, forKey: "username")
         UserDefaults.standard.set(ServiceManager.instance.userProfile.avatar[AvatarParts.hair]!, forKey: "avatarHair")
         UserDefaults.standard.set(ServiceManager.instance.userProfile.avatar[AvatarParts.face]!, forKey: "avatarFace")

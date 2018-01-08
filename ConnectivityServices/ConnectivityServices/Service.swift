@@ -18,7 +18,6 @@ public class Service: NSObject {
     internal var _peers: [MCPeerID]
     internal var _peersDiscoveryInfos: [[String:String]]
     internal var _discoveryInfo: [String : String]
-    internal var _invitationHandler: ((Bool, MCSession?)->Void)!
     internal var _session: MCSession
     
     public var serviceType: String {
@@ -116,12 +115,6 @@ public class Service: NSObject {
         }
     }
     
-    public var invitationHandler: ((Bool, MCSession?)->Void)! {
-        get {
-            return _invitationHandler
-        }
-    }
-    
     internal init(profile: ProfileRequirements, serviceType: String) {
         self._profile = profile
         self._serviceType = serviceType
@@ -157,8 +150,6 @@ extension Service: MCNearbyServiceAdvertiserDelegate {
         if (self.peerId.displayName.components(separatedBy: "|")[1] != self.serviceType) {
             return
         }
-        
-        _invitationHandler = invitationHandler
     }
 }
 

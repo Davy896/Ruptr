@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ServiceManager.instance.userProfile = UserProfile(id: String.randomAlphaNumericString(length: UserProfile.idLength),
                                                           username: defaults.string(forKey: "username") ?? "",
                                                           avatar: [AvatarParts.hair: defaults.string(forKey: "avatarHair") ?? "hairstyle_0_black",
-                                                                   AvatarParts.face: defaults.string(forKey: "avatarFace") ?? "expression_\0",
+                                                                   AvatarParts.face: defaults.string(forKey: "avatarFace") ?? "expression_0",
                                                             AvatarParts.skin: defaults.string(forKey: "avatarSkin") ?? "skinTones|0"],
                                                           moods: [Mood(rawValue: defaults.string(forKey: "moodOne") ?? "Sports") ?? Mood.sports,
                                                                   Mood(rawValue: defaults.string(forKey: "moodTwo") ?? "Games") ?? Mood.games,

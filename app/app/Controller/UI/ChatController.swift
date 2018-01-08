@@ -300,7 +300,6 @@ var emojiCustomView = UIView()
                             cell.tail.alpha = 1
                         })
         
-        
         return cell
     }
     

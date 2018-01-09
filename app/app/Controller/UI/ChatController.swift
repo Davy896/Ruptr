@@ -27,9 +27,12 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }()
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        collectionView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height - 50 )
+        notificationView.alpha = 0
         NotificationCenter.default.addObserver(self, selector: #selector(receivedMessage), name: NSNotification.Name(rawValue: "received_message"), object: nil)
 
         chatCollectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
@@ -53,24 +56,67 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         setupKeyboard()
         self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(self.tap)
-        startTimer()
+//        startTimer()
         self.inputTextField.text = self.stringEmoji
         self.send()
         self.inputTextField.text = ""
+        
+        showAndHideNotificatio()
     }
     
-    var timeLabel = UILabel()
-    var timer = Timer()
-    var timeCount: TimeInterval = 300
-    let timeInterval: TimeInterval = 1
+
+
+
+let notificationView = UIView()
+var notificationText = UITextView()
+var emojiCustomView = UIView()
     
+    
+    
+    func show() {
+
+        notificationView.alpha = 1
+    }
+    
+    func hide() {
+        notificationView.alpha = 0
+    }
+
+    func showAndHideNotificatio() {
+
+        UIView.animate(withDuration: 1.0, delay: 1.0, animations: show, completion: {(complete : Bool) -> Void in
+            UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide, completion: {(complete : Bool) -> Void in
+                
+                self.notificationText.text = "You have only 1 minute left ,hurry up to send the last messagges to say goodbye or to talk face to face!!!"
+                UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
+                    UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide, completion: {(complete : Bool) -> Void in
+                        
+                        self.notificationText.text = "Your time is over ,the chat will be closed!"
+                        UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
+                            UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide)})
+                        })
+                })
+            })
+        
+    })
+    }
+    
+    
+    
+    
+    
+//    var timeLabel = UILabel()
+//    var timer = Timer()
+//    var timeCount: TimeInterval = 300
+//    let timeInterval: TimeInterval = 1
+//
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let tabBarController = tabBarController {
             tabBarController.tabBar.isHidden = true
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let background = self.view.viewWithTag(0451) {
@@ -79,36 +125,36 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             })
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
-    
-    @objc func timeString(time:TimeInterval) -> String {
-        let minutes = Int(time) / 60 % 60
-        let seconds = Int(time) % 60
-        return String(format:"%02i:%02i", minutes, seconds)
-    }
-    
-    @objc func updateTime() {
-        timeLabel.text = "\(timeString(time: timeCount))"
-        if timeCount != 0 {
-            timeCount -= 1
-            
-        }else {
-            endTimer()
-        }
-    }
-    
-    func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-    }
-    
-    
-    func endTimer() {
-        timer.invalidate()
-    }
-    
+//
+//    @objc func timeString(time:TimeInterval) -> String {
+//        let minutes = Int(time) / 60 % 60
+//        let seconds = Int(time) % 60
+//        return String(format:"%02i:%02i", minutes, seconds)
+//    }
+//
+//    @objc func updateTime() {
+//        timeLabel.text = "\(timeString(time: timeCount))"
+//        if timeCount != 0 {
+//            timeCount -= 1
+//
+//        }else {
+//            endTimer()
+//        }
+//    }
+//
+//    func startTimer() {
+//        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+//    }
+//
+//
+//    func endTimer() {
+//        timer.invalidate()
+//    }
+//
     func setupKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
@@ -154,12 +200,13 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }
     
     
+    
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
         cell.message = messages[indexPath.item]
         let messageText = messages[indexPath.item].text
-        
         
         
         if messages[indexPath.item].id == ServiceManager.instance.userProfile.id {
@@ -181,7 +228,17 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.bringSubview(toFront: cell.profileImageHair)
             cell.tail.image = UIImage(named: "tailRight")
             
-            cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18, y: cell.cloud.frame.height - 33, width: 20, height: 25)
+            cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18  , y: cell.cloud.frame.height - 33 + 10 , width: 15, height: 15)
+            UIView.animate(withDuration: 1.0, animations: {
+                cell.cloud.alpha = 1
+                cell.messageLabel.alpha = 1
+                cell.profileImageHair.alpha = 1
+                cell.profileImageSkinColor.alpha = 1
+                cell.profileImageEyes.alpha = 1
+                cell.tail.alpha = 1
+            })
+            
+            
             
         }else {
             
@@ -205,19 +262,48 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             
             
             cell.tail.image = UIImage(named: "tailLeft")
-            cell.tail.frame = CGRect(x:  50 + 12 - 19, y: cell.cloud.frame.height - 33, width: 20, height: 25)
+            cell.tail.frame = CGRect(x:  50 + 17 - 19, y: cell.cloud.frame.height - 33 + 10, width: 15, height: 15)
+
+            
+        
+        
+//            UIView.animate(withDuration: 1.0, animations: {
+//                cell.cloud.alpha = 1
+//                cell.messageLabel.alpha = 1
+//                cell.profileImageHair.alpha = 1
+//                cell.profileImageSkinColor.alpha = 1
+//                cell.profileImageEyes.alpha = 1
+//                cell.tail.alpha = 1
+//            })
             
         }
         
         let item = messages.count - 1
         let inserctionIndexPath = NSIndexPath(item: item, section: 0)
         
-        collectionView.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: true)
+//        collectionView.scrollToItem(at: inserctionIndexPath as IndexPath, at: .bottom, animated: false)
+        if collectionView.contentSize.height - (containerViewBottomAnchor?.constant)! + 50 > collectionView.frame.size.height
+        {
+            let offset = CGPoint(x: 0, y: collectionView.contentSize.height - collectionView.frame.size.height - (containerViewBottomAnchor?.constant)! )
+            
+            collectionView.setContentOffset(offset , animated: true)
+            
+            
+        }
+        
+        UIView.animate(withDuration: 0.5, animations: {
+                            cell.cloud.alpha = 1
+                            cell.messageLabel.alpha = 1
+                            cell.profileImageHair.alpha = 1
+                            cell.profileImageSkinColor.alpha = 1
+                            cell.profileImageEyes.alpha = 1
+                            cell.tail.alpha = 1
+                        })
         
         return cell
     }
     
-    
+  
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -225,25 +311,60 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         let messageText = messages[indexPath.item].text
         height = estimateFrameForText(messageText).height + 30
         let width = UIScreen.main.bounds.width
+        
         return CGSize(width: width , height: height)
         
     }
-    
+//
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 50)
     }
+
     
     
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
-        return CGSize(width: view.frame.width, height: 80)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//
+//        return CGSize(width: view.frame.width, height: 80)
+//    }
     
     var containerViewBottomAnchor: NSLayoutConstraint?
     
     
     func setupInputComponents() {
+        
+        
+
+        notificationView.translatesAutoresizingMaskIntoConstraints = false
+        notificationView.backgroundColor = UIColor.white
+        notificationView.layer.cornerRadius = 20
+        self.view.addSubview(notificationView)
+        notificationView.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 8).isActive = true       //constrain  Button Send
+        notificationView.topAnchor.constraint(equalTo: view.topAnchor,constant: 75).isActive = true   //
+        notificationView.widthAnchor.constraint(equalToConstant: 359).isActive = true                      //
+        notificationView.heightAnchor.constraint(equalToConstant: 112).isActive = true     //
+        
+        notificationView.addSubview(notificationText)
+        notificationText.translatesAutoresizingMaskIntoConstraints = false
+        notificationText.leftAnchor.constraint(equalTo: notificationView.leftAnchor,constant: 8).isActive = true       //constrain  Button Send
+        notificationText.topAnchor.constraint(equalTo: notificationView.topAnchor,constant: 6).isActive = true   //
+        notificationText.widthAnchor.constraint(equalToConstant: 300).isActive = true                      //
+        notificationText.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
+        notificationText.font = UIFont.systemFont(ofSize: 18)
+        notificationText.text = "Remember you can chat only for 5 minutes!!!"
+        
+        
+        
+        self.view.addSubview(emojiCustomView)
+        emojiCustomView.translatesAutoresizingMaskIntoConstraints = false
+        
+        emojiCustomView.frame = CGRect(x: 0, y: 667, width: view.frame.size.width, height: 0)
+//
+//        emojiCustomView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+//        emojiCustomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
+//        emojiCustomView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
+//        emojiCustomView.heightAnchor.constraint(equalToConstant: 0).isActive = true          //
+//
+        emojiCustomView.backgroundColor = UIColor.white
         
         let containerView = UIView()                                    //creation of the writing container view
         containerView.translatesAutoresizingMaskIntoConstraints = false //(cercare a cosa serve)
@@ -278,18 +399,48 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         containerView.addSubview(inputTextField)            //add the textField to the containerView
         
-        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 15).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
+        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 15 ).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
         inputTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true     //
         inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -10).isActive = true          //we are using this constaraint to extend the textField right anchor untill left anchor send button
         inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true    //
         
+//
+//        let plusButton = UIButton(type: .system)
+//        containerView.addSubview(plusButton)
+////        plusButton.titleLabel?.text =  "+"
+//        plusButton.setTitle("+", for: .normal)
+//        plusButton.translatesAutoresizingMaskIntoConstraints = false
+//
+//        plusButton.layer.cornerRadius = 20
+//        plusButton.layer.borderColor = UIColor.gray.cgColor
+//        plusButton.layer.borderWidth = 0.5
+//        plusButton.backgroundColor = UIColor.white
+//
+//
+//        plusButton.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
+//        plusButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
+//        plusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+//        plusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//        plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+////        plusButton.titleLabel?.textColor = UIColor.blue
+//
+//        plusButton.addTarget(self, action: #selector(plus), for: .touchUpInside)
+//
         borderInput.translatesAutoresizingMaskIntoConstraints = false
+        
         
         borderInput.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
         borderInput.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
         borderInput.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -5).isActive = true
         borderInput.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true
         
+        
+        
+//        borderInput.leftAnchor.constraint(equalTo: plusButton.rightAnchor, constant: 5).isActive = true
+//        borderInput.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
+//        borderInput.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -5).isActive = true
+//        borderInput.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true
+//
         borderInput.layer.cornerRadius = 20
         borderInput.backgroundColor = UIColor.white
         borderInput.layer.borderColor = UIColor.gray.cgColor
@@ -305,7 +456,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         separatorLineView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true           //
         separatorLineView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true       //
         separatorLineView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true                    //
-        timeLabel.text = "time: \(timeString(time: timeCount))"
+//        timeLabel.text = "time: \(timeString(time: timeCount))"
     }
     
     @objc func send() {
@@ -315,6 +466,18 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             inputTextField.text = ""
         }
     }
+    
+    @objc func plus() {
+        UIView.animate(withDuration: 1, animations: {
+            
+            self.emojiCustomView.frame.origin.y = 409
+            self.emojiCustomView.frame.size.height = 258
+            self.containerViewBottomAnchor?.constant = -258
+            })
+       
+    }
+    
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {          // this function allow you to send messages using enter
         self.send()

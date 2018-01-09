@@ -16,7 +16,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     var messages: [Messages] = []
     var tap: UITapGestureRecognizer!
     var stringEmoji: String = ""
-    @IBOutlet weak var chatCollectionView : UICollectionView!
+    @IBOutlet weak var chatCollectionView: UICollectionView!
+    
     
     lazy var inputTextField: UITextField = {                        //this is the declaration of the input textField and the textField we need to write and having a reference to use function handleSend
         let textField = UITextField()                               //
@@ -57,10 +58,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(self.tap)
 //        startTimer()
-        self.inputTextField.text = self.stringEmoji
-        self.send()
-        self.inputTextField.text = ""
-        
         showAndHideNotificatio()
     }
     
@@ -459,6 +456,37 @@ var emojiCustomView = UIView()
 //        timeLabel.text = "time: \(timeString(time: timeCount))"
     }
     
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionElementKindSectionHeader:
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath)
+            if let label = headerView.viewWithTag(0451) as? UILabel {
+                label.text =
+                """
+                Wordfy your emojis
+                \(self.stringEmoji)
+                """
+                label.sizeToFit()
+                label.center = headerView.center
+            }
+
+            return headerView
+        case UICollectionElementKindSectionFooter:
+            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath)
+            return footerView
+        default:
+            assert(false, "Unexpected element kind")
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if (self.stringEmoji.isEmpty) {
+            return CGSize.zero
+        } else {
+            return CGSize(width: self.chatCollectionView.bounds.width, height: 96)
+        }
+    }
+    
     @objc func send() {
         //function to send messages
         if inputTextField.text != "" {
@@ -476,8 +504,6 @@ var emojiCustomView = UIView()
             })
        
     }
-    
-    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {          // this function allow you to send messages using enter
         self.send()

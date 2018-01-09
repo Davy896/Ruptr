@@ -12,7 +12,7 @@ import UIKit
 class ChatController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
     
     private let cellId = "cellID"
-    
+    private let cellEmoji = "cellEMOJI"
     var messages: [Messages] = []
     var tap: UITapGestureRecognizer!
     var stringEmoji: String = ""
@@ -52,6 +52,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         chatCollectionView.delegate = self
         chatCollectionView.dataSource = self
         chatCollectionView.register(SingleChatCell.self, forCellWithReuseIdentifier: cellId)
+        
+        chatCollectionView.register(SingleEmojiCell.self, forCellWithReuseIdentifier: cellEmoji)
         chatCollectionView.alwaysBounceVertical = true
         setupKeyboard()
         self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -191,35 +193,112 @@ var emojiCustomView = UIView()
         return messages.count
     }
     
-    
+    var cellDimentionBool: Bool = false
+//    var a: CGFloat = 30
     
     func estimateFrameForText(_ text: String) -> CGRect {
         let size = CGSize(width: 200, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
     }
+  
+//    func frameCellForEmoji() -> CGFloat{
+//        var heightCell: CGFloat
+//        if cellDimentionBool == true {
+//            heightCell = 100
+//        } else {
+//            heightCell = 30
+//        }
+//       return heightCell
+//    }
     
-    
-    
+   
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
-        cell.message = messages[indexPath.item]
-        let messageText = messages[indexPath.item].text
+
+       if messages[indexPath.item].text == "WWWWWWWWWWWWWWWWWWWWWWWWcellDimentionBool = truecellDimentionBool  " {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellEmoji, for: indexPath) as! SingleEmojiCell
+            cell.message = messages[indexPath.item]
+            let messageText = messages[indexPath.item].text
+            var mounth = UIImageView()
+            
+
+            cell.tail.alpha = 0
+            cell.messageLabel.alpha = 0
+            cell.cloud.alpha = 0
+            cell.mounth.image = #imageLiteral(resourceName: "expression_2")
+    
         
         
         if messages[indexPath.item].id == ServiceManager.instance.userProfile.id {
+            cell.profileImageHair.frame = CGRect(x: 265, y: 0, width: 100, height: 100)
+            cell.profileImageEyes.frame = CGRect(x: 265, y: 0, width: 100, height: 100)
+            cell.profileImageSkinColor.frame = CGRect(x: 265, y: 0, width: 100, height: 100)
+            cell.mounth.frame = CGRect(x: 265, y: 25, width: 100, height: 100)
+        } else {
             
+            cell.profileImageHair.frame = CGRect(x: 10, y: 0, width: 100, height: 100)
+            cell.profileImageEyes.frame = CGRect(x: 10, y: 0, width: 100, height: 100)
+            cell.profileImageSkinColor.frame = CGRect(x: 10, y: 0, width: 100, height: 100)
+            cell.mounth.frame = CGRect(x: 10, y: 25, width: 100, height: 100)
+            
+        }
+            cell.profileImageEyes.layer.cornerRadius = 50
+        
+            cell.profileImageEyes.backgroundColor = Colours.getColour(named: messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[0],
+                                                                                      index: Int(messages[indexPath.item].avatarSkinColor.components(separatedBy: "|")[1]))
+            cell.bringSubview(toFront: cell.profileImageHair)
+            cell.bringSubview(toFront: cell.mounth)
+    
+        
+            
+            
+            UIView.animate(withDuration: 1.0, animations: {
+            
+                    cell.profileImageHair.alpha = 1
+                    cell.profileImageSkinColor.alpha = 1
+                    cell.profileImageEyes.alpha = 1
+                    cell.mounth.alpha = 1
+                            })
+            let item = messages.count - 1
+            let inserctionIndexPath = NSIndexPath(item: item, section: 0)
+            
+            if collectionView.contentSize.height - (containerViewBottomAnchor?.constant)! + 50 > collectionView.frame.size.height
+            {
+                let offset = CGPoint(x: 0, y: collectionView.contentSize.height - collectionView.frame.size.height - (containerViewBottomAnchor?.constant)! )
+                
+                collectionView.setContentOffset(offset , animated: true)
+                
+                
+            }
+        
+            return cell
+
+        } else {
+        
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SingleChatCell
+            cell.message = messages[indexPath.item]
+            let messageText = messages[indexPath.item].text
+            var mounth = UIImageView()
+            
+        if messages[indexPath.item].id == ServiceManager.instance.userProfile.id {
+           
             cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
             cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
-            cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
+            
+            
+            cell.mounth.alpha = 0
             
             cell.cloud.backgroundColor = UIColor.blue
             cell.messageLabel.backgroundColor = UIColor.clear
-            
+                
             cell.cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 27 - 50 - 18, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)
             cell.messageLabel.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 18 - 50 - 18, y: 0, width: estimateFrameForText(messageText).width + 16, height: estimateFrameForText(messageText).height + 20)
+            
+            
+            
             cell.profileImageHair.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageEyes.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageSkinColor.frame = CGRect(x: UIScreen.main.bounds.width - 45, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
@@ -229,22 +308,23 @@ var emojiCustomView = UIView()
             cell.tail.image = UIImage(named: "tailRight")
             
             cell.tail.frame = CGRect(x: UIScreen.main.bounds.width - 50 - 18  , y: cell.cloud.frame.height - 33 + 10 , width: 15, height: 15)
-            UIView.animate(withDuration: 1.0, animations: {
+           
+                
+                UIView.animate(withDuration: 1.0, animations: {
                 cell.cloud.alpha = 1
                 cell.messageLabel.alpha = 1
                 cell.profileImageHair.alpha = 1
                 cell.profileImageSkinColor.alpha = 1
                 cell.profileImageEyes.alpha = 1
                 cell.tail.alpha = 1
+                    
             })
-            
             
             
         }else {
             
             cell.profileImageHair.image = UIImage(named: messages[indexPath.item].avatarHair)
             cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
-            cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
             
             cell.profileImageHair.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
             cell.profileImageEyes.frame = CGRect(x: 10, y: estimateFrameForText(messageText).height - 12, width: 30, height: 30)
@@ -267,16 +347,16 @@ var emojiCustomView = UIView()
             
         
         
-//            UIView.animate(withDuration: 1.0, animations: {
-//                cell.cloud.alpha = 1
-//                cell.messageLabel.alpha = 1
-//                cell.profileImageHair.alpha = 1
-//                cell.profileImageSkinColor.alpha = 1
-//                cell.profileImageEyes.alpha = 1
-//                cell.tail.alpha = 1
-//            })
+            UIView.animate(withDuration: 1.0, animations: {
+                cell.cloud.alpha = 1
+                cell.messageLabel.alpha = 1
+                cell.profileImageHair.alpha = 1
+                cell.profileImageSkinColor.alpha = 1
+                cell.profileImageEyes.alpha = 1
+                cell.tail.alpha = 1
+            })
             
-        }
+            }
         
         let item = messages.count - 1
         let inserctionIndexPath = NSIndexPath(item: item, section: 0)
@@ -291,18 +371,10 @@ var emojiCustomView = UIView()
             
         }
         
-        UIView.animate(withDuration: 0.5, animations: {
-                            cell.cloud.alpha = 1
-                            cell.messageLabel.alpha = 1
-                            cell.profileImageHair.alpha = 1
-                            cell.profileImageSkinColor.alpha = 1
-                            cell.profileImageEyes.alpha = 1
-                            cell.tail.alpha = 1
-                        })
-        
+//
         return cell
     }
-    
+    }
   
     
     
@@ -310,12 +382,19 @@ var emojiCustomView = UIView()
         var height: CGFloat = 80
         let messageText = messages[indexPath.item].text
         height = estimateFrameForText(messageText).height + 30
+
+//      if cellDimentionBool == true {
+//            height = 100
+//        }
+
         let width = UIScreen.main.bounds.width
-        
+
         return CGSize(width: width , height: height)
-        
+
     }
-//
+
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 50)
     }
@@ -358,12 +437,12 @@ var emojiCustomView = UIView()
         emojiCustomView.translatesAutoresizingMaskIntoConstraints = false
         
         emojiCustomView.frame = CGRect(x: 0, y: 667, width: view.frame.size.width, height: 0)
-//
-//        emojiCustomView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-//        emojiCustomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
-//        emojiCustomView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
-//        emojiCustomView.heightAnchor.constraint(equalToConstant: 0).isActive = true          //
-//
+
+        emojiCustomView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        emojiCustomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
+        emojiCustomView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
+        emojiCustomView.heightAnchor.constraint(equalToConstant: 0).isActive = true          //
+
         emojiCustomView.backgroundColor = UIColor.white
         
         let containerView = UIView()                                    //creation of the writing container view
@@ -404,28 +483,26 @@ var emojiCustomView = UIView()
         inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -10).isActive = true          //we are using this constaraint to extend the textField right anchor untill left anchor send button
         inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true    //
         
-//
-//        let plusButton = UIButton(type: .system)
-//        containerView.addSubview(plusButton)
-////        plusButton.titleLabel?.text =  "+"
-//        plusButton.setTitle("+", for: .normal)
-//        plusButton.translatesAutoresizingMaskIntoConstraints = false
-//
-//        plusButton.layer.cornerRadius = 20
-//        plusButton.layer.borderColor = UIColor.gray.cgColor
-//        plusButton.layer.borderWidth = 0.5
-//        plusButton.backgroundColor = UIColor.white
-//
-//
-//        plusButton.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
-//        plusButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
-//        plusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-//        plusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-//        plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
-////        plusButton.titleLabel?.textColor = UIColor.blue
-//
-//        plusButton.addTarget(self, action: #selector(plus), for: .touchUpInside)
-//
+
+        let plusButton = UIButton(type: .system)
+        containerView.addSubview(plusButton)
+        plusButton.setTitle("+", for: .normal)
+        plusButton.translatesAutoresizingMaskIntoConstraints = false
+
+        plusButton.layer.cornerRadius = 20
+        plusButton.layer.borderColor = UIColor.gray.cgColor
+        plusButton.layer.borderWidth = 0.5
+        plusButton.backgroundColor = UIColor.white
+
+
+        plusButton.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
+        plusButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
+        plusButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        plusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+
+        plusButton.addTarget(self, action: #selector(createEmoji), for: .touchUpInside)
+
         borderInput.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -461,11 +538,37 @@ var emojiCustomView = UIView()
     
     @objc func send() {
         //function to send messages
+ 
+        
+        
+        
         if inputTextField.text != "" {
+            
+            let numberOfChar = inputTextField.text?.characters
+            var arrayMessage: String
+            for char in inputTextField.text!.enumerated() {
+                if (char.element == "|") {
+                    
+                    notificationText.text = "You can't send this '|' character!"
+                    inputTextField.text = ""
+                    UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
+                        UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide)})
+                    
+                    return
+                }
+            }
+            
             createMessages(input: inputTextField)
             inputTextField.text = ""
         }
+//        cellDimentionBool = false
+//        a = 30
     }
+    
+    
+    
+    
+    
     
     @objc func plus() {
         UIView.animate(withDuration: 1, animations: {
@@ -483,6 +586,18 @@ var emojiCustomView = UIView()
         self.send()
         return true
     }
+    
+    
+    @objc func createEmoji() {
+        let emoji = ServiceManager.instance.userProfile
+        let newEmoji = Messages(text: "WWWWWWWWWWWWWWWWWWWWWWWWcellDimentionBool = truecellDimentionBool  " , username: emoji.username, avatarHair: emoji.avatar[AvatarParts.hair]!,avatarEyes: emoji.avatar[AvatarParts.face]!, avatarSkinColor: emoji.avatar[AvatarParts.skin]!, id: emoji.id)
+        if let peer = ServiceManager.instance.selectedPeer {
+            ServiceManager.instance.chatService.send(message: "\(MPCMessageTypes.message)|\(newEmoji.toString())", toPeer: peer.key)
+        }
+//        cellDimentionBool = true
+//        a = 100
+    }
+    
     
     func createMessages( input: UITextField) {
         let profile = ServiceManager.instance.userProfile

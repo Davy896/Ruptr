@@ -57,6 +57,18 @@ class SingleChatCell: UICollectionViewCell {
         return label
     }()
     
+    let mounth: UIImageView = {
+        var image = UIImageView()
+        //        image = #imageLiteral(resourceName: "right")
+//        image.backgroundColor = UIColor.blue
+        image.layer.cornerRadius = 15
+//        image.alpha = 0
+        
+        return image
+    }()
+
+    
+    
     let profileImageHair: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -123,6 +135,7 @@ class SingleChatCell: UICollectionViewCell {
     func setupView() {
         backgroundColor = UIColor.clear
         
+        addSubview(mounth)
         addSubview(cloud)
         addSubview(messageLabel)
         addSubview(profileImageHair)

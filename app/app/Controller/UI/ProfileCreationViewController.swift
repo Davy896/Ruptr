@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
+class ProfileCreationViewController: UIViewController {
     
     private var avatarHairName: String = "hairstyle_0_black"
     private var moodOne: Mood = Mood.sports
@@ -20,13 +20,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
     private var currentSkin = 0
     private var moodSelection = 1
     
-    private let displayedPositionX: CGFloat = 16
-    private let firstPartHiddenPositionX: CGFloat = -400
-    private let seccondPartHiddenPositionX: CGFloat = 400
-    
-    @IBOutlet weak var firstPartView: UIView!
-    @IBOutlet weak var seccondPartView: UIView!
-    @IBOutlet weak var pageMarker: UIPageControl!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var avatarHairImageView: RoundImgView!
     @IBOutlet weak var avatarFaceImageView: RoundImgView!
     
@@ -110,7 +104,7 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
                 button.isEnabled = false
             }
         }
-    
+        
         NotificationCenter.default.addObserver(self, selector: #selector(profileWasEdited(_:)), name: Notification.Name.UITextFieldTextDidChange, object: nil)
     }
     
@@ -118,6 +112,16 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if (self.userNameTextField.text != nil && self.userNameTextField.text != "") {
+            self.scrollView.setContentOffset(CGPoint(x: 0,
+                                                     y: self.scrollView.contentSize.height -
+                                                        self.scrollView.bounds.size.height),
+                                             animated: false)
+        }
+    }
+    
     @IBAction func updateAvatar(_ sender: UIButton) {
         switch sender.tag {
         case 0: // Hair Right
@@ -245,52 +249,6 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         UserDefaults.standard.set(ServiceManager.instance.userProfile.status.rawValue, forKey: "status")
     }
     
-    @IBAction func switchParts(_ sender: Any) {
-        if let swipe = sender as? UISwipeGestureRecognizer {
-            switch swipe.direction {
-            case UISwipeGestureRecognizerDirection.left:
-                self.pageMarker.currentPage = 1
-                UIView.animate(withDuration: 0.35, animations: {
-                    self.firstPartView.frame.origin.x = self.firstPartHiddenPositionX
-                    self.seccondPartView.frame.origin.x = self.displayedPositionX
-                })
-                break
-            case UISwipeGestureRecognizerDirection.right:
-                self.pageMarker.currentPage = 0
-                UIView.animate(withDuration: 0.35, animations: {
-                    self.firstPartView.frame.origin.x = self.displayedPositionX
-                    self.seccondPartView.frame.origin.x = self.seccondPartHiddenPositionX
-                })
-                break
-            default:
-                break
-            }
-        } else if let pageControl = sender as? UIPageControl  {
-            if pageControl.currentPage == 1 {
-                UIView.animate(withDuration: 0.35, animations: {
-                    self.firstPartView.frame.origin.x = self.firstPartHiddenPositionX
-                    self.seccondPartView.frame.origin.x = self.displayedPositionX
-                })
-            } else {
-                UIView.animate(withDuration: 0.35, animations: {
-                    self.firstPartView.frame.origin.x = self.displayedPositionX
-                    self.seccondPartView.frame.origin.x = self.seccondPartHiddenPositionX
-                })
-            }
-        }
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let validated = self.validate(textField)
-        self.userNameValidationLabel.text = validated.message
-        UIView.animate(withDuration: 0.25, animations: {
-            self.userNameValidationLabel.isHidden = validated.isValid
-            self.userNameValidationLabel.backgroundColor = Colours.errorBackground
-        })
-        view.endEditing(true)
-        return true
-    }
-    
     private func validate(_ control: UIControl) -> (isValid: Bool,message: String?) {
         
         if let textField = control as? UITextField {
@@ -347,4 +305,22 @@ class ProfileCreationViewController: UIViewController, UITextFieldDelegate {
         self.finishButton.isEnabled = validated.isValid
         self.finishButton.bgColor = validated.isValid ? UIColor.white : Colours.saveProfileButtonInvalidBackground
     }
+}
+
+extension ProfileCreationViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let validated = self.validate(textField)
+        self.userNameValidationLabel.text = validated.message
+        UIView.animate(withDuration: 0.25, animations: {
+            self.userNameValidationLabel.isHidden = validated.isValid
+            self.userNameValidationLabel.backgroundColor = Colours.errorBackground
+        })
+        view.endEditing(true)
+        return true
+    }
+}
+
+extension ProfileCreationViewController: UIScrollViewDelegate {
+    
 }

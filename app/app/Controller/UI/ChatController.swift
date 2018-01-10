@@ -76,7 +76,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 240) {
             UIView.animate(withDuration: 0.2,
                            animations: { self.notificationText.alpha = 1 }) {
                             finished in
@@ -89,7 +89,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 10) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 300) {
             UIView.animate(withDuration: 0.2,
                            animations: { self.notificationText.alpha = 1 }) {
                             finished in

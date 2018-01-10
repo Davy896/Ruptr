@@ -17,7 +17,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     var tap: UITapGestureRecognizer!
     var stringEmoji: String = ""
     @IBOutlet weak var chatCollectionView: UICollectionView!
-    
+    let sendButton = UIButton(type: .system)
     
     lazy var inputTextField: UITextField = {                        //this is the declaration of the input textField and the textField we need to write and having a reference to use function handleSend
         let textField = UITextField()                               //
@@ -76,7 +76,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 240) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             UIView.animate(withDuration: 0.2,
                            animations: { self.notificationText.alpha = 1 }) {
                             finished in
@@ -89,15 +89,15 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 300) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 10) {
             UIView.animate(withDuration: 0.2,
                            animations: { self.notificationText.alpha = 1 }) {
                             finished in
+                            self.inputTextField.isEnabled = false
+                            self.sendButton.isEnabled = false
                             UIView.animate(withDuration: 0.2,
                                            delay: 2,
-                                           animations: { self.notificationText.alpha = 0 }) {
-                                            finished in
-                            }
+                                           animations: { self.notificationText.alpha = 0 })
             }
         }
     }
@@ -416,7 +416,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         let borderInput = UIView()
         containerView.addSubview(borderInput)
         
-        let sendButton = UIButton(type: .system)
+      
         sendButton.setTitle(NSLocalizedString("send", comment: ""), for: .normal)                       //
         sendButton.translatesAutoresizingMaskIntoConstraints = false    //
         containerView.addSubview(sendButton)                            //

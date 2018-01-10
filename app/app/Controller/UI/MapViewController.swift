@@ -149,7 +149,8 @@ class MapViewController: ConnectivityViewController {
             for i in 0 ... self.people.count - 1 {
                 let button = AvatarPlanetButton.createAvatarButton(from: self.people[i], size: self.inviteView.avatarFrameView.frame.size - 5)
                 repeat {
-                    let center = self.circleView.points[Int(arc4random_uniform(UInt32(361))) + 361 * self.circleView.circleFirstIndex[circleIndex] ]
+                    let a = Int(arc4random_uniform(UInt32(361))) + 361 * self.circleView.circleFirstIndex[circleIndex]
+                    let center = self.circleView.points[a]
                     button.center = CGPoint(x: center.x, y: center.y)
                 } while (self.checkButtonColision(button))
                 

@@ -1,15 +1,15 @@
 //
-//  Messages.swift
+//  SingleEmojiCell.swift
 //  App
 //
-//  Created by Davide Contaldo on 14/12/17.
-//  Copyright © 2017 Apple Dev Academy. All rights reserved.
+//  Created by Davide Contaldo on 09/01/18.
+//  Copyright © 2018 Apple Dev Academy. All rights reserved.
 //
 
 import UIKit
 
 
-class SingleChatCell: UICollectionViewCell {
+class SingleEmojiCell: UICollectionViewCell {
     
     
     var message: Messages? {
@@ -19,14 +19,14 @@ class SingleChatCell: UICollectionViewCell {
             profileImageEyes.image = UIImage(named: (message?.avatarEyes)!)
             profileImageSkinColor.image = UIImage(named: (message?.avatarSkinColor)!)
             messageLabel.text = message?.text
-//            cloud.image = #imageLiteral(resourceName: "right")
-//            tail.image = #imageLiteral(resourceName: "tail3")
+            //            cloud.image = #imageLiteral(resourceName: "right")
+            //            tail.image = #imageLiteral(resourceName: "tail3")
         }
     }
     
     
     
-  
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = ""
@@ -37,7 +37,7 @@ class SingleChatCell: UICollectionViewCell {
     
     var cloud: UIView = {
         var image = UIView()
-//        image = #imageLiteral(resourceName: "right")
+        //        image = #imageLiteral(resourceName: "right")
         image.backgroundColor = UIColor.blue
         image.layer.cornerRadius = 15
         image.alpha = 0
@@ -60,13 +60,13 @@ class SingleChatCell: UICollectionViewCell {
     let mounth: UIImageView = {
         var image = UIImageView()
         //        image = #imageLiteral(resourceName: "right")
-//        image.backgroundColor = UIColor.blue
+        //        image.backgroundColor = UIColor.blue
         image.layer.cornerRadius = 15
-//        image.alpha = 0
+        image.alpha = 0
         
         return image
     }()
-
+    
     
     
     let profileImageHair: UIImageView = {
@@ -98,7 +98,7 @@ class SingleChatCell: UICollectionViewCell {
     
     let tail: UIImageView = {
         var tailImage = UIImageView()
-//        tailImage.image = #imageLiteral(resourceName: "Path")
+        //        tailImage.image = #imageLiteral(resourceName: "Path")
         tailImage.alpha = 0
         return tailImage
     }()
@@ -119,13 +119,13 @@ class SingleChatCell: UICollectionViewCell {
     
     
     override init(frame: CGRect) {
-       
+        
         super.init(frame: frame)
-         setupView()
+        setupView()
         
     }
     
-   
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -134,6 +134,7 @@ class SingleChatCell: UICollectionViewCell {
     
     func setupView() {
         backgroundColor = UIColor.clear
+        
         addSubview(mounth)
         addSubview(cloud)
         addSubview(messageLabel)
@@ -142,8 +143,9 @@ class SingleChatCell: UICollectionViewCell {
         addSubview(profileImageSkinColor)
         addSubview(tail)
     }
-
+    
 }
+
 
 
 

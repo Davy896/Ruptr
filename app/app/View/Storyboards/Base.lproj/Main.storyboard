@@ -570,7 +570,7 @@
         <!--Map-->
         <scene sceneID="BRA-nk-VvI">
             <objects>
-                <navigationController id="hMa-8X-ByQ" sceneMemberID="viewController">
+                <navigationController title="Map" id="hMa-8X-ByQ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Map" image="map_tabicon_hollow" selectedImage="map_tabicon_filled" id="iGr-7h-ihK"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7FW-hT-NtY">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

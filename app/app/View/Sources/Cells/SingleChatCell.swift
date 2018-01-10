@@ -122,7 +122,6 @@ class SingleChatCell: UICollectionViewCell {
     
     func setupView() {
         backgroundColor = UIColor.clear
-        
         addSubview(cloud)
         addSubview(messageLabel)
         addSubview(profileImageHair)

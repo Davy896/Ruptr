@@ -184,11 +184,7 @@ var emojiCustomView = UIView()
             self.emojiCustomView.frame.size.height = 0
             self.containerViewBottomAnchor?.constant = 0
         })
-        
-//        self.emojiCustomView.frame.origin.y = 667
-//
-//        self.emojiCustomView.frame.size.height = 0
-//        containerViewBottomAnchor?.constant = 0
+    
         self.view.endEditing(true)
     }
     
@@ -229,14 +225,33 @@ var emojiCustomView = UIView()
 //        }
 //       return heightCell
 //    }
-    
-   
+    var mouthName = UITextField()
+//
+//    func checkingForSpecialChar(input: String){
+//        var specialChar: String = ""
+//        for char in mouthName.enumerated() {
+//            if (char.element == "^") {
+//                input = mouthName
+//
+//            }
+//        }
+//
+//    }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+//        checkingForSpecialChar(input: messages[indexPath.item].text)
+        
+        for char in messages[indexPath.item].text.enumerated() {
+            if (char.element == "^") {
+                mouthName.text = messages[indexPath.item].text
+                
+            }
+        }
+        
 
-       if messages[indexPath.item].text == "WWWWWWWWWWWWWWWWWWWWWWWWcellDimentionBool = truecellDimentionBool  " {
-            
+       if messages[indexPath.item].text == mouthName.text{
+        
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellEmoji, for: indexPath) as! SingleEmojiCell
             cell.message = messages[indexPath.item]
             let messageText = messages[indexPath.item].text
@@ -246,7 +261,7 @@ var emojiCustomView = UIView()
             cell.tail.alpha = 0
             cell.messageLabel.alpha = 0
             cell.cloud.alpha = 0
-            cell.mounth.image = #imageLiteral(resourceName: "expression_2")
+            cell.mounth.image = UIImage(named: mouthName.text!)
     
         
         
@@ -254,13 +269,13 @@ var emojiCustomView = UIView()
             cell.profileImageHair.frame = CGRect(x: 265, y: 0, width: 100, height: 100)
             cell.profileImageEyes.frame = CGRect(x: 265, y: 0, width: 100, height: 100)
             cell.profileImageSkinColor.frame = CGRect(x: 265, y: 0, width: 100, height: 100)
-            cell.mounth.frame = CGRect(x: 265, y: 25, width: 100, height: 100)
+            cell.mounth.frame = CGRect(x: 265, y: 0, width: 100, height: 100)
         } else {
             
             cell.profileImageHair.frame = CGRect(x: 10, y: 0, width: 100, height: 100)
             cell.profileImageEyes.frame = CGRect(x: 10, y: 0, width: 100, height: 100)
             cell.profileImageSkinColor.frame = CGRect(x: 10, y: 0, width: 100, height: 100)
-            cell.mounth.frame = CGRect(x: 10, y: 25, width: 100, height: 100)
+            cell.mounth.frame = CGRect(x: 10, y: 0, width: 100, height: 100)
             
         }
             cell.profileImageEyes.layer.cornerRadius = 50
@@ -392,8 +407,10 @@ var emojiCustomView = UIView()
 //
         return cell
     }
-    }
-  
+                
+        }
+       
+    
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -430,7 +447,7 @@ var emojiCustomView = UIView()
     func setupInputComponents() {
         
         let emoji = ServiceManager.instance.userProfile
-        let newEmoji = Messages(text: "WWWWWWWWWWWWWWWWWWWWWWWWcellDimentionBool = truecellDimentionBool  " , username: emoji.username, avatarHair: emoji.avatar[AvatarParts.hair]!,avatarEyes: emoji.avatar[AvatarParts.face]!, avatarSkinColor: emoji.avatar[AvatarParts.skin]!, id: emoji.id)
+        let newEmoji = Messages(text: inputTextField.text!, username: emoji.username, avatarHair: emoji.avatar[AvatarParts.hair]!,avatarEyes: emoji.avatar[AvatarParts.face]!, avatarSkinColor: emoji.avatar[AvatarParts.skin]!, id: emoji.id)
         
         emojiCustomView.layer.cornerRadius = 20
         
@@ -447,7 +464,7 @@ var emojiCustomView = UIView()
         
         
         
-        var happyHair = UIImageView()
+        let happyHair = UIImageView()
         happyEmoji.addSubview(happyHair)
         happyHair.image = UIImage(named: newEmoji.avatarHair)
         happyHair.translatesAutoresizingMaskIntoConstraints = false
@@ -457,7 +474,7 @@ var emojiCustomView = UIView()
         happyHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         
-        var happyEyes = UIImageView()
+        let happyEyes = UIImageView()
         happyEmoji.addSubview(happyEyes)
         happyEyes.image = UIImage(named: newEmoji.avatarEyes)
         happyEyes.translatesAutoresizingMaskIntoConstraints = false
@@ -468,9 +485,9 @@ var emojiCustomView = UIView()
         happyEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
                                                                         index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
        
-        var happyMount = UIImageView()
+        let happyMount = UIImageView()
         happyEmoji.addSubview(happyMount)
-        happyMount.image = UIImage(named: newEmoji.avatarEyes)
+        happyMount.image = UIImage(named: "Happy emoji month in the UIImageView in the customEmojiView ^EMOJI")
         happyMount.translatesAutoresizingMaskIntoConstraints = false
         happyMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
         happyMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
@@ -502,7 +519,7 @@ var emojiCustomView = UIView()
         
         
         
-        var sadHair = UIImageView()
+        let sadHair = UIImageView()
         sadEmoji.addSubview(sadHair)
         sadHair.image = UIImage(named: newEmoji.avatarHair)
         sadHair.translatesAutoresizingMaskIntoConstraints = false
@@ -512,7 +529,7 @@ var emojiCustomView = UIView()
         sadHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         
-        var sadEyes = UIImageView()
+        let sadEyes = UIImageView()
         sadEmoji.addSubview(sadEyes)
         sadEyes.image = UIImage(named: newEmoji.avatarEyes)
         sadEyes.translatesAutoresizingMaskIntoConstraints = false
@@ -523,9 +540,9 @@ var emojiCustomView = UIView()
         sadEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
                                                       index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
         
-        var sadMount = UIImageView()
+        let sadMount = UIImageView()
         sadEmoji.addSubview(sadMount)
-        sadMount.image = UIImage(named: newEmoji.avatarEyes)
+        sadMount.image = UIImage(named: "Sad emoji month in the UIImageView in the customEmojiView ^EMOJI")
         sadMount.translatesAutoresizingMaskIntoConstraints = false
         sadMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
         sadMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
@@ -556,7 +573,7 @@ var emojiCustomView = UIView()
         
         
         
-        var smilingHair = UIImageView()
+        let smilingHair = UIImageView()
         smilingEmoji.addSubview(smilingHair)
         smilingHair.image = UIImage(named: newEmoji.avatarHair)
         smilingHair.translatesAutoresizingMaskIntoConstraints = false
@@ -566,7 +583,7 @@ var emojiCustomView = UIView()
         smilingHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         
-        var smilingEyes = UIImageView()
+        let smilingEyes = UIImageView()
         smilingEmoji.addSubview(smilingEyes)
         smilingEyes.image = UIImage(named: newEmoji.avatarEyes)
         smilingEyes.translatesAutoresizingMaskIntoConstraints = false
@@ -577,9 +594,9 @@ var emojiCustomView = UIView()
         smilingEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
                                                     index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
         
-        var smilingMount = UIImageView()
+        let smilingMount = UIImageView()
         smilingEmoji.addSubview(smilingMount)
-        smilingMount.image = UIImage(named: "Oval 6")
+        smilingMount.image = UIImage(named: "Smiling emoji month in the UIImageView in the customEmojiView ^EMOJI")
         smilingMount.translatesAutoresizingMaskIntoConstraints = false
         smilingMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
         smilingMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
@@ -603,7 +620,7 @@ var emojiCustomView = UIView()
         cryingEmoji.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
         
         
-        var cryingHair = UIImageView()
+        let cryingHair = UIImageView()
         cryingEmoji.addSubview(cryingHair)
         cryingHair.image = UIImage(named: newEmoji.avatarHair)
         cryingHair.translatesAutoresizingMaskIntoConstraints = false
@@ -613,7 +630,7 @@ var emojiCustomView = UIView()
         cryingHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         
-        var cryingEyes = UIImageView()
+        let cryingEyes = UIImageView()
         cryingEmoji.addSubview(cryingEyes)
         cryingEyes.image = UIImage(named: newEmoji.avatarEyes)
         cryingEyes.translatesAutoresizingMaskIntoConstraints = false
@@ -624,9 +641,9 @@ var emojiCustomView = UIView()
         cryingEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
                                                         index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
         
-        var cryingMount = UIImageView()
+        let cryingMount = UIImageView()
         cryingEmoji.addSubview(cryingMount)
-        cryingMount.image = UIImage(named: newEmoji.avatarEyes)
+        cryingMount.image = UIImage(named: "Crying emoji month in the UIImageView in the customEmojiView ^EMOJI")
         cryingMount.translatesAutoresizingMaskIntoConstraints = false
         cryingMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
         cryingMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
@@ -652,7 +669,7 @@ var emojiCustomView = UIView()
         funnyEmoji.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
         
         
-        var funnyHair = UIImageView()
+        let funnyHair = UIImageView()
         funnyEmoji.addSubview(funnyHair)
         funnyHair.image = UIImage(named: newEmoji.avatarHair)
         funnyHair.translatesAutoresizingMaskIntoConstraints = false
@@ -662,7 +679,7 @@ var emojiCustomView = UIView()
         funnyHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         
-        var funnyEyes = UIImageView()
+        let funnyEyes = UIImageView()
         funnyEmoji.addSubview(funnyEyes)
         funnyEyes.image = UIImage(named: newEmoji.avatarEyes)
         funnyEyes.translatesAutoresizingMaskIntoConstraints = false
@@ -673,9 +690,9 @@ var emojiCustomView = UIView()
         funnyEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
                                                        index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
         
-        var funnyMount = UIImageView()
+        let funnyMount = UIImageView()
         funnyEmoji.addSubview(funnyMount)
-        funnyMount.image = UIImage(named: newEmoji.avatarEyes)
+        funnyMount.image = UIImage(named: "Funny emoji month in the UIImageView in the customEmojiView ^EMOJI")
         funnyMount.translatesAutoresizingMaskIntoConstraints = false
         funnyMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
         funnyMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
@@ -698,7 +715,7 @@ var emojiCustomView = UIView()
         surprisedEmoji.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
         
         
-        var surprisedHair = UIImageView()
+        let surprisedHair = UIImageView()
         surprisedEmoji.addSubview(surprisedHair)
         surprisedHair.image = UIImage(named: newEmoji.avatarHair)
         surprisedHair.translatesAutoresizingMaskIntoConstraints = false
@@ -708,7 +725,7 @@ var emojiCustomView = UIView()
         surprisedHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         
-        var surprisedEyes = UIImageView()
+        let surprisedEyes = UIImageView()
         surprisedEmoji.addSubview(surprisedEyes)
         surprisedEyes.image = UIImage(named: newEmoji.avatarEyes)
         surprisedEyes.translatesAutoresizingMaskIntoConstraints = false
@@ -719,9 +736,9 @@ var emojiCustomView = UIView()
         surprisedEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
                                                       index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
         
-        var surprisedMount = UIImageView()
+        let surprisedMount = UIImageView()
         surprisedEmoji.addSubview(surprisedMount)
-        surprisedMount.image = UIImage(named: newEmoji.avatarEyes)
+        surprisedMount.image = UIImage(named: "Surprised emoji month in the UIImageView in the customEmojiView ^EMOJI")
         surprisedMount.translatesAutoresizingMaskIntoConstraints = false
         surprisedMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
         surprisedMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
@@ -771,8 +788,12 @@ var emojiCustomView = UIView()
         emojiCustomView.backgroundColor = UIColor.white
         
         
-        happyEmoji.addTarget(self, action: #selector(createEmoji), for: .touchUpInside)
-        
+        happyEmoji.addTarget(self, action: #selector(happyEmojiButton), for: .touchUpInside)
+        sadEmoji.addTarget(self, action: #selector(sadEmojiButton), for: .touchUpInside)
+        smilingEmoji.addTarget(self, action: #selector(smilingEmojiButton), for: .touchUpInside)
+        cryingEmoji.addTarget(self, action: #selector(cryingEmojiButton), for: .touchUpInside)
+        funnyEmoji.addTarget(self, action: #selector(funnyEmojiButton), for: .touchUpInside)
+        surprisedEmoji.addTarget(self, action: #selector(surprisedEmojiButton), for: .touchUpInside)
         
         let containerView = UIView()                                    //creation of the writing container view
         containerView.translatesAutoresizingMaskIntoConstraints = false //(cercare a cosa serve)
@@ -875,12 +896,10 @@ var emojiCustomView = UIView()
         
         if inputTextField.text != "" {
             
-            let numberOfChar = inputTextField.text?.characters
-            var arrayMessage: String
             for char in inputTextField.text!.enumerated() {
-                if (char.element == "|") {
+                if (char.element == "^") {
                     
-                    notificationText.text = "You can't send this '|' character!"
+                    notificationText.text = "You can't send this '^' character!"
                     inputTextField.text = ""
                     UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
                         UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide)})
@@ -927,13 +946,81 @@ var emojiCustomView = UIView()
     }
     
     
-//    func happyEmojiButton
+    @objc func happyEmojiButton() {
+        
+        mouthName.text = "Happy emoji month in the UIImageView in the customEmojiView ^EMOJI"
+        createEmoji(input: mouthName)
+        UIView.animate(withDuration: 0.35, animations: {
+            self.emojiCustomView.frame.origin.y = 667
+            
+            self.emojiCustomView.frame.size.height = 0
+            self.containerViewBottomAnchor?.constant = 0
+        })
+    }
     
+    @objc func sadEmojiButton() {
+        
+        mouthName.text = "Sad emoji month in the UIImageView in the customEmojiView ^EMOJI"
+        createEmoji(input: mouthName)
+        UIView.animate(withDuration: 0.35, animations: {
+            self.emojiCustomView.frame.origin.y = 667
+            
+            self.emojiCustomView.frame.size.height = 0
+            self.containerViewBottomAnchor?.constant = 0
+        })
+    }
     
+    @objc func smilingEmojiButton() {
+        
+        mouthName.text = "Smiling emoji month in the UIImageView in the customEmojiView ^EMOJI"
+        createEmoji(input: mouthName)
+        UIView.animate(withDuration: 0.35, animations: {
+            self.emojiCustomView.frame.origin.y = 667
+            
+            self.emojiCustomView.frame.size.height = 0
+            self.containerViewBottomAnchor?.constant = 0
+        })
+    }
     
-    @objc func createEmoji() {
+    @objc func cryingEmojiButton() {
+        
+        mouthName.text = "Crying emoji month in the UIImageView in the customEmojiView ^EMOJI"
+        createEmoji(input: mouthName)
+        UIView.animate(withDuration: 0.35, animations: {
+            self.emojiCustomView.frame.origin.y = 667
+            
+            self.emojiCustomView.frame.size.height = 0
+            self.containerViewBottomAnchor?.constant = 0
+        })
+    }
+    
+    @objc func funnyEmojiButton() {
+        
+        mouthName.text = "Funny emoji month in the UIImageView in the customEmojiView ^EMOJI"
+        createEmoji(input: mouthName)
+        UIView.animate(withDuration: 0.35, animations: {
+            self.emojiCustomView.frame.origin.y = 667
+            
+            self.emojiCustomView.frame.size.height = 0
+            self.containerViewBottomAnchor?.constant = 0
+        })
+    }
+    
+    @objc func surprisedEmojiButton() {
+        
+        mouthName.text = "Surprised emoji month in the UIImageView in the customEmojiView ^EMOJI"
+        createEmoji(input: mouthName)
+        UIView.animate(withDuration: 0.35, animations: {
+            self.emojiCustomView.frame.origin.y = 667
+            
+            self.emojiCustomView.frame.size.height = 0
+            self.containerViewBottomAnchor?.constant = 0
+        })
+    }
+    
+    @objc func createEmoji(input: UITextField) {
         let emoji = ServiceManager.instance.userProfile
-        let newEmoji = Messages(text: "WWWWWWWWWWWWWWWWWWWWWWWWcellDimentionBool = truecellDimentionBool  " , username: emoji.username, avatarHair: emoji.avatar[AvatarParts.hair]!,avatarEyes: emoji.avatar[AvatarParts.face]!, avatarSkinColor: emoji.avatar[AvatarParts.skin]!, id: emoji.id)
+        let newEmoji = Messages(text: input.text!, username: emoji.username, avatarHair: emoji.avatar[AvatarParts.hair]!,avatarEyes: emoji.avatar[AvatarParts.face]!, avatarSkinColor: emoji.avatar[AvatarParts.skin]!, id: emoji.id)
         if let peer = ServiceManager.instance.selectedPeer {
             ServiceManager.instance.chatService.send(message: "\(MPCMessageTypes.message)|\(newEmoji.toString())", toPeer: peer.key)
         }

@@ -282,7 +282,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             
             
             
-            UIView.animate(withDuration: 1.0, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 
                 cell.profileImageHair.alpha = 1
                 cell.profileImageSkinColor.alpha = 1

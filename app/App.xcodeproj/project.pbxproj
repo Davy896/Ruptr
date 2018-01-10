@@ -349,8 +349,8 @@
 			isa = PBXGroup;
 			children = (
 				4159D73B2002C11A0047DF18 /* Extentions */,
-				4175189F1FE3C911004972FA /* Colours.swift */,
 				418E16971FF80EA200A0C282 /* OperatorOverloads */,
+				4175189F1FE3C911004972FA /* Colours.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

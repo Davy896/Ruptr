@@ -15,7 +15,7 @@ class Colours {
     static let skinTones = [ #colorLiteral(red: 0.8078431373, green: 0.7411764706, blue: 0.6274509804, alpha: 1), #colorLiteral(red: 0.6679978967, green: 0.4751212597, blue: 0.2586010993, alpha: 1), #colorLiteral(red: 0.5725490196, green: 0.4745098039, blue: 0.3490196078, alpha: 1), #colorLiteral(red: 0.2509803922, green: 0.1647058824, blue: 0.1098039216, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.9295479911, green: 0.5815968605, blue: 1, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)]
     static let saveProfileButtonInvalidBackground = #colorLiteral(red: 0.7490196078, green: 0.7568627451, blue: 0.737254902, alpha: 1)
     static let alerts = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
-    static let receivedSpeechBubble = #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.5921568627, alpha: 1)
+    static let receivedSpeechBubble = #colorLiteral(red: 0.3294117647, green: 0.4901960784, blue: 0.7960784314, alpha: 1)
     
     static func getColour(named name: String, index: Int?) -> UIColor{
         switch name {

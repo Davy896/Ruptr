@@ -253,7 +253,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.profileImageEyes.image = UIImage(named: messages[indexPath.item].avatarEyes)
             cell.profileImageSkinColor.image = UIImage(named: messages[indexPath.item].avatarSkinColor)
             
-            cell.cloud.backgroundColor = UIColor.blue
+            cell.cloud.backgroundColor = Colours.backgroundSecondary
             cell.messageLabel.backgroundColor = UIColor.clear
             
             cell.cloud.frame = CGRect(x: UIScreen.main.bounds.width - estimateFrameForText(messageText).width - 27 - 50 - 18, y: 0, width: estimateFrameForText(messageText).width + 28, height: estimateFrameForText(messageText).height + 20)

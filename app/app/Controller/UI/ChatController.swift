@@ -116,33 +116,35 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     
     func show() {
-        
+
         notificationView.alpha = 1
+        notificationText.alpha = 1
     }
-    
+
     func hide() {
         notificationView.alpha = 0
+        notificationText.alpha = 0
     }
-    
-    func showAndHideNotification() {
-        
-        UIView.animate(withDuration: 2, delay: 1.0, animations: show, completion: {(complete : Bool) -> Void in
-            UIView.animate(withDuration: 2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide, completion: {(complete : Bool) -> Void in
-                
-                self.notificationText.text = "You have only 1 minute left ,hurry up to send the last messagges to say goodbye or to talk face to face!!!"
-                UIView.animate(withDuration: 2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
-                    UIView.animate(withDuration: 0.2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide, completion: {(complete : Bool) -> Void in
-                        
-                        self.notificationText.text = "Your time is over ,the chat will be closed!"
-                        UIView.animate(withDuration: 2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
-                            UIView.animate(withDuration: 2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide)})
-                    })
-                })
-            })
-            
-        })
-    }
-    
+//
+//    func showAndHideNotification() {
+//
+//        UIView.animate(withDuration: 2, delay: 1.0, animations: show, completion: {(complete : Bool) -> Void in
+//            UIView.animate(withDuration: 2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide, completion: {(complete : Bool) -> Void in
+//
+//                self.notificationText.text = "You have only 1 minute left ,hurry up to send the last messagges to say goodbye or to talk face to face!!!"
+//                UIView.animate(withDuration: 2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
+//                    UIView.animate(withDuration: 0.2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide, completion: {(complete : Bool) -> Void in
+//
+//                        self.notificationText.text = "Your time is over ,the chat will be closed!"
+//                        UIView.animate(withDuration: 2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
+//                            UIView.animate(withDuration: 2, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide)})
+//                    })
+//                })
+//            })
+//
+//        })
+//    }
+//
     
     
     
@@ -876,6 +878,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                 if (char.element == "^") {
                     
                     notificationText.text = "You can't send this '^' character!"
+                    notificationText.textColor = UIColor.black
                     inputTextField.text = ""
                     UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: self.show, completion: {(complete : Bool) -> Void in
                         UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveLinear, animations: self.hide)})
@@ -1019,7 +1022,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
    
         
         
-       
+    
         
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
             switch kind {

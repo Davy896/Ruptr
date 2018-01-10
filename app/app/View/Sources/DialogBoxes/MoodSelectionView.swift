@@ -135,21 +135,27 @@ class MoodSelectionView: UIView {
             switch key {
             case Mood.food:
                 button.setBackgroundImage(UIImage(named: "food"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "food_selected"), for: UIControlState.disabled)
                 break
             case Mood.games:
                 button.setBackgroundImage(UIImage(named: "games"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "games_selected"), for: UIControlState.disabled)
                 break
             case Mood.music:
                 button.setBackgroundImage(UIImage(named: "music"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "music_selected"), for: UIControlState.disabled)
                 break
             case Mood.outdoor:
                 button.setBackgroundImage(UIImage(named: "outdoors"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "outdoors_selected"), for: UIControlState.disabled)
                 break
             case Mood.shopping:
                 button.setBackgroundImage(UIImage(named: "shopping"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "shopping_selected"), for: UIControlState.disabled)
                 break
             case Mood.sports:
                 button.setBackgroundImage(UIImage(named: "sports"), for: UIControlState.normal)
+                button.setBackgroundImage(UIImage(named: "sports_selected"), for: UIControlState.disabled)
                 break
             }
             

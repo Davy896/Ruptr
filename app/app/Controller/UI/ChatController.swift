@@ -57,6 +57,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         chatCollectionView.alwaysBounceVertical = true
         setupKeyboard()
         self.tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
         self.view.addGestureRecognizer(self.tap)
 //        startTimer()
         self.inputTextField.text = self.stringEmoji
@@ -175,6 +176,19 @@ var emojiCustomView = UIView()
     }
     
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        
+        
+        UIView.animate(withDuration: 0.35, animations: {
+            self.emojiCustomView.frame.origin.y = 667
+            
+            self.emojiCustomView.frame.size.height = 0
+            self.containerViewBottomAnchor?.constant = 0
+        })
+        
+//        self.emojiCustomView.frame.origin.y = 667
+//
+//        self.emojiCustomView.frame.size.height = 0
+//        containerViewBottomAnchor?.constant = 0
         self.view.endEditing(true)
     }
     
@@ -188,6 +202,10 @@ var emojiCustomView = UIView()
             self.view.layoutIfNeeded()
         }
     }
+    
+//    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+//        plus()
+//    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
@@ -411,8 +429,311 @@ var emojiCustomView = UIView()
     
     func setupInputComponents() {
         
+        let emoji = ServiceManager.instance.userProfile
+        let newEmoji = Messages(text: "WWWWWWWWWWWWWWWWWWWWWWWWcellDimentionBool = truecellDimentionBool  " , username: emoji.username, avatarHair: emoji.avatar[AvatarParts.hair]!,avatarEyes: emoji.avatar[AvatarParts.face]!, avatarSkinColor: emoji.avatar[AvatarParts.skin]!, id: emoji.id)
         
+        emojiCustomView.layer.cornerRadius = 20
+        
+        
+        let happyEmoji = UIButton()
+        
+        emojiCustomView.addSubview(happyEmoji)
+        happyEmoji.translatesAutoresizingMaskIntoConstraints = false
+        happyEmoji.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
+        happyEmoji.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        happyEmoji.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        happyEmoji.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
 
+        
+        
+        
+        var happyHair = UIImageView()
+        happyEmoji.addSubview(happyHair)
+        happyHair.image = UIImage(named: newEmoji.avatarHair)
+        happyHair.translatesAutoresizingMaskIntoConstraints = false
+        happyHair.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
+        happyHair.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        happyHair.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        happyHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        var happyEyes = UIImageView()
+        happyEmoji.addSubview(happyEyes)
+        happyEyes.image = UIImage(named: newEmoji.avatarEyes)
+        happyEyes.translatesAutoresizingMaskIntoConstraints = false
+        happyEyes.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
+        happyEyes.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        happyEyes.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        happyEyes.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        happyEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
+                                                                        index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
+       
+        var happyMount = UIImageView()
+        happyEmoji.addSubview(happyMount)
+        happyMount.image = UIImage(named: newEmoji.avatarEyes)
+        happyMount.translatesAutoresizingMaskIntoConstraints = false
+        happyMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
+        happyMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        happyMount.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        happyMount.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        
+        
+        
+        
+        happyEyes.layer.cornerRadius = 50
+        
+        
+        
+        happyEmoji.bringSubview(toFront: happyHair)
+        
+        
+        
+        let sadEmoji = UIButton()
+        
+        emojiCustomView.addSubview(sadEmoji)
+        sadEmoji.translatesAutoresizingMaskIntoConstraints = false
+        sadEmoji.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
+        sadEmoji.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        sadEmoji.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        sadEmoji.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
+        
+        
+        
+        
+        var sadHair = UIImageView()
+        sadEmoji.addSubview(sadHair)
+        sadHair.image = UIImage(named: newEmoji.avatarHair)
+        sadHair.translatesAutoresizingMaskIntoConstraints = false
+        sadHair.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
+        sadHair.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        sadHair.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        sadHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        var sadEyes = UIImageView()
+        sadEmoji.addSubview(sadEyes)
+        sadEyes.image = UIImage(named: newEmoji.avatarEyes)
+        sadEyes.translatesAutoresizingMaskIntoConstraints = false
+        sadEyes.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
+        sadEyes.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        sadEyes.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        sadEyes.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        sadEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
+                                                      index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
+        
+        var sadMount = UIImageView()
+        sadEmoji.addSubview(sadMount)
+        sadMount.image = UIImage(named: newEmoji.avatarEyes)
+        sadMount.translatesAutoresizingMaskIntoConstraints = false
+        sadMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 20).isActive = true       //constrain  Button Send
+        sadMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        sadMount.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        sadMount.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        sadEyes.layer.cornerRadius = 50
+        
+        sadEmoji.bringSubview(toFront: sadHair)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        let smilingEmoji = UIButton()
+        
+        emojiCustomView.addSubview(smilingEmoji)
+        smilingEmoji.translatesAutoresizingMaskIntoConstraints = false
+        smilingEmoji.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
+        smilingEmoji.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        smilingEmoji.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        smilingEmoji.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
+        
+        
+        
+        
+        var smilingHair = UIImageView()
+        smilingEmoji.addSubview(smilingHair)
+        smilingHair.image = UIImage(named: newEmoji.avatarHair)
+        smilingHair.translatesAutoresizingMaskIntoConstraints = false
+        smilingHair.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
+        smilingHair.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        smilingHair.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        smilingHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        var smilingEyes = UIImageView()
+        smilingEmoji.addSubview(smilingEyes)
+        smilingEyes.image = UIImage(named: newEmoji.avatarEyes)
+        smilingEyes.translatesAutoresizingMaskIntoConstraints = false
+        smilingEyes.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
+        smilingEyes.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        smilingEyes.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        smilingEyes.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        smilingEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
+                                                    index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
+        
+        var smilingMount = UIImageView()
+        smilingEmoji.addSubview(smilingMount)
+        smilingMount.image = UIImage(named: "Oval 6")
+        smilingMount.translatesAutoresizingMaskIntoConstraints = false
+        smilingMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
+        smilingMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        smilingMount.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        smilingMount.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        smilingEyes.layer.cornerRadius = 50
+        
+        smilingEmoji.bringSubview(toFront: smilingHair)
+        
+        
+        
+        
+        let cryingEmoji = UIButton()
+        
+        emojiCustomView.addSubview(cryingEmoji)
+        cryingEmoji.translatesAutoresizingMaskIntoConstraints = false
+        cryingEmoji.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
+        cryingEmoji.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        cryingEmoji.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        cryingEmoji.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
+        
+        
+        var cryingHair = UIImageView()
+        cryingEmoji.addSubview(cryingHair)
+        cryingHair.image = UIImage(named: newEmoji.avatarHair)
+        cryingHair.translatesAutoresizingMaskIntoConstraints = false
+        cryingHair.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
+        cryingHair.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        cryingHair.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        cryingHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        var cryingEyes = UIImageView()
+        cryingEmoji.addSubview(cryingEyes)
+        cryingEyes.image = UIImage(named: newEmoji.avatarEyes)
+        cryingEyes.translatesAutoresizingMaskIntoConstraints = false
+        cryingEyes.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
+        cryingEyes.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        cryingEyes.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        cryingEyes.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        cryingEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
+                                                        index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
+        
+        var cryingMount = UIImageView()
+        cryingEmoji.addSubview(cryingMount)
+        cryingMount.image = UIImage(named: newEmoji.avatarEyes)
+        cryingMount.translatesAutoresizingMaskIntoConstraints = false
+        cryingMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135).isActive = true       //constrain  Button Send
+        cryingMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        cryingMount.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        cryingMount.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        cryingEyes.layer.cornerRadius = 50
+        
+        cryingEmoji.bringSubview(toFront: cryingHair)
+        
+        
+        
+        
+        
+        
+        let funnyEmoji = UIButton()
+        
+        emojiCustomView.addSubview(funnyEmoji)
+        funnyEmoji.translatesAutoresizingMaskIntoConstraints = false
+        funnyEmoji.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
+        funnyEmoji.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        funnyEmoji.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        funnyEmoji.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
+        
+        
+        var funnyHair = UIImageView()
+        funnyEmoji.addSubview(funnyHair)
+        funnyHair.image = UIImage(named: newEmoji.avatarHair)
+        funnyHair.translatesAutoresizingMaskIntoConstraints = false
+        funnyHair.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
+        funnyHair.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        funnyHair.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        funnyHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        var funnyEyes = UIImageView()
+        funnyEmoji.addSubview(funnyEyes)
+        funnyEyes.image = UIImage(named: newEmoji.avatarEyes)
+        funnyEyes.translatesAutoresizingMaskIntoConstraints = false
+        funnyEyes.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
+        funnyEyes.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        funnyEyes.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        funnyEyes.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        funnyEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
+                                                       index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
+        
+        var funnyMount = UIImageView()
+        funnyEmoji.addSubview(funnyMount)
+        funnyMount.image = UIImage(named: newEmoji.avatarEyes)
+        funnyMount.translatesAutoresizingMaskIntoConstraints = false
+        funnyMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
+        funnyMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 20).isActive = true   //
+        funnyMount.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        funnyMount.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        funnyEyes.layer.cornerRadius = 50
+        
+        funnyEmoji.bringSubview(toFront: funnyHair)
+        
+        
+        
+        let surprisedEmoji = UIButton()
+        
+        emojiCustomView.addSubview(surprisedEmoji)
+        surprisedEmoji.translatesAutoresizingMaskIntoConstraints = false
+        surprisedEmoji.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
+        surprisedEmoji.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        surprisedEmoji.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        surprisedEmoji.heightAnchor.constraint(equalToConstant: 100).isActive = true     //
+        
+        
+        var surprisedHair = UIImageView()
+        surprisedEmoji.addSubview(surprisedHair)
+        surprisedHair.image = UIImage(named: newEmoji.avatarHair)
+        surprisedHair.translatesAutoresizingMaskIntoConstraints = false
+        surprisedHair.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
+        surprisedHair.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        surprisedHair.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        surprisedHair.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        var surprisedEyes = UIImageView()
+        surprisedEmoji.addSubview(surprisedEyes)
+        surprisedEyes.image = UIImage(named: newEmoji.avatarEyes)
+        surprisedEyes.translatesAutoresizingMaskIntoConstraints = false
+        surprisedEyes.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
+        surprisedEyes.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        surprisedEyes.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        surprisedEyes.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        surprisedEyes.backgroundColor = Colours.getColour(named: newEmoji.avatarSkinColor.components(separatedBy: "|")[0],
+                                                      index: Int(newEmoji.avatarSkinColor.components(separatedBy: "|")[1]))
+        
+        var surprisedMount = UIImageView()
+        surprisedEmoji.addSubview(surprisedMount)
+        surprisedMount.image = UIImage(named: newEmoji.avatarEyes)
+        surprisedMount.translatesAutoresizingMaskIntoConstraints = false
+        surprisedMount.leftAnchor.constraint(equalTo: emojiCustomView.leftAnchor,constant: 135 + 115).isActive = true       //constrain  Button Send
+        surprisedMount.topAnchor.constraint(equalTo: emojiCustomView.topAnchor,constant: 140).isActive = true   //
+        surprisedMount.widthAnchor.constraint(equalToConstant: 100).isActive = true                      //
+        surprisedMount.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        surprisedEyes.layer.cornerRadius = 50
+        
+        surprisedEmoji.bringSubview(toFront: surprisedHair)
+        
+        
+        
         notificationView.translatesAutoresizingMaskIntoConstraints = false
         notificationView.backgroundColor = UIColor.white
         notificationView.layer.cornerRadius = 20
@@ -422,7 +743,9 @@ var emojiCustomView = UIView()
         notificationView.widthAnchor.constraint(equalToConstant: 359).isActive = true                      //
         notificationView.heightAnchor.constraint(equalToConstant: 112).isActive = true     //
         
+        
         notificationView.addSubview(notificationText)
+        
         notificationText.translatesAutoresizingMaskIntoConstraints = false
         notificationText.leftAnchor.constraint(equalTo: notificationView.leftAnchor,constant: 8).isActive = true       //constrain  Button Send
         notificationText.topAnchor.constraint(equalTo: notificationView.topAnchor,constant: 6).isActive = true   //
@@ -433,17 +756,23 @@ var emojiCustomView = UIView()
         
         
         
+        
+        
         self.view.addSubview(emojiCustomView)
-        emojiCustomView.translatesAutoresizingMaskIntoConstraints = false
+//        emojiCustomView.translatesAutoresizingMaskIntoConstraints = false
         
         emojiCustomView.frame = CGRect(x: 0, y: 667, width: view.frame.size.width, height: 0)
 
-        emojiCustomView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        emojiCustomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
-        emojiCustomView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
-        emojiCustomView.heightAnchor.constraint(equalToConstant: 0).isActive = true          //
+//        emojiCustomView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+//        emojiCustomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true       //setting constarain
+//        emojiCustomView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true     //
+//        emojiCustomView.heightAnchor.constraint(equalToConstant: 0).isActive = true          //
 
         emojiCustomView.backgroundColor = UIColor.white
+        
+        
+        happyEmoji.addTarget(self, action: #selector(createEmoji), for: .touchUpInside)
+        
         
         let containerView = UIView()                                    //creation of the writing container view
         containerView.translatesAutoresizingMaskIntoConstraints = false //(cercare a cosa serve)
@@ -478,7 +807,7 @@ var emojiCustomView = UIView()
         
         containerView.addSubview(inputTextField)            //add the textField to the containerView
         
-        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 15 ).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
+        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor , constant: 15 + 50).isActive = true        //contraint textField  (constant: 8 --> serve per spostare di 8 pixel la scritta "enter text..." dal margine della UIView )
         inputTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true     //
         inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -10).isActive = true          //we are using this constaraint to extend the textField right anchor untill left anchor send button
         inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true    //
@@ -501,22 +830,24 @@ var emojiCustomView = UIView()
         plusButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
 
-        plusButton.addTarget(self, action: #selector(createEmoji), for: .touchUpInside)
+//        plusButton.addTarget(self, action: #selector(plus), for: .touchUpInside)
 
+         plusButton.addTarget(self, action: #selector(plus), for: .touchUpInside)
+        
         borderInput.translatesAutoresizingMaskIntoConstraints = false
         
         
-        borderInput.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
-        borderInput.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
-        borderInput.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -5).isActive = true
-        borderInput.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true
-        
-        
-        
-//        borderInput.leftAnchor.constraint(equalTo: plusButton.rightAnchor, constant: 5).isActive = true
+//        borderInput.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5).isActive = true
 //        borderInput.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
 //        borderInput.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -5).isActive = true
 //        borderInput.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true
+//
+        
+        
+        borderInput.leftAnchor.constraint(equalTo: plusButton.rightAnchor, constant: 5).isActive = true
+        borderInput.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -5).isActive = true
+        borderInput.rightAnchor.constraint(equalTo: sendButton.leftAnchor,constant: -5).isActive = true
+        borderInput.heightAnchor.constraint(equalTo: containerView.heightAnchor,constant: -10).isActive = true
 //
         borderInput.layer.cornerRadius = 20
         borderInput.backgroundColor = UIColor.white
@@ -571,13 +902,21 @@ var emojiCustomView = UIView()
     
     
     @objc func plus() {
-        UIView.animate(withDuration: 1, animations: {
-            
-            self.emojiCustomView.frame.origin.y = 409
-            self.emojiCustomView.frame.size.height = 258
-            self.containerViewBottomAnchor?.constant = -258
+        UIView.animate(withDuration: 0.35, animations: {
+            self.emojiCustomView.frame.origin.y = 359
+            self.emojiCustomView.frame.size.height = 280
+            self.view.endEditing(true)
             })
-       
+        
+        
+        
+        
+//        self.emojiCustomView.frame.origin.y = 409
+        
+//        self.emojiCustomView.frame.size.height = 258
+        
+//        containerViewBottomAnchor?.constant = -258
+        
     }
     
     
@@ -586,6 +925,10 @@ var emojiCustomView = UIView()
         self.send()
         return true
     }
+    
+    
+//    func happyEmojiButton
+    
     
     
     @objc func createEmoji() {

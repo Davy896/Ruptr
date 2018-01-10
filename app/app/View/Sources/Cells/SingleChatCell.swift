@@ -24,6 +24,8 @@ class SingleChatCell: UICollectionViewCell {
         }
     }
     
+    
+    
   
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -38,7 +40,7 @@ class SingleChatCell: UICollectionViewCell {
 //        image = #imageLiteral(resourceName: "right")
         image.backgroundColor = UIColor.blue
         image.layer.cornerRadius = 15
-        
+        image.alpha = 0
         
         return image
     }()
@@ -51,6 +53,7 @@ class SingleChatCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 18)
         label.layer.cornerRadius = 15
         label.isEditable = false
+        label.alpha = 0
         return label
     }()
     
@@ -59,6 +62,7 @@ class SingleChatCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
+        imageView.alpha = 0
         return imageView
     }()
     
@@ -67,6 +71,7 @@ class SingleChatCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
+        imageView.alpha = 0
         return imageView
     }()
     
@@ -75,12 +80,14 @@ class SingleChatCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
+        imageView.alpha = 0
         return imageView
     }()
     
     let tail: UIImageView = {
         var tailImage = UIImageView()
 //        tailImage.image = #imageLiteral(resourceName: "Path")
+        tailImage.alpha = 0
         return tailImage
     }()
     
@@ -115,7 +122,6 @@ class SingleChatCell: UICollectionViewCell {
     
     func setupView() {
         backgroundColor = UIColor.clear
-        
         addSubview(cloud)
         addSubview(messageLabel)
         addSubview(profileImageHair)

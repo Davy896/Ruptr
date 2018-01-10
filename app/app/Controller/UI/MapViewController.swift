@@ -138,7 +138,7 @@ class MapViewController: ConnectivityViewController {
             
             while (peersMissing > 0) {
                 peersMissing -= circlePopulation
-                circlePopulation += (circleIndex + 1)
+                circlePopulation += circleIndex == 0 ? 1 : circleIndex
                 circleIndex += 1
             }
             

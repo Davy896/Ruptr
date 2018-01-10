@@ -12,9 +12,20 @@ import MultipeerConnectivity
 
 class ListTableViewController: ConnectivityViewController {
     
+    private var id: MCPeerID!
+    private var profile: UserProfile!
+    
     @IBOutlet var tableView: UITableView!
     @IBOutlet var selectedAvatar: AvatarPlanetButton!
     var selectedAvatarPosition: CGPoint?
+    var isDisplayingInviteAlert = false
+    var isDisplayingInvitationAlert = false
+    var isDisplayingBusyAlert = false
+    
+    var currentCenter: CGPoint {
+        return CGPoint(x: self.view.center.x,
+                       y: self.view.center.y + self.tableView.contentOffset.y)
+    }
     
     let invisibleTransform = CGAffineTransform(scaleX: 0.00000000000001, y: 0.00000000000001)
     
@@ -34,8 +45,7 @@ class ListTableViewController: ConnectivityViewController {
                         self.inviteView.dialogBoxView.center = avatarPosition
                     } else {
                         self.inviteView.dialogBoxView.transform = CGAffineTransform.identity
-                        self.inviteView.dialogBoxView.center = CGPoint(x: self.view.center.x,
-                                                                       y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
+                        self.inviteView.dialogBoxView.center = self.currentCenter
                     }
                 }) {
                     finished in
@@ -83,6 +93,12 @@ class ListTableViewController: ConnectivityViewController {
                           duration: 0.2,
                           options: UIViewAnimationOptions.transitionCrossDissolve,
                           animations: { self.tableView.reloadData() })
+        
+        self.transparencyView.center = self.currentCenter
+        self.busyAlert.center = self.currentCenter
+        self.activityIndicator.center = self.currentCenter
+        self.inviteView.dialogBoxView.center = self.currentCenter
+        self.invitationView.center = self.currentCenter
     }
     
     override func setUpPromptViews() {
@@ -94,15 +110,48 @@ class ListTableViewController: ConnectivityViewController {
         self.selectedAvatar.isUserInteractionEnabled = false
         self.selectedAvatar.alpha = 1
         
-        self.busyAlert.center = CGPoint(x: self.view.center.x,
-                                        y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
-        self.inviteView.dialogBoxView.center = CGPoint(x: self.view.center.x,
-                                                       y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
-        self.invitationView.center = CGPoint(x: self.view.center.x,
-                                        y: self.view.center.y - (self.tabBarController?.tabBar.frame.height ?? 0))
+        self.transparencyView.center = self.currentCenter
+        self.busyAlert.center = self.currentCenter
+        self.inviteView.dialogBoxView.center = self.currentCenter
+        self.invitationView.center = self.currentCenter
         
         self.inviteView.avatarFrameView.addSubview(self.selectedAvatar)
         self.inviteView.dialogBoxView.transform = self.invisibleTransform
+    }
+    
+    override func busyAlertDisplayCompletion(finished: Bool) {
+        super.busyAlertDisplayCompletion(finished: finished)
+        if (finished) {
+            self.tableView.isScrollEnabled = false
+        }
+    }
+    
+    override func busyAlertActionCompletion(finished: Bool) {
+        super.busyAlertActionCompletion(finished: finished)
+        if (finished) {
+            self.tableView.isScrollEnabled = true
+        }
+    }
+    
+    override func displayInvitationCompletion(finished: Bool) {
+        super.displayInvitationCompletion(finished: finished)
+        if (finished) {
+            self.tableView.isScrollEnabled = false
+        }
+    }
+    
+    override func acceptInvitationCompletion(finished: Bool) {
+        super.acceptInvitationCompletion(finished: finished)
+        if (finished) {
+            self.tableView.isScrollEnabled = false
+        }
+    }
+    
+    override func refuseInvitationCompletion(finished: Bool) {
+        super.refuseInvitationCompletion(finished: finished)
+        if (finished) {
+            self.tableView.isScrollEnabled = false
+        }
     }
 }
 
@@ -139,6 +188,14 @@ extension ListTableViewController: UITableViewDelegate {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
         }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        self.transparencyView.center = self.currentCenter
+        self.busyAlert.center = self.currentCenter
+        self.activityIndicator.center = self.currentCenter
+        self.inviteView.dialogBoxView.center = self.currentCenter
+        self.invitationView.center = self.currentCenter
     }
 }
 

@@ -1,0 +1,9 @@
+.DS_Store*
+.xcuserdatad*
+.xcuserdatad*
+.xcuserdatad
+xuserdata
+App/App.xcodeproj/xcuserdata/
+ConnectivityServices/ConnectivityServices.xcodeproj/xcuserdata/
+firstMiniChallenge.xcworkspace/xcuserdata/
+App/Pods/Pods.xcodeproj/xcuserdata/
